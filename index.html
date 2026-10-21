@@ -3,1223 +3,330 @@
 <html lang="id"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/>
-<title>Ngenal Rasa - Sistem POS Multi-Cabang</title>
-<!-- Tailwind CSS CDN with plugins -->
+<title>POS Ngenal Rasa - Gerbang Masuk Resmi</title>
+<!-- Tailwind CSS CDN v3 with plugins -->
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts: Plus Jakarta Sans -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome Icons -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
 <!-- Tailwind Configuration -->
-<script data-purpose="tailwind-config">
+<script>
     tailwind.config = {
       theme: {
         extend: {
           colors: {
             brand: {
-              red: '#B91C1C',
-              redHover: '#991B1B',
-              softRed: '#FEF2F2',
-              cream: '#FEF9E7',
-              creamDark: '#FDF3C7',
-              green: '#15803D'
+              DEFAULT: '#b20017',
+              hover: '#940013',
+              light: '#fdf2f2',
+              accent: '#d8232a',
+              dark: '#6d000e'
             }
           },
           fontFamily: {
-            sans: ['-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', 'Helvetica', 'Arial', 'sans-serif']
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          boxShadow: {
+            'soft': '0 10px 30px -5px rgba(178, 0, 23, 0.08), 0 4px 12px -2px rgba(0, 0, 0, 0.05)',
+            'button': '0 4px 14px 0 rgba(178, 0, 23, 0.35)',
           }
         }
       }
-    };
+    }
   </script>
 <!-- BEGIN: Custom Styles -->
-<style data-purpose="base-layout">
+<style data-purpose="custom-layout">
     body {
-      background-color: #F8FAFC;
-      color: #1E293B;
+      font-family: 'Plus Jakarta Sans', sans-serif;
       -webkit-tap-highlight-color: transparent;
-      user-select: none;
+      touch-action: manipulation;
     }
-    input, button, select, textarea {
-      font-family: inherit;
+    
+    /* Subtle dot background pattern */
+    .bg-subtle-pattern {
+      background-color: #fcfcfc;
+      background-image: radial-gradient(#e5e7eb 1px, transparent 1px);
+      background-size: 20px 20px;
     }
-    /* Hide scrollbars while maintaining scroll functionality */
-    .no-scrollbar::-webkit-scrollbar {
+
+    /* iOS safe areas padding support */
+    .safe-top {
+      padding-top: env(safe-area-inset-top, 16px);
+    }
+    .safe-bottom {
+      padding-bottom: env(safe-area-inset-bottom, 24px);
+    }
+
+    /* Smooth tab transitions */
+    .tab-content {
+      transition: opacity 0.25s ease-in-out, transform 0.25s ease-in-out;
+    }
+    .tab-content.hidden {
       display: none;
+      opacity: 0;
+      transform: translateY(6px);
     }
-    .no-scrollbar {
-      -ms-overflow-style: none;
-      scrollbar-width: none;
-    }
-  </style>
-<style data-purpose="table-styling">
-    .table-container {
-      border-radius: 1.25rem;
-      border: 1px solid #F1F5F9;
-      background: #FFFFFF;
-      box-shadow: 0 4px 14px 0 rgba(0, 0, 0, 0.04);
-      overflow-x: auto;
-    }
-    .sticky-col {
-      position: sticky;
-      left: 0;
-      background-color: inherit;
-      z-index: 10;
+    .tab-content:not(.hidden) {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
     }
   </style>
 <!-- END: Custom Styles -->
 </head>
-<body class="bg-[#F8FAFC] antialiased text-slate-800 pb-24">
-<!-- BEGIN: TopHeader -->
-<!-- Top bar matching screenshot with NR icon, Name, Role Badge, Switch User button -->
-<header class="bg-white px-4 pt-4 pb-3 border-b border-slate-100 shadow-sm sticky top-0 z-30">
-<div class="flex items-center justify-between">
-<div class="flex items-center gap-3">
-<!-- Brand Avatar -->
-<div class="w-12 h-12 rounded-2xl bg-[#B91C1C] text-white font-extrabold flex items-center justify-center text-lg tracking-wider shadow-sm flex-shrink-0">
-          NR
-        </div>
-<!-- Business Info & User Profile -->
-<div class="flex flex-col">
-<div class="flex items-center gap-2">
-<h1 class="text-base font-bold text-slate-900 leading-tight">Ngenal Rasa</h1>
-<!-- Role Badge -->
-<span class="bg-[#FEF08A] text-[#854D0E] text-[10px] font-bold px-2 py-0.5 rounded tracking-wide uppercase" id="userRoleBadge">
-              OWNER
-            </span>
+<body class="bg-subtle-pattern text-slate-800 antialiased min-h-screen flex items-center justify-center p-3 sm:p-5">
+<!-- BEGIN: MobileContainer -->
+<!-- Constrained precisely for iPhone / Mobile viewport (max-w-[390px]) -->
+<main class="w-full max-w-[390px] mx-auto flex flex-col justify-between min-h-[92vh] safe-top safe-bottom relative" data-purpose="auth-screen-container">
+<!-- Top Decorative Subtle Glow -->
+<div class="absolute -top-10 left-1/2 -translate-x-1/2 w-48 h-48 bg-red-100 rounded-full blur-3xl opacity-60 pointer-events-none -z-10"></div>
+<!-- BEGIN: BrandHeader -->
+<header class="pt-4 pb-2 text-center" data-purpose="brand-header">
+<!-- Genuine Ngenal Rasa Logo -->
+<div class="flex justify-center items-center px-4 py-2">
+<img alt="Logo Ngenal Rasa Ori" class="h-16 w-auto object-contain drop-shadow-sm transition-transform active:scale-95 duration-200" id="brand-logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAjAIJzoBRoWtcXH45hVZ80v6WeZ04U97n931VlOrGb_ez4s_Z9RpcKfLLzw_lFiDJaB1ofUj1H-bk1t3Li0TRYWtFhLnu2vXlNCwNMsgPKIETc7Y6J0bAyk9NcjKXONwTsEujAMI_jDnsz4yijzNMmG4UGuLjrdbN-6rNqsW3lPKAXVXCWjUrnVe_OkCpGp2HMtnNipW8Cvoj0vFeffBxCfvnRksKaz0j02WYjnD9xJya58Hyc6JPvotjkmBX6sc9GuA"/>
 </div>
-<div class="flex items-center gap-1.5 text-xs text-slate-600 mt-0.5">
-<span class="font-medium" id="userNameDisplay">Heri Pebrianto</span>
-<span>•</span>
-<span class="text-[#B91C1C] font-semibold" id="userLocationDisplay">Toko Pusat</span>
-</div>
-</div>
-</div>
-<!-- Action Buttons in Header -->
-<div class="flex items-center gap-2">
-<!-- Team/Staff Modal Trigger Button -->
-<button class="w-10 h-10 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center transition-colors" id="btnOpenStaffModal" title="Kelola Staf / Karyawan">
-<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-<path d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-</button>
-<!-- Switch Account Button -->
-<button class="flex items-center gap-1.5 bg-[#FEF2F2] hover:bg-[#FEE2E2] text-[#B91C1C] px-3 py-2 rounded-xl text-xs font-bold border border-red-100 transition-colors" id="btnSwitchAccount">
-<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-<path d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-<span class="leading-none text-left">Ganti<br/>Akun</span>
-</button>
-</div>
-</div>
+<p class="text-[12.5px] font-medium text-slate-500 tracking-wide mt-1">
+        Sistem Kasir &amp; Inventaris Jajanan Tradisional
+      </p>
 </header>
-<!-- END: TopHeader -->
-<!-- BEGIN: BranchSelector -->
-<!-- Horizontal selector for active branches matching screenshot pills -->
-<section class="px-4 py-3 bg-white border-b border-slate-100" data-purpose="branch-navigation">
-<div class="flex items-center gap-2.5 overflow-x-auto no-scrollbar py-0.5">
-<!-- Dynamically generated branch buttons -->
-<div class="flex items-center gap-2 flex-nowrap" id="branchButtonList">
-<!-- Injected via JavaScript -->
-</div>
-<!-- Add Branch Button -->
-<button class="flex-shrink-0 flex items-center gap-1.5 px-3.5 py-2.5 border border-slate-300 rounded-xl text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 transition-colors" id="btnAddBranch">
-<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-<path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-<span>+ Cabang</span>
+<!-- END: BrandHeader -->
+<!-- BEGIN: AuthCard -->
+<div class="bg-white rounded-3xl p-5 shadow-soft border border-slate-100/80 my-auto" data-purpose="auth-card">
+<!-- Segmented Tab Switcher (Masuk Akun / Daftar Baru) -->
+<div class="grid grid-cols-2 p-1 bg-slate-100/90 rounded-2xl mb-6 text-sm font-semibold relative" data-purpose="segmented-tabs" role="tablist">
+<button aria-controls="form-login" aria-selected="true" class="py-2.5 rounded-xl text-center transition-all duration-200 bg-white text-brand shadow-sm font-bold flex items-center justify-center gap-1.5" id="tab-login-btn" onclick="switchTab('login')" role="tab" type="button">
+<i class="fa-solid fa-right-to-bracket text-xs"></i>
+<span>Masuk Akun</span>
+</button>
+<button aria-controls="form-register" aria-selected="false" class="py-2.5 rounded-xl text-center transition-all duration-200 text-slate-500 hover:text-slate-800 flex items-center justify-center gap-1.5" id="tab-register-btn" onclick="switchTab('register')" role="tab" type="button">
+<i class="fa-solid fa-user-plus text-xs"></i>
+<span>Daftar Baru</span>
 </button>
 </div>
-</section>
-<!-- END: BranchSelector -->
-<!-- BEGIN: PartnerRevenueSharingBanner -->
-<!-- Dedicated revenue split card for branch partner / kolega -->
-<section class="px-4 pt-3 hidden" data-purpose="revenue-share-card" id="partnerSectionCard">
-<div class="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-2xl p-3.5 shadow-sm">
-<div class="flex items-center justify-between mb-2">
-<div class="flex items-center gap-1.5">
-<span class="text-xs bg-amber-500 text-white font-black px-1.5 py-0.5 rounded">MITRA KOLEGA</span>
-<span class="text-xs font-bold text-slate-800" id="partnerNameDisplay">Nama Kolega</span>
+<!-- BEGIN: FormMasuk (Login) -->
+<section aria-labelledby="tab-login-btn" class="tab-content" data-purpose="login-form-section" id="form-login"><form class="space-y-4" onsubmit="handleAuthSubmit(event, 'login')">
+<!-- Inline Feedback Banner -->
+<div class="hidden p-3 rounded-xl text-xs font-semibold" id="login-feedback"></div>
+<!-- Username / Staff ID Input -->
+<div>
+<label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5 ml-1" for="login-username">
+              Nama Pengguna / ID Staf
+            </label>
+<div class="relative">
+<span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+<i class="fa-regular fa-user text-sm"></i>
+</span>
+<input autocomplete="username" class="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 text-slate-800 text-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-brand focus:border-brand transition bg-slate-50/50 focus:bg-white" id="login-username" placeholder="Contoh: Heri P atau Kasir Serayu" required="" type="text"/>
 </div>
-<button class="bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-bold px-2.5 py-1 rounded-lg flex items-center gap-1 shadow-xs" id="btnShareWA">
-<span>Kirim WA Slip</span>
+</div>
+<!-- Password Input -->
+<div>
+<div class="flex justify-between items-center mb-1.5 ml-1">
+<label class="block text-xs font-bold text-slate-700 uppercase tracking-wider" for="login-password">
+                Kata Sandi / PIN
+              </label>
+</div>
+<div class="relative">
+<span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+<i class="fa-solid fa-lock text-sm"></i>
+</span>
+<input autocomplete="current-password" class="w-full pl-10 pr-11 py-3 rounded-xl border border-slate-200 text-slate-800 text-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-brand focus:border-brand transition bg-slate-50/50 focus:bg-white" id="login-password" placeholder="Masukkan PIN atau Sandi" required="" type="password"/>
+<button aria-label="Tampilkan atau sembunyikan kata sandi" class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600 focus:outline-none" onclick="togglePasswordVisibility('login-password', this)" type="button">
+<i class="fa-regular fa-eye text-sm"></i>
 </button>
 </div>
-<div class="grid grid-cols-3 gap-2 text-center text-xs">
-<div class="bg-white/80 p-2 rounded-xl border border-amber-100">
-<span class="text-slate-500 text-[10px] block">Total Omzet</span>
-<span class="font-extrabold text-slate-800 text-xs" id="partnerTotalOmzet">Rp 0</span>
 </div>
-<div class="bg-white/80 p-2 rounded-xl border border-amber-100">
-<span class="text-slate-500 text-[10px] block">Jatah Kolega (<span id="partnerRatioKolega">30</span>%)</span>
-<span class="font-extrabold text-emerald-600 text-xs" id="partnerShareAmount">Rp 0</span>
-</div>
-<div class="bg-white/80 p-2 rounded-xl border border-amber-100">
-<span class="text-slate-500 text-[10px] block">Jatah Owner (<span id="partnerRatioOwner">70</span>%)</span>
-<span class="font-extrabold text-brand-red text-xs" id="partnerOwnerAmount">Rp 0</span>
-</div>
-</div>
-</div>
-</section>
-<!-- END: PartnerRevenueSharingBanner -->
-<!-- BEGIN: MainContentArea -->
-<main class="px-3 pt-3" data-purpose="content-display">
-<!-- Tab View: Master Pusat / Stok Kue Table -->
-<div class="space-y-3" id="viewMainTable">
-<!-- Table Header & Subtitle info -->
-<div class="flex items-center justify-between px-1">
-<div class="text-xs font-medium text-slate-500">
-          Mode: <strong class="text-slate-800" id="lblActiveViewMode">Master Pusat (Owner)</strong>
-</div>
-<div class="text-[11px] font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded-full">
-          Perhitungan Realtime Otomatis Aktif
-        </div>
-</div>
-<!-- Main Data Table Container matching exact layout in screenshot -->
-<div class="table-container border rounded-2xl overflow-hidden bg-white shadow-sm">
-<div class="overflow-x-auto no-scrollbar">
-<table class="w-full text-left border-collapse" id="posItemsTable">
-<!-- Table Header with Light Cream tint matching UI -->
-<thead>
-<tr class="bg-[#FEF9E7] text-slate-800 text-xs font-bold border-b border-amber-100">
-<th class="py-3 px-4 text-left whitespace-nowrap min-w-[130px]">Varian Jajanan</th>
-<!-- HPP Modal: Only for Owner -->
-<th class="py-3 px-2 text-center whitespace-nowrap min-w-[85px] owner-col">
-                  Harga<br/>Kulak<br/><span class="font-normal text-[10px] text-slate-500">(Modal HPP)</span>
-</th>
-<th class="py-3 px-2 text-center whitespace-nowrap min-w-[85px]">
-                  Harga<br/>Jual
-                </th>
-<!-- Staff Specific Operational Columns -->
-<th class="py-3 px-2 text-center whitespace-nowrap min-w-[65px] staff-col hidden">Awal</th>
-<th class="py-3 px-2 text-center whitespace-nowrap min-w-[65px] staff-col hidden">Laku</th>
-<th class="py-3 px-2 text-center whitespace-nowrap min-w-[60px] staff-col hidden">Basi</th>
-<th class="py-3 px-2 text-center whitespace-nowrap min-w-[60px] staff-col hidden">Retur</th>
-<th class="py-3 px-2 text-center whitespace-nowrap min-w-[65px] staff-col hidden">Sisa</th>
-<!-- Margin Bersih: Only for Owner. Accurate = Harga Jual - Modal Kulak -->
-<th class="py-3 px-3 text-right whitespace-nowrap min-w-[95px] text-[#15803D] owner-col">
-                  Margin<br/>Bersih
-                </th>
-<!-- Omzet Subtotal for Cashier/Karyawan -->
-<th class="py-3 px-3 text-right whitespace-nowrap min-w-[95px] text-slate-800 staff-col hidden">
-                  Subtotal<br/>Omzet
-                </th>
-<th class="py-3 px-2 text-center whitespace-nowrap w-10 owner-col">Aksi</th>
-</tr>
-</thead>
-<!-- Table Body filled dynamically -->
-<tbody class="text-xs divide-y divide-slate-100 font-semibold text-slate-800" id="itemsTableBody">
-<!-- Dynamically populated rows -->
-</tbody>
-</table>
+<!-- Submit Button -->
+<button class="w-full py-3.5 px-4 mt-2 bg-brand hover:bg-brand-hover active:scale-[0.98] text-white font-bold text-sm rounded-xl shadow-button flex items-center justify-center gap-2 transition duration-150" type="submit">
+<span>Masuk ke Sistem POS</span>
+<i class="fa-solid fa-arrow-right text-xs"></i>
+</button>
+<!-- Security Notice Note -->
+<div class="pt-2 text-center" data-purpose="security-disclaimer">
+<div class="inline-flex items-center gap-1.5 px-3 py-2 bg-amber-50/80 border border-amber-200/60 rounded-xl text-left">
+<i class="fa-solid fa-shield-halved text-amber-600 text-xs shrink-0"></i>
+<p class="text-[11px] leading-tight text-amber-800 font-medium">
+                Hanya akun terdaftar resmi yang memiliki izin akses ke sistem POS Ngenal Rasa.
+              </p>
 </div>
 </div>
-<!-- Quick Summary Footer Info Box -->
-<div class="bg-white p-3 rounded-2xl border border-slate-100 shadow-sm flex items-center justify-between text-xs">
+</form></section>
+<!-- END: FormMasuk -->
+<!-- BEGIN: FormDaftar (Register) -->
+<section aria-labelledby="tab-register-btn" class="tab-content hidden" data-purpose="register-form-section" id="form-register"><form class="space-y-3.5" onsubmit="handleAuthSubmit(event, 'register')">
+<!-- Inline Feedback Banner -->
+<div class="hidden p-3 rounded-xl text-xs font-semibold" id="reg-feedback"></div>
+<!-- Username Baru -->
 <div>
-<span class="text-slate-500 block text-[11px]">Total Varian Kue:</span>
-<span class="font-bold text-slate-800" id="totalVariantsCount">7 Macam</span>
-</div>
-<div class="owner-col text-right">
-<span class="text-slate-500 block text-[11px]">Rata-rata Margin Bersih:</span>
-<span class="font-extrabold text-[#15803D]" id="avgMarginDisplay">Rp 1.000 / pcs</span>
-</div>
-<div class="staff-col hidden text-right">
-<span class="text-slate-500 block text-[11px]">Total Omzet Terjual:</span>
-<span class="font-extrabold text-[#B91C1C]" id="staffTotalOmzetDisplay">Rp 0</span>
+<label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1 ml-1" for="reg-username">
+              Nama Pengguna / ID Baru
+            </label>
+<div class="relative">
+<span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+<i class="fa-regular fa-circle-user text-sm"></i>
+</span>
+<input autocomplete="off" class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 text-slate-800 text-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-brand focus:border-brand transition bg-slate-50/50 focus:bg-white" id="reg-username" placeholder="Contoh: Kasir Serayu atau Heri P" required="" type="text"/>
 </div>
 </div>
-<!-- Add Product Row Button (Owner Only) -->
-<div class="owner-col flex justify-end">
-<button class="inline-flex items-center gap-1.5 px-3 py-2 bg-slate-800 hover:bg-slate-900 text-white rounded-xl text-xs font-bold transition shadow-sm" id="btnAddNewProduct">
-<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-<path d="M12 6v6m0 0v6m0-6h6m-6 0H6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-          Tambah Varian Kue
-        </button>
-</div>
-<!-- Daily Cashier Save & Submit button (Staff Only) -->
-<div class="staff-col hidden pt-2">
-<button class="w-full py-3 bg-[#B91C1C] hover:bg-red-800 text-white font-bold rounded-xl text-sm shadow-md transition flex items-center justify-center gap-2" id="btnSaveCashierClosing">
-<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-<path d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-          Simpan &amp; Rekap Penjualan Kasir Hari Ini
-        </button>
-</div>
-</div>
-<!-- Tab View: Pengeluaran -->
-<div class="space-y-3 hidden" id="viewExpenses">
-<div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm">
-<h2 class="text-sm font-bold text-slate-800 mb-3 flex items-center justify-between">
-<span>Form Catat Pengeluaran Operasional</span>
-<span class="text-[10px] bg-red-100 text-[#B91C1C] px-2 py-0.5 rounded font-bold" id="expenseBranchBadge">Cabang</span>
-</h2>
-<form class="space-y-3 text-xs" id="formAddExpense">
+<!-- Kata Sandi / PIN Baru -->
 <div>
-<label class="block text-slate-600 font-medium mb-1">Keterangan Pengeluaran</label>
-<input class="w-full text-xs rounded-xl border-slate-300 focus:border-red-500 focus:ring-red-500" id="expenseDescription" placeholder="Contoh: Plastik kresek, isi ulang gas, es batu" required="" type="text"/>
+<label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1 ml-1" for="reg-password">
+              Kata Sandi / PIN
+            </label>
+<div class="relative">
+<span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+<i class="fa-solid fa-key text-sm"></i>
+</span>
+<input class="w-full pl-10 pr-11 py-2.5 rounded-xl border border-slate-200 text-slate-800 text-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-brand focus:border-brand transition bg-slate-50/50 focus:bg-white" id="reg-password" minlength="4" placeholder="Minimal 4 karakter PIN / Sandi" required="" type="password"/>
+<button aria-label="Tampilkan atau sembunyikan kata sandi" class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600 focus:outline-none" onclick="togglePasswordVisibility('reg-password', this)" type="button">
+<i class="fa-regular fa-eye text-sm"></i>
+</button>
 </div>
-<div class="grid grid-cols-2 gap-2">
-<div>
-<label class="block text-slate-600 font-medium mb-1">Nominal (Rp)</label>
-<input class="w-full text-xs rounded-xl border-slate-300 focus:border-red-500 focus:ring-red-500" id="expenseAmount" min="0" placeholder="0" required="" type="number"/>
 </div>
+<!-- Hak Akses Dropdown -->
 <div>
-<label class="block text-slate-600 font-medium mb-1">Kategori</label>
-<select class="w-full text-xs rounded-xl border-slate-300 focus:border-red-500 focus:ring-red-500" id="expenseCategory">
-<option value="Operasional">Operasional</option>
-<option value="Kemasan">Kemasan / Plastik</option>
-<option value="Kebersihan">Kebersihan</option>
-<option value="Lainnya">Lainnya</option>
+<label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1 ml-1" for="reg-role">
+              Pilihan Hak Akses
+            </label>
+<div class="relative">
+<span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+<i class="fa-solid fa-user-gear text-sm"></i>
+</span>
+<select class="w-full pl-10 pr-8 py-2.5 rounded-xl border border-slate-200 text-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-brand transition bg-slate-50/50 focus:bg-white appearance-none font-medium" id="reg-role" required="">
+<option value="owner">Owner (Toko Pusat &amp; Kontrol Penuh)</option>
+<option selected="" value="kasir">Kasir (Cabang Serayu)</option>
 </select>
+<span class="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-slate-400 text-xs">
+<i class="fa-solid fa-chevron-down"></i>
+</span>
 </div>
 </div>
-<button class="w-full py-2.5 bg-slate-800 text-white font-bold rounded-xl text-xs hover:bg-slate-900 transition" type="submit">
-            + Simpan Pengeluaran
-          </button>
-</form>
+<!-- Register Submit Button -->
+<button class="w-full py-3.5 px-4 mt-2 bg-brand hover:bg-brand-hover active:scale-[0.98] text-white font-bold text-sm rounded-xl shadow-button flex items-center justify-center gap-2 transition duration-150" type="submit">
+<i class="fa-solid fa-id-badge text-xs"></i>
+<span>Daftarkan Akun Resmi</span>
+</button>
+</form></section>
+<!-- END: FormDaftar -->
 </div>
-<!-- Expense List -->
-<div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm">
-<div class="flex items-center justify-between mb-2">
-<h3 class="text-xs font-bold text-slate-800">Daftar Pengeluaran Hari Ini</h3>
-<span class="text-xs font-bold text-red-600" id="expenseTotalToday">Total: Rp 0</span>
+<!-- END: AuthCard -->
+<!-- BEGIN: QuickSpecsBadge -->
+<!-- Explains underlying POS capability ready in system -->
+<!-- BEGIN: OfficialWebCard -->
+<div class="mt-3 mb-1 text-center" data-purpose="official-website-link">
+<p class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider mb-1.5">Klik Official Web:</p>
+<a class="inline-flex items-center justify-between w-full p-2.5 px-4 bg-white/90 hover:bg-white border border-slate-200/80 hover:border-brand/40 shadow-sm rounded-2xl transition duration-200 group text-left" href="https://ngenalrasa.github.io/" rel="noopener noreferrer" target="_blank">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-xl bg-red-50 text-brand flex items-center justify-center shrink-0">
+<i class="fa-solid fa-globe text-sm"></i>
 </div>
-<div class="divide-y divide-slate-100 max-h-60 overflow-y-auto no-scrollbar" id="expenseListContainer">
-<!-- Injected items -->
-<div class="text-center py-6 text-slate-400 text-xs">Belum ada catatan pengeluaran.</div>
-</div>
-</div>
-</div>
-<!-- Tab View: Histori Transaksi -->
-<div class="space-y-3 hidden" id="viewHistory">
-<div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm">
-<div class="flex items-center justify-between mb-3">
-<h2 class="text-sm font-bold text-slate-800">Riwayat Rekap Harian</h2>
-<span class="text-xs text-slate-500 font-medium" id="historyBranchFilterText">Semua Cabang</span>
-</div>
-<div class="space-y-2.5 max-h-[460px] overflow-y-auto no-scrollbar" id="historyListContainer">
-<!-- Dynamically populated rekap cards -->
-<div class="text-center py-8 text-slate-400 text-xs">Belum ada riwayat rekap harian tersimpan.</div>
+<div class="leading-tight">
+<div class="text-xs font-bold text-slate-800 group-hover:text-brand transition">ngenalrasa.github.io</div>
+<div class="text-[10.5px] text-slate-400 font-medium">Katalog Produk &amp; Info Usaha Ngenal Rasa</div>
 </div>
 </div>
+<i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-400 group-hover:text-brand transition ml-2"></i>
+</a>
 </div>
-<!-- Tab View: Cetak Laporan A4 -->
-<div class="space-y-3 hidden" id="viewPrintA4">
-<div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm text-center">
-<div class="w-12 h-12 bg-slate-100 text-slate-700 rounded-full flex items-center justify-center mx-auto mb-2">
-<svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-<path d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
+<!-- END: OfficialWebCard --><footer class="mt-4 mb-2 text-center" data-purpose="system-specs-summary">
+<div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-200/50 border border-slate-200 text-[11px] text-slate-600 font-medium">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+<span>Siap: 53 Varian Jajanan • Stok, Basi, Retur • Cetak A4</span>
 </div>
-<h3 class="text-sm font-bold text-slate-900 mb-1">Cetak Rekap Format Kertas A4</h3>
-<p class="text-xs text-slate-500 mb-4">Mencetak rekap laporan stok, penjualan, biaya, dan bagi hasil mitra untuk arsip fisik cabang.</p>
-<button class="px-5 py-2.5 bg-brand-red text-white text-xs font-bold rounded-xl hover:bg-brand-redHover transition flex items-center justify-center gap-1.5 mx-auto" onclick="window.print()">
-<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-<path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-          Mulai Cetak / Simpan PDF (A4)
-        </button>
-</div>
-</div>
+<p class="text-[10px] text-slate-400 mt-2">
+        © 2025 Ngenal Rasa. Hak Cipta Dilindungi Undang-Undang.
+      </p>
+</footer>
+<!-- END: QuickSpecsBadge -->
 </main>
-<!-- END: MainContentArea -->
-<!-- BEGIN: BottomNavigation -->
-<!-- Matching exact 5 tabs from screenshot: Stok Kue, Pengeluaran, Histori, Master Pusat, Cetak A4 -->
-<nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 z-40 py-1.5 px-2 max-w-md mx-auto shadow-lg" data-purpose="bottom-bar">
-<div class="grid grid-cols-5 text-center">
-<!-- Tab 1: Stok Kue -->
-<button class="nav-tab-btn flex flex-col items-center justify-center py-1 text-slate-500 hover:text-[#B91C1C]" data-tab="stok-kue">
-<svg class="w-5 h-5 mb-0.5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-<path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-<span class="text-[10px] font-medium leading-tight">Stok Kue</span>
-</button>
-<!-- Tab 2: Pengeluaran -->
-<button class="nav-tab-btn flex flex-col items-center justify-center py-1 text-slate-500 hover:text-[#B91C1C]" data-tab="pengeluaran">
-<svg class="w-5 h-5 mb-0.5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-<path d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-<span class="text-[10px] font-medium leading-tight">Pengeluaran</span>
-</button>
-<!-- Tab 3: Histori -->
-<button class="nav-tab-btn flex flex-col items-center justify-center py-1 text-slate-500 hover:text-[#B91C1C]" data-tab="histori">
-<svg class="w-5 h-5 mb-0.5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-<path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-<span class="text-[10px] font-medium leading-tight">Histori</span>
-</button>
-<!-- Tab 4: Master Pusat (Active by default as per screenshot) -->
-<button class="nav-tab-btn active-tab flex flex-col items-center justify-center py-1 text-[#B91C1C]" data-tab="master-pusat">
-<svg class="w-5 h-5 mb-0.5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-<path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-<span class="text-[10px] font-bold leading-tight">Master Pusat</span>
-</button>
-<!-- Tab 5: Cetak A4 -->
-<button class="nav-tab-btn flex flex-col items-center justify-center py-1 text-slate-500 hover:text-[#B91C1C]" data-tab="cetak-a4">
-<svg class="w-5 h-5 mb-0.5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-<path d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-<span class="text-[10px] font-medium leading-tight">Cetak A4</span>
-</button>
-</div>
-</nav>
-<!-- END: BottomNavigation -->
-<!-- BEGIN: ModalSwitchAccount -->
-<!-- Account Switch Modal (Owner vs Karyawan) -->
-<div class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 hidden backdrop-blur-xs" id="modalAccount">
-<div class="bg-white rounded-2xl w-full max-w-sm p-5 shadow-2xl space-y-4">
-<div class="flex items-center justify-between pb-2 border-b border-slate-100">
-<h3 class="font-bold text-slate-900 text-sm">Pilih Akun / Hak Akses</h3>
-<button class="text-slate-400 hover:text-slate-700" id="btnCloseModalAccount">
-<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-<path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-</button>
-</div>
-<div class="space-y-2.5">
-<!-- Option: Owner (Pusat) -->
-<button class="w-full text-left p-3 rounded-xl border border-red-200 bg-red-50 hover:bg-red-100 transition flex items-center justify-between" data-login-branch="Toko Pusat" data-login-role="OWNER" data-login-user="Heri Pebrianto">
-<div>
-<span class="font-bold text-xs text-slate-900 block">Heri Pebrianto (Owner)</span>
-<span class="text-[11px] text-red-700">Hak Akses Penuh: Modal Kulak, Margin &amp; Semua Cabang</span>
-</div>
-<span class="text-[10px] bg-red-600 text-white font-bold px-2 py-0.5 rounded">OWNER</span>
-</button>
-<!-- Option: Karyawan Kasir Cabang Serayu -->
-<button class="w-full text-left p-3 rounded-xl border border-slate-200 hover:border-slate-300 bg-white hover:bg-slate-50 transition flex items-center justify-between" data-login-branch="Cabang Serayu" data-login-role="KARYAWAN" data-login-user="Siti Kasir Serayu">
-<div>
-<span class="font-bold text-xs text-slate-900 block">Siti Rahma (Kasir Serayu)</span>
-<span class="text-[11px] text-slate-500">Akses Terbatas: Stok, Kasir &amp; Pengeluaran</span>
-</div>
-<span class="text-[10px] bg-blue-100 text-blue-700 font-bold px-2 py-0.5 rounded">KASIR</span>
-</button>
-<!-- Dynamic list of registered staffs -->
-<div class="space-y-2" id="additionalStaffAccounts"></div>
-</div>
-</div>
-</div>
-<!-- END: ModalSwitchAccount -->
-<!-- BEGIN: ModalManageStaff -->
-<!-- Modal to add new employees for branches -->
-<div class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 hidden backdrop-blur-xs" id="modalStaff">
-<div class="bg-white rounded-2xl w-full max-w-sm p-5 shadow-2xl space-y-4">
-<div class="flex items-center justify-between pb-2 border-b border-slate-100">
-<h3 class="font-bold text-slate-900 text-sm">Kelola Staf &amp; Kasir Cabang</h3>
-<button class="text-slate-400 hover:text-slate-700" id="btnCloseModalStaff">
-<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-<path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-</button>
-</div>
-<form class="space-y-3 text-xs" id="formAddStaff">
-<div>
-<label class="block font-medium text-slate-700 mb-1">Nama Karyawan Kasir</label>
-<input class="w-full text-xs rounded-xl border-slate-300" id="staffNameInput" placeholder="Contoh: Rian Anggara" required="" type="text"/>
-</div>
-<div>
-<label class="block font-medium text-slate-700 mb-1">Penempatan Cabang</label>
-<select class="w-full text-xs rounded-xl border-slate-300" id="staffBranchSelect">
-<!-- Injected dynamically -->
-</select>
-</div>
-<button class="w-full py-2.5 bg-brand-red text-white font-bold rounded-xl text-xs hover:bg-brand-redHover transition" type="submit">
-          + Tambah Akun Karyawan
-        </button>
-</form>
-<div class="border-t border-slate-100 pt-2">
-<h4 class="text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">Daftar Karyawan Aktif</h4>
-<div class="space-y-2 max-h-40 overflow-y-auto no-scrollbar text-xs" id="registeredStaffList">
-<!-- Dynamically populated -->
-</div>
-</div>
-</div>
-</div>
-<!-- END: ModalManageStaff -->
-<!-- BEGIN: ModalAddBranch -->
-<!-- Modal to add new branch -->
-<div class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 hidden backdrop-blur-xs" id="modalAddBranch">
-<div class="bg-white rounded-2xl w-full max-w-sm p-5 shadow-2xl space-y-4">
-<div class="flex items-center justify-between pb-2 border-b border-slate-100">
-<h3 class="font-bold text-slate-900 text-sm">Tambah Cabang Baru</h3>
-<button class="text-slate-400 hover:text-slate-700" id="btnCloseModalBranch">
-<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-<path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-</button>
-</div>
-<form class="space-y-3 text-xs" id="formNewBranch">
-<div>
-<label class="block font-medium text-slate-700 mb-1">Nama Cabang</label>
-<input class="w-full text-xs rounded-xl border-slate-300" id="newBranchName" placeholder="Contoh: Cabang Slamet Riyadi" required="" type="text"/>
-</div>
-<div>
-<label class="block font-medium text-slate-700 mb-1">Nama Kolega / Mitra (Opsional)</label>
-<input class="w-full text-xs rounded-xl border-slate-300" id="newBranchPartner" placeholder="Contoh: Pak Budi Santoso" type="text"/>
-</div>
-<div class="grid grid-cols-2 gap-2">
-<div>
-<label class="block font-medium text-slate-700 mb-1">% Bagi Hasil Mitra</label>
-<input class="w-full text-xs rounded-xl border-slate-300" id="newBranchPartnerShare" max="100" min="0" type="number" value="30"/>
-</div>
-<div>
-<label class="block font-medium text-slate-700 mb-1">% Bagi Hasil Owner</label>
-<input class="w-full text-xs rounded-xl border-slate-300" id="newBranchOwnerShare" max="100" min="0" type="number" value="70"/>
-</div>
-</div>
-<button class="w-full py-2.5 bg-brand-red text-white font-bold rounded-xl text-xs hover:bg-brand-redHover transition" type="submit">
-          Simpan Cabang Baru
-        </button>
-</form>
-</div>
-</div>
-<!-- END: ModalAddBranch -->
-<!-- BEGIN: CoreLogic -->
-<script data-purpose="pos-state-and-data">
-    // Default initial data matching exact screenshot item list
-    const DEFAULT_PRODUCTS = [
-      { id: 'p1', name: 'KUE SUS', kulak: 2500, jual: 3000, awal: 50, laku: 0, basi: 0, retur: 0 },
-      { id: 'p2', name: 'BAKPAO', kulak: 2500, jual: 3000, awal: 40, laku: 0, basi: 0, retur: 0 },
-      { id: 'p3', name: 'BOLEN PUSANG', kulak: 2500, jual: 3000, awal: 35, laku: 0, basi: 0, retur: 0 },
-      { id: 'p4', name: 'KUKUS', kulak: 1200, jual: 2000, awal: 60, laku: 0, basi: 0, retur: 0 },
-      { id: 'p5', name: 'DONAT TEBAL', kulak: 2500, jual: 4000, awal: 45, laku: 0, basi: 0, retur: 0 },
-      { id: 'p6', name: 'DONAT TIPIS/GULA', kulak: 2200, jual: 3500, awal: 50, laku: 0, basi: 0, retur: 0 },
-      { id: 'p7', name: 'KUE SEBRA', kulak: 2000, jual: 3500, awal: 30, laku: 0, basi: 0, retur: 0 }
-    ];
+<!-- END: MobileContainer -->
+<!-- BEGIN: InteractiveScripts -->
+<script data-purpose="tab-switcher">
+    /**
+     * Toggles between Login and Register views
+     */
+    function switchTab(target) {
+      const loginForm = document.getElementById('form-login');
+      const regForm = document.getElementById('form-register');
+      const loginBtn = document.getElementById('tab-login-btn');
+      const regBtn = document.getElementById('tab-register-btn');
 
-    const DEFAULT_BRANCHES = [
-      { id: 'b_pusat', name: 'Toko Pusat', isPusat: true, partner: null },
-      { id: 'b_serayu', name: 'Cabang Serayu', isPusat: false, partner: { name: 'Ibu Ratna', partnerShare: 30, ownerShare: 70 } }
-    ];
-
-    // Current State
-    let currentUser = {
-      name: 'Heri Pebrianto',
-      role: 'OWNER', // 'OWNER' or 'KARYAWAN'
-      branch: 'Toko Pusat'
-    };
-
-    let activeBranch = 'Toko Pusat';
-    let currentTab = 'master-pusat';
-
-    // Helper functions for storage keys
-    const getStockKey = (branch) => `NR_STOK_${branch}`;
-    const getPartnerKey = (branch) => `NR_PARTNER_${branch}`;
-    const getExpenseKey = (branch) => `NR_EXPENSES_${branch}`;
-    const getHistoryKey = () => `NR_HISTORY_GLOBAL`;
-    const getStaffKey = () => `NR_STAFF_LIST`;
-    const getBranchesKey = () => `NR_BRANCHES_LIST`;
-
-    // Local Storage Initializers
-    function initDataStore() {
-      if (!localStorage.getItem(getBranchesKey())) {
-        localStorage.setItem(getBranchesKey(), JSON.stringify(DEFAULT_BRANCHES));
-      }
-
-      // Initialize default products for default branches if not exist
-      DEFAULT_BRANCHES.forEach(branch => {
-        const stockKey = getStockKey(branch.name);
-        if (!localStorage.getItem(stockKey)) {
-          localStorage.setItem(stockKey, JSON.stringify(DEFAULT_PRODUCTS));
-        }
-
-        if (branch.partner) {
-          const partnerKey = getPartnerKey(branch.name);
-          if (!localStorage.getItem(partnerKey)) {
-            localStorage.setItem(partnerKey, JSON.stringify(branch.partner));
-          }
-        }
-      });
-    }
-
-    function getBranches() {
-      return JSON.parse(localStorage.getItem(getBranchesKey()) || '[]');
-    }
-
-    function getStock(branch) {
-      const data = localStorage.getItem(getStockKey(branch));
-      return data ? JSON.parse(data) : DEFAULT_PRODUCTS;
-    }
-
-    function saveStock(branch, items) {
-      localStorage.setItem(getStockKey(branch), JSON.stringify(items));
-    }
-
-    function getPartnerInfo(branch) {
-      const data = localStorage.getItem(getPartnerKey(branch));
-      return data ? JSON.parse(data) : null;
-    }
-  </script>
-<script data-purpose="dom-rendering-and-math">
-    // Realtime Formatter
-    const formatRp = (num) => {
-      const val = Number(num) || 0;
-      return 'Rp ' + val.toLocaleString('id-ID');
-    };
-
-    // Calculate item figures strictly adhering to formula
-    // Margin Bersih = Harga Jual - Modal Kulak
-    function calculateProductRow(item) {
-      const kulak = Number(item.kulak) || 0;
-      const jual = Number(item.jual) || 0;
-      const awal = Number(item.awal) || 0;
-      const laku = Number(item.laku) || 0;
-      const basi = Number(item.basi) || 0;
-      const retur = Number(item.retur) || 0;
-
-      // Realtime corrected clean margin
-      const marginClean = jual - kulak;
-      const sisa = awal - (laku + basi + retur);
-      const subtotalOmzet = laku * jual;
-      const subtotalMargin = laku * marginClean;
-
-      return {
-        marginClean,
-        sisa,
-        subtotalOmzet,
-        subtotalMargin
-      };
-    }
-
-    // Render Table according to Role (Owner sees modal & margin, Staff does not)
-    function renderTable() {
-      const tableBody = document.getElementById('itemsTableBody');
-      const items = getStock(activeBranch);
-      tableBody.innerHTML = '';
-
-      let totalCleanMargin = 0;
-      let totalOmzetBranch = 0;
-
-      items.forEach((item, index) => {
-        const calc = calculateProductRow(item);
-        totalCleanMargin += calc.marginClean;
-        totalOmzetBranch += calc.subtotalOmzet;
-
-        const tr = document.createElement('tr');
-        tr.className = "hover:bg-slate-50 transition border-b border-slate-100";
-
-        // Varian Jajanan column
-        let html = `
-          <td class="py-3 px-4 font-bold text-slate-800 uppercase tracking-tight">
-            ${currentUser.role === 'OWNER' 
-              ? `<input type="text" data-action="update-name" data-index="${index}" value="${item.name}" class="font-bold text-xs bg-transparent border-0 border-b border-transparent focus:border-red-500 focus:ring-0 p-0 w-full">`
-              : `<span>${item.name}</span>`
-            }
-          </td>
-        `;
-
-        // Harga Kulak (HPP Modal) - ONLY OWNER
-        if (currentUser.role === 'OWNER') {
-          html += `
-            <td class="py-2 px-2 text-center owner-col">
-              <input type="number" data-action="update-kulak" data-index="${index}" value="${item.kulak}" 
-                class="w-20 text-center text-xs py-1 px-1 rounded-lg border border-slate-200 bg-white font-medium text-slate-700 focus:border-red-500 focus:ring-red-500 shadow-xs">
-            </td>
-          `;
-        }
-
-        // Harga Jual (Red text box like screenshot)
-        html += `
-          <td class="py-2 px-2 text-center">
-            ${currentUser.role === 'OWNER'
-              ? `<input type="number" data-action="update-jual" data-index="${index}" value="${item.jual}" 
-                   class="w-20 text-center text-xs py-1 px-1 rounded-lg border border-slate-200 bg-white font-bold text-[#B91C1C] focus:border-red-500 focus:ring-red-500 shadow-xs">`
-              : `<span class="font-bold text-[#B91C1C] text-xs">${formatRp(item.jual)}</span>`
-            }
-          </td>
-        `;
-
-        // Karyawan operational columns (Stok Awal, Laku, Basi, Retur, Sisa)
-        if (currentUser.role === 'KARYAWAN') {
-          html += `
-            <td class="py-2 px-1 text-center staff-col">
-              <input type="number" data-action="update-awal" data-index="${index}" value="${item.awal}" class="w-14 text-center text-xs py-1 rounded-md border-slate-200">
-            </td>
-            <td class="py-2 px-1 text-center staff-col">
-              <input type="number" data-action="update-laku" data-index="${index}" value="${item.laku}" class="w-14 text-center text-xs py-1 rounded-md border-emerald-300 font-bold text-emerald-700 bg-emerald-50">
-            </td>
-            <td class="py-2 px-1 text-center staff-col">
-              <input type="number" data-action="update-basi" data-index="${index}" value="${item.basi}" class="w-12 text-center text-xs py-1 rounded-md border-slate-200 text-red-600">
-            </td>
-            <td class="py-2 px-1 text-center staff-col">
-              <input type="number" data-action="update-retur" data-index="${index}" value="${item.retur}" class="w-12 text-center text-xs py-1 rounded-md border-slate-200 text-amber-600">
-            </td>
-            <td class="py-2 px-2 text-center font-bold text-xs staff-col ${calc.sisa < 0 ? 'text-red-600' : 'text-slate-800'}">
-              ${calc.sisa}
-            </td>
-          `;
-        }
-
-        // Margin Bersih - strictly accurate formula: Jual - Kulak (Shown to Owner)
-        if (currentUser.role === 'OWNER') {
-          html += `
-            <td class="py-3 px-3 text-right font-extrabold text-[#15803D] text-xs owner-col whitespace-nowrap">
-              ${formatRp(calc.marginClean)}
-            </td>
-          `;
-        }
-
-        // Subtotal Omzet - shown to Staff
-        if (currentUser.role === 'KARYAWAN') {
-          html += `
-            <td class="py-3 px-3 text-right font-bold text-slate-800 text-xs staff-col whitespace-nowrap">
-              ${formatRp(calc.subtotalOmzet)}
-            </td>
-          `;
-        }
-
-        // Action Column (Delete) for Owner
-        if (currentUser.role === 'OWNER') {
-          html += `
-            <td class="py-2 px-2 text-center owner-col">
-              <button data-action="delete-item" data-index="${index}" class="text-slate-300 hover:text-red-500 p-1" title="Hapus Kue">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                </svg>
-              </button>
-            </td>
-          `;
-        }
-
-        tr.innerHTML = html;
-        tableBody.appendChild(tr);
-      });
-
-      // Update footers
-      document.getElementById('totalVariantsCount').innerText = `${items.length} Macam`;
-      const avgMargin = items.length > 0 ? Math.round(totalCleanMargin / items.length) : 0;
-      document.getElementById('avgMarginDisplay').innerText = `${formatRp(avgMargin)} / pcs`;
-      document.getElementById('staffTotalOmzetDisplay').innerText = formatRp(totalOmzetBranch);
-
-      // Partner Card Update
-      updatePartnerCard(totalOmzetBranch);
-    }
-
-    // Update Partner Revenue Sharing Card
-    function updatePartnerCard(totalOmzet) {
-      const partnerCard = document.getElementById('partnerSectionCard');
-      const partner = getPartnerInfo(activeBranch);
-
-      if (partner && activeBranch !== 'Toko Pusat') {
-        partnerCard.classList.remove('hidden');
-        document.getElementById('partnerNameDisplay').innerText = partner.name || 'Mitra Kolega';
-        document.getElementById('partnerRatioKolega').innerText = partner.partnerShare || 30;
-        document.getElementById('partnerRatioOwner').innerText = partner.ownerShare || 70;
-
-        const shareMitra = Math.round((totalOmzet * (partner.partnerShare || 30)) / 100);
-        const shareOwner = totalOmzet - shareMitra;
-
-        document.getElementById('partnerTotalOmzet').innerText = formatRp(totalOmzet);
-        document.getElementById('partnerShareAmount').innerText = formatRp(shareMitra);
-        document.getElementById('partnerOwnerAmount').innerText = formatRp(shareOwner);
-
-        // WA Slip Link
-        document.getElementById('btnShareWA').onclick = () => {
-          const text = encodeURIComponent(
-            `*SLIP BAGI HASIL NGENAL RASA*\n` +
-            `Cabang: ${activeBranch}\n` +
-            `Mitra: ${partner.name}\n` +
-            `Total Omzet: ${formatRp(totalOmzet)}\n` +
-            `------------------------\n` +
-            `Jatah Mitra (${partner.partnerShare}%): ${formatRp(shareMitra)}\n` +
-            `Jatah Owner (${partner.ownerShare}%): ${formatRp(shareOwner)}\n` +
-            `Terima kasih atas kerja samanya!`
-          );
-          window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
-        };
+      if (target === 'login') {
+        loginForm.classList.remove('hidden');
+        regForm.classList.add('hidden');
+        
+        // Active Tab Style
+        loginBtn.className = "py-2.5 rounded-xl text-center transition-all duration-200 bg-white text-brand shadow-sm font-bold flex items-center justify-center gap-1.5";
+        loginBtn.setAttribute('aria-selected', 'true');
+        
+        // Inactive Tab Style
+        regBtn.className = "py-2.5 rounded-xl text-center transition-all duration-200 text-slate-500 hover:text-slate-800 flex items-center justify-center gap-1.5";
+        regBtn.setAttribute('aria-selected', 'false');
       } else {
-        partnerCard.classList.add('hidden');
-      }
-    }
+        loginForm.classList.add('hidden');
+        regForm.classList.remove('hidden');
 
-    // Render Branch Navigation Pills matching exact UI
-    function renderBranchesBar() {
-      const listContainer = document.getElementById('branchButtonList');
-      listContainer.innerHTML = '';
-      const branches = getBranches();
+        // Active Tab Style
+        regBtn.className = "py-2.5 rounded-xl text-center transition-all duration-200 bg-white text-brand shadow-sm font-bold flex items-center justify-center gap-1.5";
+        regBtn.setAttribute('aria-selected', 'true');
 
-      branches.forEach(branch => {
-        const isActive = branch.name === activeBranch;
-        const btn = document.createElement('button');
-        btn.className = `flex-shrink-0 flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-bold transition-all ${
-          isActive 
-            ? 'bg-[#B91C1C] text-white shadow-sm' 
-            : 'bg-white border border-slate-200 text-slate-700 hover:bg-slate-50'
-        }`;
-
-        // Role restriction: Staff can only access their assigned branch
-        if (currentUser.role === 'KARYAWAN' && branch.name !== currentUser.branch) {
-          btn.classList.add('opacity-40', 'cursor-not-allowed');
-        }
-
-        btn.innerHTML = `
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${branch.isPusat ? 'M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4' : 'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6'}" />
-          </svg>
-          <span>${branch.name}</span>
-        `;
-
-        btn.addEventListener('click', () => {
-          if (currentUser.role === 'KARYAWAN' && branch.name !== currentUser.branch) {
-            alert(`Akses Ditolak: Anda login sebagai kasir ${currentUser.branch}. Hanya Owner Pusat yang dapat mengakses semua cabang.`);
-            return;
-          }
-          activeBranch = branch.name;
-          document.getElementById('userLocationDisplay').innerText = branch.name;
-          renderBranchesBar();
-          renderTable();
-          renderExpenses();
-        });
-
-        listContainer.appendChild(btn);
-      });
-    }
-
-    // Role Visibility synchronization
-    function syncRoleUI() {
-      const isOwner = currentUser.role === 'OWNER';
-
-      // Update badge in top header
-      const badge = document.getElementById('userRoleBadge');
-      const nameDisp = document.getElementById('userNameDisplay');
-      nameDisp.innerText = currentUser.name;
-
-      if (isOwner) {
-        badge.innerText = 'OWNER';
-        badge.className = 'bg-[#FEF08A] text-[#854D0E] text-[10px] font-bold px-2 py-0.5 rounded tracking-wide uppercase';
-        document.getElementById('lblActiveViewMode').innerText = `Master Pusat (${activeBranch})`;
-      } else {
-        badge.innerText = 'KASIR';
-        badge.className = 'bg-blue-100 text-blue-700 text-[10px] font-bold px-2 py-0.5 rounded tracking-wide uppercase';
-        document.getElementById('lblActiveViewMode').innerText = `Kasir Penjualan (${currentUser.branch})`;
-      }
-
-      // Show/Hide Role Columns
-      document.querySelectorAll('.owner-col').forEach(el => {
-        if (isOwner) el.classList.remove('hidden');
-        else el.classList.add('hidden');
-      });
-
-      document.querySelectorAll('.staff-col').forEach(el => {
-        if (!isOwner) el.classList.remove('hidden');
-        else el.classList.add('hidden');
-      });
-
-      // Staff Management Button only for Owner
-      const btnStaff = document.getElementById('btnOpenStaffModal');
-      const btnAddBranch = document.getElementById('btnAddBranch');
-      if (isOwner) {
-        btnStaff.classList.remove('hidden');
-        btnAddBranch.classList.remove('hidden');
-      } else {
-        btnStaff.classList.add('hidden');
-        btnAddBranch.classList.add('hidden');
+        // Inactive Tab Style
+        loginBtn.className = "py-2.5 rounded-xl text-center transition-all duration-200 text-slate-500 hover:text-slate-800 flex items-center justify-center gap-1.5";
+        loginBtn.setAttribute('aria-selected', 'false');
       }
     }
   </script>
-<!-- BEGIN: EventHandlersAndTabs -->
-<script data-purpose="event-handlers">
-    document.addEventListener('DOMContentLoaded', () => {
-      initDataStore();
-      syncRoleUI();
-      renderBranchesBar();
-      renderTable();
-      renderExpenses();
-      renderHistory();
-
-      // Realtime input delegation for table values
-      const tableBody = document.getElementById('itemsTableBody');
-      tableBody.addEventListener('input', (e) => {
-        const target = e.target;
-        const action = target.getAttribute('data-action');
-        const index = target.getAttribute('data-index');
-        if (action && index !== null) {
-          const items = getStock(activeBranch);
-          const i = parseInt(index, 10);
-
-          if (action === 'update-kulak') {
-            items[i].kulak = Math.max(0, Number(target.value) || 0);
-          } else if (action === 'update-jual') {
-            items[i].jual = Math.max(0, Number(target.value) || 0);
-          } else if (action === 'update-name') {
-            items[i].name = target.value;
-          } else if (action === 'update-awal') {
-            items[i].awal = Math.max(0, Number(target.value) || 0);
-          } else if (action === 'update-laku') {
-            items[i].laku = Math.max(0, Number(target.value) || 0);
-          } else if (action === 'update-basi') {
-            items[i].basi = Math.max(0, Number(target.value) || 0);
-          } else if (action === 'update-retur') {
-            items[i].retur = Math.max(0, Number(target.value) || 0);
-          }
-
-          saveStock(activeBranch, items);
-          renderTable();
-        }
-      });
-
-      // Delete Item Handler
-      tableBody.addEventListener('click', (e) => {
-        const btn = e.target.closest('[data-action="delete-item"]');
-        if (btn) {
-          const index = parseInt(btn.getAttribute('data-index'), 10);
-          const items = getStock(activeBranch);
-          if (confirm(`Hapus jajanan "${items[index].name}" dari cabang ini?`)) {
-            items.splice(index, 1);
-            saveStock(activeBranch, items);
-            renderTable();
-          }
-        }
-      });
-
-      // Add New Product Button
-      document.getElementById('btnAddNewProduct').addEventListener('click', () => {
-        const name = prompt('Masukkan Nama Varian Kue Baru:');
-        if (!name || !name.trim()) return;
-        const kulak = parseInt(prompt('Harga Kulak / Modal HPP (Rp):', '2000') || '0', 10);
-        const jual = parseInt(prompt('Harga Jual (Rp):', '3000') || '0', 10);
-        const items = getStock(activeBranch);
-        items.push({
-          id: 'p_' + Date.now(),
-          name: name.toUpperCase().trim(),
-          kulak: kulak,
-          jual: jual,
-          awal: 50,
-          laku: 0,
-          basi: 0,
-          retur: 0
-        });
-        saveStock(activeBranch, items);
-        renderTable();
-      });
-
-      // Cashier Daily Closing Save Button
-      document.getElementById('btnSaveCashierClosing').addEventListener('click', () => {
-        const items = getStock(activeBranch);
-        let totalOmzet = 0;
-        let totalLaku = 0;
-        let totalBasi = 0;
-
-        items.forEach(it => {
-          totalOmzet += (Number(it.laku) || 0) * (Number(it.jual) || 0);
-          totalLaku += Number(it.laku) || 0;
-          totalBasi += Number(it.basi) || 0;
-        });
-
-        const history = JSON.parse(localStorage.getItem(getHistoryKey()) || '[]');
-        const record = {
-          id: 'rekap_' + Date.now(),
-          date: new Date().toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }),
-          branch: activeBranch,
-          cashier: currentUser.name,
-          totalOmzet: totalOmzet,
-          totalLaku: totalLaku,
-          totalBasi: totalBasi
-        };
-
-        history.unshift(record);
-        localStorage.setItem(getHistoryKey(), JSON.stringify(history));
-
-        alert(`Rekap Harian Berhasil Disimpan!\nTotal Omzet: ${formatRp(totalOmzet)}\nTotal Kue Terjual: ${totalLaku} pcs`);
-        renderHistory();
-      });
-
-      // Navigation Tabs
-      document.querySelectorAll('.nav-tab-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const tab = btn.getAttribute('data-tab');
-          switchTab(tab);
-        });
-      });
-
-      // Modal Controls
-      document.getElementById('btnSwitchAccount').addEventListener('click', openAccountModal);
-      document.getElementById('btnCloseModalAccount').addEventListener('click', closeAccountModal);
-
-      document.getElementById('btnOpenStaffModal').addEventListener('click', openStaffModal);
-      document.getElementById('btnCloseModalStaff').addEventListener('click', () => document.getElementById('modalStaff').classList.add('hidden'));
-
-      document.getElementById('btnAddBranch').addEventListener('click', () => document.getElementById('modalAddBranch').classList.remove('hidden'));
-      document.getElementById('btnCloseModalBranch').addEventListener('click', () => document.getElementById('modalAddBranch').classList.add('hidden'));
-
-      // Form: Add Staff
-      document.getElementById('formAddStaff').addEventListener('submit', (e) => {
-        e.preventDefault();
-        const name = document.getElementById('staffNameInput').value.trim();
-        const branch = document.getElementById('staffBranchSelect').value;
-        if (!name) return;
-
-        const staffs = JSON.parse(localStorage.getItem(getStaffKey()) || '[]');
-        staffs.push({ id: 'st_' + Date.now(), name, branch, role: 'KARYAWAN' });
-        localStorage.setItem(getStaffKey(), JSON.stringify(staffs));
-        document.getElementById('staffNameInput').value = '';
-        renderStaffList();
-        alert(`Karyawan ${name} berhasil ditugaskan di ${branch}!`);
-      });
-
-      // Form: Add Branch
-      document.getElementById('formNewBranch').addEventListener('submit', (e) => {
-        e.preventDefault();
-        const name = document.getElementById('newBranchName').value.trim();
-        const partnerName = document.getElementById('newBranchPartner').value.trim();
-        const partnerShare = parseInt(document.getElementById('newBranchPartnerShare').value, 10) || 30;
-        const ownerShare = parseInt(document.getElementById('newBranchOwnerShare').value, 10) || 70;
-
-        if (!name) return;
-        const branches = getBranches();
-        if (branches.some(b => b.name.toLowerCase() === name.toLowerCase())) {
-          alert('Nama cabang sudah ada!');
-          return;
-        }
-
-        const newBranch = {
-          id: 'b_' + Date.now(),
-          name: name,
-          isPusat: false,
-          partner: partnerName ? { name: partnerName, partnerShare, ownerShare } : null
-        };
-
-        branches.push(newBranch);
-        localStorage.setItem(getBranchesKey(), JSON.stringify(branches));
-        // Initialize its products based on default products
-        localStorage.setItem(getStockKey(name), JSON.stringify(DEFAULT_PRODUCTS));
-        if (newBranch.partner) {
-          localStorage.setItem(getPartnerKey(name), JSON.stringify(newBranch.partner));
-        }
-
-        document.getElementById('modalAddBranch').classList.add('hidden');
-        renderBranchesBar();
-        alert(`Cabang "${name}" berhasil ditambahkan!`);
-      });
-
-      // Form: Add Expense
-      document.getElementById('formAddExpense').addEventListener('submit', (e) => {
-        e.preventDefault();
-        const desc = document.getElementById('expenseDescription').value.trim();
-        const amount = parseInt(document.getElementById('expenseAmount').value, 10) || 0;
-        const cat = document.getElementById('expenseCategory').value;
-
-        if (!desc || amount <= 0) return;
-
-        const expenses = JSON.parse(localStorage.getItem(getExpenseKey(activeBranch)) || '[]');
-        expenses.unshift({
-          id: 'exp_' + Date.now(),
-          desc,
-          amount,
-          cat,
-          date: new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })
-        });
-
-        localStorage.setItem(getExpenseKey(activeBranch), JSON.stringify(expenses));
-        document.getElementById('expenseDescription').value = '';
-        document.getElementById('expenseAmount').value = '';
-        renderExpenses();
-      });
-    });
-
-    // Tab Switcher
-    function switchTab(tabId) {
-      currentTab = tabId;
-
-      // Update Nav active style
-      document.querySelectorAll('.nav-tab-btn').forEach(btn => {
-        const isCurrent = btn.getAttribute('data-tab') === tabId;
-        if (isCurrent) {
-          btn.classList.add('active-tab', 'text-[#B91C1C]');
-          btn.classList.remove('text-slate-500');
+<script data-purpose="password-visibility">
+    /**
+     * Toggles input password between visible and masked state
+     */
+    function togglePasswordVisibility(inputId, btnElement) {
+      const input = document.getElementById(inputId);
+      const icon = btnElement.querySelector('i');
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+      } else {
+        input.type = 'password';
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
+      }
+    }
+  </script>
+<script data-purpose="auth-handling">
+    /**
+     * Simulates authentication response and prepares dashboard handoff
+     */
+    function handleAuthSubmit(e, actionType) {
+      e.preventDefault();
+      
+      const submitBtn = e.target.querySelector('button[type="submit"]');
+      const originalHtml = submitBtn.innerHTML;
+      
+      // Visual feedback loading
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin text-sm"></i><span>Memverifikasi...</span>`;
+      
+      setTimeout(() => {
+        if (actionType === 'login') {
+          const user = document.getElementById('login-username').value;
+          alert(`Berhasil Terautentikasi!\n\nSelamat datang, ${user || 'Staf POS'}.\nSistem menghubungkan Anda ke Dashboard Kasir Ngenal Rasa (53 Varian, Perhitungan Stok/Basi Otomatis & Cetak A4).`);
         } else {
-          btn.classList.remove('active-tab', 'text-[#B91C1C]');
-          btn.classList.add('text-slate-500');
+          const newUser = document.getElementById('reg-username').value;
+          const role = document.getElementById('reg-role').value;
+          const branch = document.getElementById('reg-branch').value;
+          alert(`Pendaftaran Berhasil!\n\nAkun "${newUser}" terdaftar dengan Hak Akses [${role.toUpperCase()}] untuk Cabang [${branch.toUpperCase()}]. Silakan masuk.`);
+          switchTab('login');
         }
-      });
-
-      // View sections
-      const viewTable = document.getElementById('viewMainTable');
-      const viewExpenses = document.getElementById('viewExpenses');
-      const viewHistory = document.getElementById('viewHistory');
-      const viewPrintA4 = document.getElementById('viewPrintA4');
-
-      viewTable.classList.add('hidden');
-      viewExpenses.classList.add('hidden');
-      viewHistory.classList.add('hidden');
-      viewPrintA4.classList.add('hidden');
-
-      if (tabId === 'master-pusat' || tabId === 'stok-kue') {
-        viewTable.classList.remove('hidden');
-        renderTable();
-      } else if (tabId === 'pengeluaran') {
-        viewExpenses.classList.remove('hidden');
-        renderExpenses();
-      } else if (tabId === 'histori') {
-        viewHistory.classList.remove('hidden');
-        renderHistory();
-      } else if (tabId === 'cetak-a4') {
-        viewPrintA4.classList.remove('hidden');
-      }
-    }
-
-    // Modal Switch Account Handlers
-    function openAccountModal() {
-      const modal = document.getElementById('modalAccount');
-      const addContainer = document.getElementById('additionalStaffAccounts');
-      addContainer.innerHTML = '';
-
-      const staffs = JSON.parse(localStorage.getItem(getStaffKey()) || '[]');
-      staffs.forEach(st => {
-        const btn = document.createElement('button');
-        btn.className = "w-full text-left p-3 rounded-xl border border-slate-200 hover:border-slate-300 bg-white hover:bg-slate-50 transition flex items-center justify-between";
-        btn.setAttribute('data-login-role', 'KARYAWAN');
-        btn.setAttribute('data-login-branch', st.branch);
-        btn.setAttribute('data-login-user', st.name);
-        btn.innerHTML = `
-          <div>
-            <span class="font-bold text-xs text-slate-900 block">${st.name}</span>
-            <span class="text-[11px] text-slate-500">Kasir ${st.branch}</span>
-          </div>
-          <span class="text-[10px] bg-blue-100 text-blue-700 font-bold px-2 py-0.5 rounded">KASIR</span>
-        `;
-        addContainer.appendChild(btn);
-      });
-
-      // Attach clicks
-      modal.querySelectorAll('[data-login-role]').forEach(btn => {
-        btn.onclick = () => {
-          currentUser.role = btn.getAttribute('data-login-role');
-          currentUser.name = btn.getAttribute('data-login-user');
-          currentUser.branch = btn.getAttribute('data-login-branch');
-
-          activeBranch = currentUser.branch;
-          document.getElementById('userLocationDisplay').innerText = activeBranch;
-
-          syncRoleUI();
-          renderBranchesBar();
-          renderTable();
-          renderExpenses();
-          closeAccountModal();
-        };
-      });
-
-      modal.classList.remove('hidden');
-    }
-
-    function closeAccountModal() {
-      document.getElementById('modalAccount').classList.add('hidden');
-    }
-
-    // Modal Staff Handlers
-    function openStaffModal() {
-      const select = document.getElementById('staffBranchSelect');
-      select.innerHTML = '';
-      getBranches().forEach(b => {
-        const opt = document.createElement('option');
-        opt.value = b.name;
-        opt.innerText = b.name;
-        select.appendChild(opt);
-      });
-      renderStaffList();
-      document.getElementById('modalStaff').classList.remove('hidden');
-    }
-
-    function renderStaffList() {
-      const container = document.getElementById('registeredStaffList');
-      const staffs = JSON.parse(localStorage.getItem(getStaffKey()) || '[]');
-      if (staffs.length === 0) {
-        container.innerHTML = '<div class="text-slate-400 text-center py-2 text-xs">Belum ada karyawan terdaftar</div>';
-        return;
-      }
-      container.innerHTML = '';
-      staffs.forEach((st, idx) => {
-        const div = document.createElement('div');
-        div.className = "flex items-center justify-between p-2 bg-slate-50 rounded-lg";
-        div.innerHTML = `
-          <div>
-            <strong class="text-slate-800">${st.name}</strong>
-            <span class="text-[10px] text-slate-500 block">${st.branch}</span>
-          </div>
-          <button data-delete-staff="${idx}" class="text-red-500 hover:text-red-700 text-xs font-bold">Hapus</button>
-        `;
-        container.appendChild(div);
-      });
-
-      container.querySelectorAll('[data-delete-staff]').forEach(btn => {
-        btn.onclick = () => {
-          const idx = parseInt(btn.getAttribute('data-delete-staff'), 10);
-          staffs.splice(idx, 1);
-          localStorage.setItem(getStaffKey(), JSON.stringify(staffs));
-          renderStaffList();
-        };
-      });
-    }
-
-    // Expense Render
-    function renderExpenses() {
-      document.getElementById('expenseBranchBadge').innerText = activeBranch;
-      const listContainer = document.getElementById('expenseListContainer');
-      const expenses = JSON.parse(localStorage.getItem(getExpenseKey(activeBranch)) || '[]');
-      let total = 0;
-
-      if (expenses.length === 0) {
-        listContainer.innerHTML = '<div class="text-center py-6 text-slate-400 text-xs">Belum ada catatan pengeluaran cabang ini.</div>';
-        document.getElementById('expenseTotalToday').innerText = 'Total: Rp 0';
-        return;
-      }
-
-      listContainer.innerHTML = '';
-      expenses.forEach((item) => {
-        total += item.amount;
-        const row = document.createElement('div');
-        row.className = "py-2.5 flex items-center justify-between";
-        row.innerHTML = `
-          <div>
-            <div class="font-bold text-slate-800 text-xs">${item.desc}</div>
-            <div class="text-[10px] text-slate-400">${item.cat} • ${item.date}</div>
-          </div>
-          <div class="font-extrabold text-red-600 text-xs">
-            - ${formatRp(item.amount)}
-          </div>
-        `;
-        listContainer.appendChild(row);
-      });
-
-      document.getElementById('expenseTotalToday').innerText = `Total: ${formatRp(total)}`;
-    }
-
-    // History Render
-    function renderHistory() {
-      const container = document.getElementById('historyListContainer');
-      const history = JSON.parse(localStorage.getItem(getHistoryKey()) || '[]');
-
-      if (history.length === 0) {
-        container.innerHTML = '<div class="text-center py-8 text-slate-400 text-xs">Belum ada riwayat rekap harian tersimpan.</div>';
-        return;
-      }
-
-      container.innerHTML = '';
-      history.forEach((rec) => {
-        const card = document.createElement('div');
-        card.className = "p-3 rounded-xl border border-slate-200 bg-white shadow-2xs space-y-1.5";
-        card.innerHTML = `
-          <div class="flex items-center justify-between">
-            <span class="text-xs font-bold text-slate-800">${rec.branch}</span>
-            <span class="text-[10px] bg-slate-100 text-slate-600 font-medium px-2 py-0.5 rounded">${rec.date}</span>
-          </div>
-          <div class="text-xs text-slate-600">Kasir: <strong class="text-slate-800">${rec.cashier}</strong></div>
-          <div class="grid grid-cols-3 gap-2 pt-1 border-t border-slate-100 text-[11px]">
-            <div>
-              <span class="text-slate-400 block text-[10px]">Terjual</span>
-              <strong class="text-emerald-700">${rec.totalLaku} pcs</strong>
-            </div>
-            <div>
-              <span class="text-slate-400 block text-[10px]">Basi/Retur</span>
-              <strong class="text-amber-600">${rec.totalBasi} pcs</strong>
-            </div>
-            <div class="text-right">
-              <span class="text-slate-400 block text-[10px]">Omzet</span>
-              <strong class="text-[#B91C1C]">${formatRp(rec.totalOmzet)}</strong>
-            </div>
-          </div>
-        `;
-        container.appendChild(card);
-      });
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalHtml;
+      }, 700);
     }
   </script>
-<!-- END: CoreLogic -->
+<!-- END: InteractiveScripts -->
 </body></html>
