@@ -97,7 +97,7 @@
 <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
 <span>Cetak A4</span>
 </button>
-<button class="px-2.5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-600 text-xs font-semibold rounded-xl transition" onclick="resetDefaults()">Reset Master</button>
+<button class="px-3 py-2 bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold rounded-xl flex items-center gap-1.5 transition shadow-sm" onclick="resetDailyQuantities()" title="Reset seluruh Qty Stok, Terjual, Basi &amp; Retur menjadi 0 untuk cabang aktif"><svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg><span>🔄 Reset Harian (Set 0)</span></button><button class="px-2.5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-600 text-xs font-semibold rounded-xl transition" onclick="resetDefaults()">Reset Master</button>
 </div>
 </header>
 <!-- Summary Cards Bar (Total Omzet, Total HPP, Laba Kotor, Loss Basi, Beban Operasional, Laba Bersih Akhir) -->
@@ -533,60 +533,60 @@ Cetak PDF
 </div>
 </div>
 <script>
-    // 52 MASTER VARIAN JAJANAN PASAR NGENAL RASA (REVISI RESMI LENGKAP)
+    // 52 MASTER VARIAN JAJANAN PASAR NGENAL RASA (SEMUA QTY AWAL & TERJUAL DEFAULT 0 SIAP INPUT HARIAN)
     const INITIAL_52_PRODUCTS = [
-      { id: 1, name: 'KUE SUS', kulak: 2000, jual: 3000, stok: 50, terjual: 25, basi: 2, retur: 3 },
-      { id: 2, name: 'BAKPAO', kulak: 2200, jual: 3000, stok: 40, terjual: 10, basi: 5, retur: 0 },
-      { id: 3, name: 'BOLEN PISANG', kulak: 2200, jual: 3000, stok: 35, terjual: 15, basi: 1, retur: 2 },
-      { id: 4, name: 'KUKUS', kulak: 1200, jual: 2000, stok: 60, terjual: 30, basi: 4, retur: 0 },
-      { id: 5, name: 'DONAT TEBAL', kulak: 2500, jual: 3000, stok: 45, terjual: 20, basi: 2, retur: 1 },
-      { id: 6, name: 'DONAT TIPIS/GULA', kulak: 1500, jual: 2000, stok: 50, terjual: 25, basi: 3, retur: 0 },
-      { id: 7, name: 'KUE SEBRA', kulak: 1200, jual: 2000, stok: 30, terjual: 10, basi: 1, retur: 0 },
-      { id: 8, name: 'KUE GABIN', kulak: 1200, jual: 2000, stok: 30, terjual: 15, basi: 0, retur: 0 },
-      { id: 9, name: 'KUE PIA', kulak: 2200, jual: 3000, stok: 30, terjual: 12, basi: 0, retur: 0 },
-      { id: 10, name: 'KUE AMANDEL', kulak: 1200, jual: 2000, stok: 30, terjual: 14, basi: 2, retur: 0 },
-      { id: 11, name: 'ROTI O', kulak: 2500, jual: 3000, stok: 30, terjual: 18, basi: 2, retur: 0 },
-      { id: 12, name: 'ROTI PISANG', kulak: 2200, jual: 3000, stok: 30, terjual: 15, basi: 1, retur: 0 },
-      { id: 13, name: 'ROTI GULUNG', kulak: 2500, jual: 3000, stok: 30, terjual: 10, basi: 1, retur: 0 },
-      { id: 14, name: 'ROTI SOSIS', kulak: 2500, jual: 3000, stok: 30, terjual: 15, basi: 2, retur: 0 },
-      { id: 15, name: 'ROTI SISIR', kulak: 2500, jual: 3000, stok: 30, terjual: 10, basi: 1, retur: 0 },
-      { id: 16, name: 'PUTU AYU (DESI)', kulak: 1500, jual: 2000, stok: 40, terjual: 20, basi: 3, retur: 0 },
-      { id: 17, name: 'PASTEL', kulak: 1200, jual: 2000, stok: 35, terjual: 15, basi: 2, retur: 0 },
-      { id: 18, name: 'KUE CUM-CUM', kulak: 2500, jual: 4000, stok: 30, terjual: 10, basi: 1, retur: 0 },
-      { id: 19, name: 'BIKANG', kulak: 1200, jual: 2000, stok: 40, terjual: 20, basi: 2, retur: 0 },
-      { id: 20, name: 'NOGOSARI', kulak: 1500, jual: 2000, stok: 35, terjual: 15, basi: 1, retur: 0 },
-      { id: 21, name: 'AREM-AREM', kulak: 1200, jual: 2000, stok: 40, terjual: 20, basi: 2, retur: 0 },
-      { id: 22, name: 'LEMPER BIASA', kulak: 1500, jual: 2000, stok: 35, terjual: 18, basi: 1, retur: 0 },
-      { id: 23, name: 'LEMPER BAKAR', kulak: 2000, jual: 2500, stok: 35, terjual: 15, basi: 1, retur: 0 },
-      { id: 24, name: 'LEMPER (SRI)', kulak: 2200, jual: 3500, stok: 35, terjual: 15, basi: 1, retur: 0 },
-      { id: 25, name: 'ONDE-ONDE', kulak: 1200, jual: 1500, stok: 40, terjual: 20, basi: 2, retur: 0 },
-      { id: 26, name: 'KELEPON', kulak: 1200, jual: 1500, stok: 40, terjual: 20, basi: 2, retur: 0 },
-      { id: 27, name: 'KUE CUCUR', kulak: 1200, jual: 1500, stok: 35, terjual: 15, basi: 1, retur: 0 },
-      { id: 28, name: 'STIK', kulak: 800, jual: 1000, stok: 30, terjual: 10, basi: 0, retur: 0 },
-      { id: 29, name: 'KERIPIK', kulak: 800, jual: 1000, stok: 30, terjual: 10, basi: 0, retur: 0 },
-      { id: 30, name: 'PUDING', kulak: 1500, jual: 2000, stok: 35, terjual: 15, basi: 1, retur: 0 },
-      { id: 31, name: 'KUE LAPIS', kulak: 1200, jual: 2000, stok: 35, terjual: 15, basi: 1, retur: 0 },
-      { id: 32, name: 'JADAH PUTIH', kulak: 1200, jual: 2000, stok: 30, terjual: 10, basi: 1, retur: 0 },
-      { id: 33, name: 'WAJIK', kulak: 1200, jual: 2000, stok: 30, terjual: 10, basi: 1, retur: 0 },
-      { id: 34, name: 'RISOLES', kulak: 2800, jual: 4500, stok: 40, terjual: 20, basi: 2, retur: 0 },
-      { id: 35, name: 'KUE POKIS', kulak: 1800, jual: 3000, stok: 35, terjual: 15, basi: 1, retur: 0 },
-      { id: 36, name: 'KUE LUMPUR', kulak: 2200, jual: 3500, stok: 30, terjual: 10, basi: 1, retur: 0 },
-      { id: 37, name: 'KETAN', kulak: 1200, jual: 2000, stok: 30, terjual: 10, basi: 1, retur: 0 },
-      { id: 38, name: 'MENIRAN', kulak: 1200, jual: 2000, stok: 30, terjual: 10, basi: 1, retur: 0 },
-      { id: 39, name: 'MARTABAK', kulak: 1200, jual: 2000, stok: 35, terjual: 15, basi: 1, retur: 0 },
-      { id: 40, name: 'NASI BALI (EMAK)', kulak: 5000, jual: 6000, stok: 25, terjual: 10, basi: 0, retur: 0 },
-      { id: 41, name: 'JENTIK MANIS', kulak: 1200, jual: 2000, stok: 30, terjual: 10, basi: 1, retur: 0 },
-      { id: 43, name: 'SUSU DELE', kulak: 800, jual: 1500, stok: 30, terjual: 10, basi: 0, retur: 0 },
-      { id: 44, name: 'DADAR GULUNG', kulak: 1200, jual: 2000, stok: 35, terjual: 15, basi: 1, retur: 0 },
-      { id: 45, name: 'ROTI SIFON', kulak: 1500, jual: 2000, stok: 30, terjual: 10, basi: 0, retur: 0 },
-      { id: 46, name: 'BOLU MAWAR', kulak: 1200, jual: 2000, stok: 30, terjual: 10, basi: 0, retur: 0 },
-      { id: 47, name: 'ROTI MUFFIN', kulak: 1200, jual: 2000, stok: 30, terjual: 10, basi: 0, retur: 0 },
-      { id: 48, name: 'ROTI COKELAT GARIS', kulak: 1200, jual: 2000, stok: 30, terjual: 10, basi: 0, retur: 0 },
-      { id: 49, name: 'ROTI BELAH', kulak: 2500, jual: 3000, stok: 30, terjual: 10, basi: 0, retur: 0 },
-      { id: 50, name: 'ROTI TAMPAH', kulak: 2500, jual: 3000, stok: 25, terjual: 8, basi: 0, retur: 0 },
-      { id: 51, name: 'ROTI AGAR', kulak: 1200, jual: 2000, stok: 30, terjual: 10, basi: 0, retur: 0 },
-      { id: 52, name: 'ROTI KEJU BULAT', kulak: 3000, jual: 3500, stok: 30, terjual: 10, basi: 0, retur: 0 },
-      { id: 53, name: 'ROTI KEJU', kulak: 3500, jual: 4000, stok: 30, terjual: 10, basi: 0, retur: 0 }
+      { id: 1, name: 'KUE SUS', kulak: 2000, jual: 3000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+      { id: 2, name: 'BAKPAO', kulak: 2200, jual: 3000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+      { id: 3, name: 'BOLEN PISANG', kulak: 2200, jual: 3000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+      { id: 4, name: 'KUKUS', kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+      { id: 5, name: 'DONAT TEBAL', kulak: 2500, jual: 3000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+      { id: 6, name: 'DONAT TIPIS/GULA', kulak: 1500, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+      { id: 7, name: 'KUE SEBRA', kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+      { id: 8, name: 'KUE GABIN', kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+      { id: 9, name: 'KUE PIA', kulak: 2200, jual: 3000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+      { id: 10, name: 'KUE AMANDEL', kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+      { id: 11, name: 'ROTI O', kulak: 2500, jual: 3000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+      { id: 12, name: 'ROTI PISANG', kulak: 2200, jual: 3000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+      { id: 13, name: 'ROTI GULUNG', kulak: 2500, jual: 3000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+      { id: 14, name: 'ROTI SOSIS', kulak: 2500, jual: 3000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+      { id: 15, name: 'ROTI SISIR', kulak: 2500, jual: 3000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+      { id: 16, name: 'PUTU AYU (DESI)', kulak: 1500, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+      { id: 17, name: 'PASTEL', kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+      { id: 18, name: 'KUE CUM-CUM', kulak: 2500, jual: 4000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+      { id: 19, name: 'BIKANG', kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+      { id: 20, name: 'NOGOSARI', kulak: 1500, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+      { id: 21, name: 'AREM-AREM', kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+      { id: 22, name: 'LEMPER BIASA', kulak: 1500, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+      { id: 23, name: 'LEMPER BAKAR', kulak: 2000, jual: 2500, stok: 0, terjual: 0, basi: 0, retur: 0 },
+      { id: 24, name: 'LEMPER (SRI)', kulak: 2200, jual: 3500, stok: 0, terjual: 0, basi: 0, retur: 0 },
+      { id: 25, name: 'ONDE-ONDE', kulak: 1200, jual: 1500, stok: 0, terjual: 0, basi: 0, retur: 0 },
+      { id: 26, name: 'KELEPON', kulak: 1200, jual: 1500, stok: 0, terjual: 0, basi: 0, retur: 0 },
+      { id: 27, name: 'KUE CUCUR', kulak: 1200, jual: 1500, stok: 0, terjual: 0, basi: 0, retur: 0 },
+      { id: 28, name: 'STIK', kulak: 800, jual: 1000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+      { id: 29, name: 'KERIPIK', kulak: 800, jual: 1000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+      { id: 30, name: 'PUDING', kulak: 1500, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+      { id: 31, name: 'KUE LAPIS', kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+      { id: 32, name: 'JADAH PUTIH', kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+      { id: 33, name: 'WAJIK', kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+      { id: 34, name: 'RISOLES', kulak: 2800, jual: 4500, stok: 0, terjual: 0, basi: 0, retur: 0 },
+      { id: 35, name: 'KUE POKIS', kulak: 1800, jual: 3000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+      { id: 36, name: 'KUE LUMPUR', kulak: 2200, jual: 3500, stok: 0, terjual: 0, basi: 0, retur: 0 },
+      { id: 37, name: 'KETAN', kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+      { id: 38, name: 'MENIRAN', kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+      { id: 39, name: 'MARTABAK', kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+      { id: 40, name: 'NASI BALI (EMAK)', kulak: 5000, jual: 6000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+      { id: 41, name: 'JENTIK MANIS', kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+      { id: 43, name: 'SUSU DELE', kulak: 800, jual: 1500, stok: 0, terjual: 0, basi: 0, retur: 0 },
+      { id: 44, name: 'DADAR GULUNG', kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+      { id: 45, name: 'ROTI SIFON', kulak: 1500, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+      { id: 46, name: 'BOLU MAWAR', kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+      { id: 47, name: 'ROTI MUFFIN', kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+      { id: 48, name: 'ROTI COKELAT GARIS', kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+      { id: 49, name: 'ROTI BELAH', kulak: 2500, jual: 3000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+      { id: 50, name: 'ROTI TAMPAH', kulak: 2500, jual: 3000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+      { id: 51, name: 'ROTI AGAR', kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+      { id: 52, name: 'ROTI KEJU BULAT', kulak: 3000, jual: 3500, stok: 0, terjual: 0, basi: 0, retur: 0 },
+      { id: 53, name: 'ROTI KEJU', kulak: 3500, jual: 4000, stok: 0, terjual: 0, basi: 0, retur: 0 }
     ];
 
     const DEFAULT_BRANCHES = [
@@ -606,24 +606,24 @@ Cetak PDF
     const formatRp = (num) => 'Rp ' + (Number(num) || 0).toLocaleString('id-ID');
 
     function getStorageKey(type, branchId) {
-      return `NR_BRANCH_V4_${type}_${branchId}`;
+      return `NR_BRANCH_V5_${type}_${branchId}`;
     }
 
     // Cabang Management
     function loadBranches() {
       try {
-        const stored = localStorage.getItem('NR_BRANCHES_LIST_V4');
+        const stored = localStorage.getItem('NR_BRANCHES_LIST_V5');
         if (stored) {
           branches = JSON.parse(stored);
         } else {
           branches = JSON.parse(JSON.stringify(DEFAULT_BRANCHES));
-          localStorage.setItem('NR_BRANCHES_LIST_V4', JSON.stringify(branches));
+          localStorage.setItem('NR_BRANCHES_LIST_V5', JSON.stringify(branches));
         }
       } catch (e) {
         branches = JSON.parse(JSON.stringify(DEFAULT_BRANCHES));
       }
 
-      const lastActive = localStorage.getItem('NR_CURRENT_BRANCH_ID_V4');
+      const lastActive = localStorage.getItem('NR_CURRENT_BRANCH_ID_V5');
       if (lastActive && branches.some(b => b.id === lastActive)) {
         currentBranchId = lastActive;
       } else {
@@ -632,7 +632,7 @@ Cetak PDF
     }
 
     function saveBranchesList() {
-      localStorage.setItem('NR_BRANCHES_LIST_V4', JSON.stringify(branches));
+      localStorage.setItem('NR_BRANCHES_LIST_V5', JSON.stringify(branches));
     }
 
     function renderBranchBar() {
@@ -690,7 +690,7 @@ Cetak PDF
     function switchBranch(branchId) {
       if (branchId === currentBranchId) return;
       currentBranchId = branchId;
-      localStorage.setItem('NR_CURRENT_BRANCH_ID_V4', currentBranchId);
+      localStorage.setItem('NR_CURRENT_BRANCH_ID_V5', currentBranchId);
       loadBranchData(currentBranchId);
       renderBranchBar();
       renderTable();
@@ -728,10 +728,10 @@ Cetak PDF
       branches.push(newBranch);
       saveBranchesList();
 
-      // Buat database produk terpisah untuk cabang baru ini (default 52 produk)
+      // Buat database produk terpisah untuk cabang baru ini (default 52 produk, stok & terjual 0)
       const freshBranchProducts = INITIAL_52_PRODUCTS.map(p => ({
         ...p,
-        stok: p.stok,
+        stok: 0,
         terjual: 0,
         basi: 0,
         retur: 0
@@ -743,7 +743,7 @@ Cetak PDF
 
       // Otomatis aktifkan cabang baru
       currentBranchId = branchId;
-      localStorage.setItem('NR_CURRENT_BRANCH_ID_V4', currentBranchId);
+      localStorage.setItem('NR_CURRENT_BRANCH_ID_V5', currentBranchId);
 
       loadBranchData(branchId);
       renderBranchBar();
@@ -772,7 +772,7 @@ Cetak PDF
         // Jika cabang yang dihapus sedang aktif, kembali ke Toko Pusat
         if (currentBranchId === branchId) {
           currentBranchId = 'pusat';
-          localStorage.setItem('NR_CURRENT_BRANCH_ID_V4', currentBranchId);
+          localStorage.setItem('NR_CURRENT_BRANCH_ID_V5', currentBranchId);
         }
 
         loadBranchData(currentBranchId);
@@ -784,6 +784,22 @@ Cetak PDF
     function getTodayDateString() {
       const now = new Date();
       return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+    }
+
+    function resetDailyQuantities() {
+      const curBranchObj = branches.find(b => b.id === currentBranchId);
+      const bName = curBranchObj ? curBranchObj.name : 'cabang aktif';
+      if (confirm(`Reset seluruh Qty Stok, Qty Terjual, Basi, dan Retur menjadi 0 untuk ${bName}?\n(Harga Kulak dan Jual tetap aman)`)) {
+        products = products.map(p => ({
+          ...p,
+          stok: 0,
+          terjual: 0,
+          basi: 0,
+          retur: 0
+        }));
+        saveData();
+        renderTable();
+      }
     }
 
     function checkAndExecuteDailyReset() {
@@ -865,17 +881,9 @@ Cetak PDF
             products = JSON.parse(JSON.stringify(INITIAL_52_PRODUCTS));
           }
         } else {
-          // Fallback legacy Toko Pusat jika pernah simpan
-          if (branchId === 'pusat') {
-            const legacy = localStorage.getItem('NR_SIMPLE_SALES_52_V2');
-            if (legacy) {
-              products = JSON.parse(legacy).filter(item => item.name !== 'NASI (ANA)');
-            } else {
-              products = JSON.parse(JSON.stringify(INITIAL_52_PRODUCTS));
-            }
-          } else {
-            products = JSON.parse(JSON.stringify(INITIAL_52_PRODUCTS));
-          }
+          // Default ke master 52 produk dengan stok dan terjual 0
+          products = JSON.parse(JSON.stringify(INITIAL_52_PRODUCTS));
+          localStorage.setItem(keyProd, JSON.stringify(products));
         }
 
         const keyExp = getStorageKey('EXP', branchId);
@@ -902,10 +910,6 @@ Cetak PDF
 
     function saveData() {
       localStorage.setItem(getStorageKey('PROD', currentBranchId), JSON.stringify(products));
-      // simpan juga ke master legacy jika cabang pusat
-      if (currentBranchId === 'pusat') {
-        localStorage.setItem('NR_SIMPLE_SALES_52_V2', JSON.stringify(products));
-      }
       updateCountsAndBadges();
     }
 
@@ -923,7 +927,7 @@ Cetak PDF
     function resetDefaults() {
       const curBranchObj = branches.find(b => b.id === currentBranchId);
       const bName = curBranchObj ? curBranchObj.name : 'cabang aktif';
-      if (confirm(`Reset seluruh nilai tabel dan daftar pengeluaran untuk ${bName} ke master default 52 jajanan pasar?`)) {
+      if (confirm(`Reset seluruh nilai tabel dan daftar pengeluaran untuk ${bName} ke master default 52 jajanan pasar (Stok & Terjual = 0)?`)) {
         products = JSON.parse(JSON.stringify(INITIAL_52_PRODUCTS));
         expenses = [];
         localStorage.setItem(`NR_LAST_RESET_DATE_${currentBranchId}`, getTodayDateString());
@@ -939,6 +943,7 @@ Cetak PDF
       const stok = Number(p.stok) || 0;
       const terjual = Number(p.terjual) || 0;
       const basi = Number(p.basi) || 0;
+      if (terjual === 0) return false;
       const ratio = stok > 0 ? (terjual / stok) : 0;
       return ratio >= 0.40 && basi <= 2;
     }
@@ -947,8 +952,9 @@ Cetak PDF
       const stok = Number(p.stok) || 0;
       const terjual = Number(p.terjual) || 0;
       const basi = Number(p.basi) || 0;
-      const ratio = stok > 0 ? (terjual / stok) : 0;
-      return ratio < 0.40 || basi >= 3;
+      if (basi >= 3) return true;
+      if (terjual > 0 && stok > 0 && (terjual / stok) < 0.40) return true;
+      return false;
     }
 
     function setMovingFilter(filter) {
@@ -1076,19 +1082,19 @@ Cetak PDF
           </td>
           <!-- 4. Qty Stok -->
           <td class="py-2 px-1 text-center">
-            <input type="number" data-idx="${index}" data-field="stok" value="${stok}" class="w-16 text-center py-1.5 px-1 bg-white border border-slate-200 rounded-lg text-xs font-bold text-slate-800 focus:border-red-500 focus:ring-red-500">
+            <input type="number" data-idx="${index}" data-field="stok" value="${stok}" placeholder="0" class="w-16 text-center py-1.5 px-1 bg-white border border-slate-200 rounded-lg text-xs font-bold text-slate-800 focus:border-red-500 focus:ring-red-500">
           </td>
           <!-- 5. Qty Terjual -->
           <td class="py-2 px-1 text-center bg-emerald-50/30">
-            <input type="number" data-idx="${index}" data-field="terjual" value="${terjual}" class="w-16 text-center py-1.5 px-1 bg-emerald-50 border border-emerald-300 rounded-lg text-xs font-black text-emerald-800 focus:border-emerald-600 focus:ring-emerald-600">
+            <input type="number" data-idx="${index}" data-field="terjual" value="${terjual}" placeholder="0" class="w-16 text-center py-1.5 px-1 bg-emerald-50 border border-emerald-300 rounded-lg text-xs font-black text-emerald-800 focus:border-emerald-600 focus:ring-emerald-600">
           </td>
           <!-- 6. Basi -->
           <td class="py-2 px-1 text-center bg-red-50/20">
-            <input type="number" data-idx="${index}" data-field="basi" value="${basi}" class="w-14 text-center py-1.5 px-1 bg-red-50/60 border border-red-200 rounded-lg text-xs font-bold text-red-600 focus:border-red-500 focus:ring-red-500">
+            <input type="number" data-idx="${index}" data-field="basi" value="${basi}" placeholder="0" class="w-14 text-center py-1.5 px-1 bg-red-50/60 border border-red-200 rounded-lg text-xs font-bold text-red-600 focus:border-red-500 focus:ring-red-500">
           </td>
           <!-- 7. Retur -->
           <td class="py-2 px-1 text-center">
-            <input type="number" data-idx="${index}" data-field="retur" value="${retur}" class="w-14 text-center py-1.5 px-1 bg-amber-50/60 border border-amber-200 rounded-lg text-xs font-bold text-amber-700 focus:border-amber-500 focus:ring-amber-500">
+            <input type="number" data-idx="${index}" data-field="retur" value="${retur}" placeholder="0" class="w-14 text-center py-1.5 px-1 bg-amber-50/60 border border-amber-200 rounded-lg text-xs font-bold text-amber-700 focus:border-amber-500 focus:ring-amber-500">
           </td>
           <!-- 8. Marjin Bersih -->
           <td class="py-2.5 px-2.5 text-right font-extrabold text-[#15803D] text-xs whitespace-nowrap" id="mb-${index}">
@@ -1507,23 +1513,31 @@ Cetak PDF
       document.getElementById('repCalcExpense').innerText = `- ${formatRp(repExpense)}`;
       document.getElementById('repNetProfit').innerText = formatRp(repNet);
 
-      const sortedFast = [...products].sort((a, b) => (Number(b.terjual) || 0) - (Number(a.terjual) || 0)).slice(0, 3);
+      const sortedFast = [...products].filter(p => (Number(p.terjual) || 0) > 0).sort((a, b) => (Number(b.terjual) || 0) - (Number(a.terjual) || 0)).slice(0, 3);
       const topFastList = document.getElementById('repTopFastList');
-      topFastList.innerHTML = sortedFast.map((p, i) => `
-        <li class="flex justify-between items-center py-0.5 border-b border-slate-200/50">
-          <span>${i + 1}. ${p.name}</span>
-          <span class="font-extrabold text-emerald-700">${(Number(p.terjual) || 0) * multiplier} pcs terjual</span>
-        </li>
-      `).join('');
+      if (sortedFast.length === 0) {
+        topFastList.innerHTML = '<li class="py-1 text-slate-400 italic">Belum ada data penjualan hari ini.</li>';
+      } else {
+        topFastList.innerHTML = sortedFast.map((p, i) => `
+          <li class="flex justify-between items-center py-0.5 border-b border-slate-200/50">
+            <span>${i + 1}. ${p.name}</span>
+            <span class="font-extrabold text-emerald-700">${(Number(p.terjual) || 0) * multiplier} pcs terjual</span>
+          </li>
+        `).join('');
+      }
 
-      const sortedBasi = [...products].sort((a, b) => (Number(b.basi) || 0) - (Number(a.basi) || 0)).slice(0, 3);
+      const sortedBasi = [...products].filter(p => (Number(p.basi) || 0) > 0).sort((a, b) => (Number(b.basi) || 0) - (Number(a.basi) || 0)).slice(0, 3);
       const topBasiList = document.getElementById('repTopBasiList');
-      topBasiList.innerHTML = sortedBasi.map((p, i) => `
-        <li class="flex justify-between items-center py-0.5 border-b border-slate-200/50">
-          <span>${i + 1}. ${p.name}</span>
-          <span class="font-bold text-red-600">${(Number(p.basi) || 0) * multiplier} pcs basi</span>
-        </li>
-      `).join('');
+      if (sortedBasi.length === 0) {
+        topBasiList.innerHTML = '<li class="py-1 text-slate-400 italic">Tidak ada jajanan basi tercatat.</li>';
+      } else {
+        topBasiList.innerHTML = sortedBasi.map((p, i) => `
+          <li class="flex justify-between items-center py-0.5 border-b border-slate-200/50">
+            <span>${i + 1}. ${p.name}</span>
+            <span class="font-bold text-red-600">${(Number(p.basi) || 0) * multiplier} pcs basi</span>
+          </li>
+        `).join('');
+      }
     }
 
     document.addEventListener('DOMContentLoaded', () => {
