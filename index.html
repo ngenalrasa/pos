@@ -3,7 +3,7 @@
 <html lang="id"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
-<title>Ngenal Rasa - Tabel Penjualan Harian Lengkap</title>
+<title>Ngenal Rasa - Tabel Penjualan Harian Lengkap Multi Cabang</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <script>
     tailwind.config = {
@@ -46,7 +46,7 @@
     }
     @media print {
       body { background-color: white !important; padding: 0 !important; }
-      header, .action-bar, .modal-backdrop, .no-print, .reset-banner { display: none !important; }
+      header, .action-bar, .modal-backdrop, .no-print, .reset-banner, #branchBarContainer { display: none !important; }
       .table-container { box-shadow: none !important; border: 1px solid #ccc !important; }
     }
   </style>
@@ -57,28 +57,19 @@
 <header class="w-full mb-5 bg-white p-5 sm:p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col items-center text-center">
 <!-- Prominent Centered Logo -->
 <div class="mb-3 flex justify-center">
-<img alt="Logo Ngenal Rasa" class="h-14 sm:h-16 w-auto object-contain drop-shadow-xs" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDpHOjADQjG6Jks7p7EyVkDAjRYwMnaH2mI4umsrpQsfBJckrNNhYLWclVVcvAwNmvyyb7L8UUlKwBd2bT58l7ds-nH3FfQQlrginrox9_-KmpBqMJz2ERqBg_tQzW8bP5LQ39AX9jMEZkdtft2n-RINkTmhBFOv595KfFfx-nZiHD3lhzxOZpO_CPVJQRq2AqgBH48i4wWsH6jFH4eV6GiwqZniVcwtQmRqWq84UDaOmzwBHUdw3rXUxW1TGL70er_Q8s"/>
+<img alt="Logo Ngenal Rasa" class="h-14 sm:h-16 w-auto object-contain drop-shadow-xs" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB6YZApkN-CToV_3wlqqdglBsR9oYs02c9q0yo4NWUBr5ZF65DZm6IsAWT4mbkmw71GM8-E-Wfi_4pvmO1mEq6nxGz56GtM35UzHz9p_9i1dy7IjwrGL9PBr4nEoqRYaJ3m9qhU4qnWGHXGGzPcIPUdrLMb-dIrAA60jYhCpS15WSyyqSSvq2tcmBdfWz225O70RvniF_ZVNRmF8WTclaXlCvSpQ2bp7JuCkwrX9Cm-KXU3m-bScYyCiABAVC-j8fSgVdQ"/>
 </div>
-<!-- Centered Title & Subtitle -->
-<!-- 24-Hour Reset Status & Indicator Banner -->
-<div class="w-full max-w-2xl bg-amber-50/80 border border-amber-200/90 rounded-xl px-3.5 py-2 mb-4 flex flex-col sm:flex-row items-center justify-between gap-2 reset-banner hidden">
-<div class="flex items-center gap-2 text-xs text-amber-950 font-medium">
-<span class="relative flex h-2.5 w-2.5">
-<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-<span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
-</span>
-<span>🔄 <strong>Reset Otomatis 24 Jam Aktif:</strong> Pukul 00:00 WIB</span>
-<span class="bg-amber-100/90 text-amber-900 border border-amber-300 text-[10px] px-2 py-0.5 rounded-md font-bold" id="resetCountdownBadge">--:--:-- tersisa</span>
-</div>
-<div class="flex items-center gap-2">
-<span class="text-[11px] text-slate-500 hidden md:inline">Terakhir: <span class="font-semibold text-slate-700" id="lastResetDateText">-</span></span>
-<button class="px-2.5 py-1 bg-white hover:bg-red-50 text-red-700 border border-red-200 text-[11px] font-bold rounded-lg transition shadow-2xs flex items-center gap-1 hover:border-red-300" onclick="triggerManualReset()">
-<svg class="w-3.5 h-3.5 text-red-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-        Reset Kuantitas Sekarang (0)
-      </button>
+<!-- Multi-Cabang Store Navigation Bar Dinamis & 100% Aktif -->
+<div class="w-full mb-3 pb-3 border-b border-slate-100 flex flex-col items-center gap-2">
+<div class="flex items-center gap-1.5 text-xs text-slate-500 font-semibold">
+<svg class="w-3.5 h-3.5 text-red-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>PILIH CABANG TOKO:</span>
+<span class="ml-2 inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 shadow-2xs" id="cloudSyncBadge" title="Status sinkronisasi Firebase Firestore"><span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" id="cloudSyncDot"></span><span id="cloudSyncText">Cloud Online</span></span></div>
+<div class="flex items-center justify-center flex-wrap gap-2 w-full" id="branchBarContainer">
+<!-- Cabang buttons will render here dynamically -->
 </div>
 </div>
-<!-- Quick Filter & Action Bar Centered -->
+<!-- 6 Toolbar Action Buttons -->
 <div class="w-full flex items-center justify-center flex-wrap gap-2.5 pt-1 border-t border-slate-100">
 <div class="relative w-full sm:w-64">
 <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
@@ -151,7 +142,7 @@
 <div class="flex items-center gap-1.5 flex-wrap justify-center sm:justify-start">
 <span class="text-xs font-bold text-slate-500 mr-1 hidden sm:inline">Filter Kategori:</span>
 <button class="px-3 py-1.5 text-xs font-bold rounded-xl transition bg-slate-900 text-white shadow-xs" id="filterAllBtn" onclick="setMovingFilter('all')">
-Semua Produk (<span id="countAllBadge">53</span>)
+Semua Produk (<span id="countAllBadge">52</span>)
 </button>
 <button class="px-3 py-1.5 text-xs font-bold rounded-xl transition bg-white text-emerald-700 border border-emerald-200 hover:bg-emerald-50" id="filterFastBtn" onclick="setMovingFilter('fast')">
 🔥 Fast Moving (<span id="countFastBadge">0</span>)
@@ -226,7 +217,7 @@ Aksi
 <tfoot class="bg-slate-50 border-t-2 border-slate-200 text-xs font-bold text-slate-900">
 <tr>
 <td class="py-3.5 px-3 sticky left-0 bg-slate-50 z-10 border-r border-slate-200">
-TOTAL (<span id="footProductCount">53 Varian</span>)
+TOTAL (<span id="footProductCount">52 Varian</span>)
 </td>
 <td class="py-3.5 px-2 text-center text-slate-500 font-normal">-</td>
 <td class="py-3.5 px-2 text-center text-slate-500 font-normal">-</td>
@@ -245,7 +236,12 @@ TOTAL (<span id="footProductCount">53 Varian</span>)
 </div>
 <!-- Legend / Formula Explanations -->
 <div class="mt-4 p-4 bg-white rounded-2xl border border-slate-200 text-xs text-slate-500 space-y-1.5 shadow-2xs">
-<div class="font-bold text-slate-800 text-[11px] uppercase tracking-wider mb-1">Keterangan Rumus Kolom:</div>
+<div class="font-bold text-slate-800 text-[11px] uppercase tracking-wider mb-1">
+<div class="flex items-center justify-between flex-wrap gap-1 font-bold text-slate-800 text-[11px] uppercase tracking-wider">
+<span>Keterangan Rumus Kolom:</span>
+<span class="text-[#B91C1C] normal-case font-bold" id="activeBranchIndicator">Aktif: Toko Pusat</span>
+</div>
+</div>
 <div class="grid grid-cols-1 md:grid-cols-3 gap-2 text-[11px]">
 <div>• <strong>Marjin Bersih (per pcs)</strong> = Harga Jual - Harga Kulak</div>
 <div>• <strong>Laba Kotor</strong> = Qty Terjual × Marjin Bersih</div>
@@ -317,7 +313,7 @@ TOTAL (<span id="footProductCount">53 Varian</span>)
 <span class="w-8 h-8 rounded-lg bg-amber-600 text-white flex items-center justify-center font-bold text-sm">💸</span>
 <div>
 <h3 class="text-sm font-bold text-slate-900">Catat Pengeluaran Operasional</h3>
-<p class="text-[11px] text-slate-500">Biaya kemasan, kantong kresek, mika, logistik, dll.</p>
+<p class="text-[11px] text-slate-500" id="expenseBranchSubtitle">Biaya operasional untuk cabang aktif</p>
 </div>
 </div>
 <button class="text-slate-400 hover:text-slate-700 font-bold text-lg" onclick="closeExpenseModal()">×</button>
@@ -370,7 +366,7 @@ TOTAL (<span id="footProductCount">53 Varian</span>)
 <span class="w-8 h-8 rounded-lg bg-emerald-600 text-white flex items-center justify-center font-bold text-sm">💾</span>
 <div>
 <h3 class="text-sm font-bold text-emerald-950">Simpan Riwayat Rekapitulasi</h3>
-<p class="text-[11px] text-emerald-700">Arsipkan performa jajanan pasar Ngenal Rasa</p>
+<p class="text-[11px] text-emerald-700" id="historyBranchSubtitle">Arsipkan performa jajanan pasar Ngenal Rasa</p>
 </div>
 </div>
 <button class="text-slate-400 hover:text-slate-700 font-bold text-lg" onclick="closeSaveHistoryModal()">×</button>
@@ -420,10 +416,10 @@ TOTAL (<span id="footProductCount">53 Varian</span>)
 <div class="bg-white rounded-2xl max-w-3xl w-full border border-slate-200 shadow-2xl my-auto overflow-hidden">
 <div class="bg-[#FEF9E7] p-4 border-b border-amber-200/80 flex items-center justify-between">
 <div class="flex items-center gap-2.5">
-<img alt="Ngenal Rasa" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDpHOjADQjG6Jks7p7EyVkDAjRYwMnaH2mI4umsrpQsfBJckrNNhYLWclVVcvAwNmvyyb7L8UUlKwBd2bT58l7ds-nH3FfQQlrginrox9_-KmpBqMJz2ERqBg_tQzW8bP5LQ39AX9jMEZkdtft2n-RINkTmhBFOv595KfFfx-nZiHD3lhzxOZpO_CPVJQRq2AqgBH48i4wWsH6jFH4eV6GiwqZniVcwtQmRqWq84UDaOmzwBHUdw3rXUxW1TGL70er_Q8s"/>
+<img alt="Ngenal Rasa" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB6YZApkN-CToV_3wlqqdglBsR9oYs02c9q0yo4NWUBr5ZF65DZm6IsAWT4mbkmw71GM8-E-Wfi_4pvmO1mEq6nxGz56GtM35UzHz9p_9i1dy7IjwrGL9PBr4nEoqRYaJ3m9qhU4qnWGHXGGzPcIPUdrLMb-dIrAA60jYhCpS15WSyyqSSvq2tcmBdfWz225O70RvniF_ZVNRmF8WTclaXlCvSpQ2bp7JuCkwrX9Cm-KXU3m-bScYyCiABAVC-j8fSgVdQ"/>
 <div>
 <h3 class="text-base font-bold text-slate-900">Laporan Rekapitulasi Penjualan &amp; Laba</h3>
-<p class="text-xs text-slate-500">Breakdown performa keuangan terpadu Ngenal Rasa</p>
+<p class="text-xs text-slate-500" id="reportBranchSubtitle">Breakdown performa keuangan Toko Pusat</p>
 </div>
 </div>
 <div class="flex items-center gap-2">
@@ -500,64 +496,106 @@ Cetak PDF
 </div>
 </div>
 </div>
+<!-- Modal 5: Tambah Cabang Baru -->
+<div class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-50 hidden flex items-center justify-center p-4" id="addBranchModal">
+<div class="bg-white rounded-2xl max-w-md w-full border border-slate-200 shadow-2xl overflow-hidden">
+<div class="bg-[#FEF9E7] p-4 border-b border-amber-200/80 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-8 h-8 rounded-lg bg-[#B91C1C] text-white flex items-center justify-center font-bold text-sm">🏪</span>
+<div>
+<h3 class="text-sm font-bold text-slate-900">Tambah Cabang Toko Baru</h3>
+<p class="text-[11px] text-slate-500">Buat outlet baru dengan database penjualan mandiri</p>
+</div>
+</div>
+<button class="text-slate-400 hover:text-slate-700 font-bold text-lg" onclick="closeAddBranchModal()">×</button>
+</div>
+<form class="p-4 space-y-3" id="addBranchForm" onsubmit="submitNewBranch(event)">
+<div>
+<label class="block text-[11px] font-bold text-slate-700 mb-1">Nama Cabang Toko <span class="text-red-500">*</span></label>
+<input class="w-full text-xs p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-red-500 focus:ring-red-500 font-bold text-slate-900" id="newBranchName" placeholder="Contoh: Cabang Kartasura / Outlet Solo Baru" required="" type="text"/>
+</div>
+<div>
+<label class="block text-[11px] font-bold text-slate-700 mb-1">Penanggung Jawab / Mitra (Opsional)</label>
+<input class="w-full text-xs p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-red-500 font-medium" id="newBranchPic" placeholder="Contoh: Mas Budi / Mbak Rina" type="text"/>
+</div>
+<div>
+<label class="block text-[11px] font-bold text-slate-700 mb-1">Lokasi / Alamat (Opsional)</label>
+<input class="w-full text-xs p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-red-500 font-medium" id="newBranchLocation" placeholder="Contoh: Jl. Slamet Riyadi No. 45" type="text"/>
+</div>
+<div class="p-3 bg-slate-50 border-t border-slate-100 -mx-4 -mb-4 mt-4 flex items-center justify-end gap-2">
+<button class="px-3.5 py-2 text-slate-600 text-xs font-semibold rounded-xl hover:bg-slate-200 transition" onclick="closeAddBranchModal()" type="button">Batal</button>
+<button class="px-4 py-2 bg-[#B91C1C] hover:bg-red-800 text-white text-xs font-bold rounded-xl transition shadow-xs flex items-center gap-1.5" type="submit">
+<svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>Simpan Cabang</span>
+</button>
+</div>
+</form>
+</div>
+</div>
 <script>
-    // 53 MASTER VARIAN JAJANAN PASAR NGENAL RASA
-    const INITIAL_53_PRODUCTS = [
-      { id: 1, name: 'KUE SUS', kulak: 2500, jual: 3000, stok: 50, terjual: 25, basi: 2, retur: 3 },
-      { id: 2, name: 'BAKPAO', kulak: 2500, jual: 3000, stok: 40, terjual: 10, basi: 5, retur: 0 },
-      { id: 3, name: 'BOLEN PUSANG', kulak: 2500, jual: 3000, stok: 35, terjual: 15, basi: 1, retur: 2 },
+    // 52 MASTER VARIAN JAJANAN PASAR NGENAL RASA (REVISI RESMI LENGKAP)
+    const INITIAL_52_PRODUCTS = [
+      { id: 1, name: 'KUE SUS', kulak: 2000, jual: 3000, stok: 50, terjual: 25, basi: 2, retur: 3 },
+      { id: 2, name: 'BAKPAO', kulak: 2200, jual: 3000, stok: 40, terjual: 10, basi: 5, retur: 0 },
+      { id: 3, name: 'BOLEN PISANG', kulak: 2200, jual: 3000, stok: 35, terjual: 15, basi: 1, retur: 2 },
       { id: 4, name: 'KUKUS', kulak: 1200, jual: 2000, stok: 60, terjual: 30, basi: 4, retur: 0 },
-      { id: 5, name: 'DONAT TEBAL', kulak: 2500, jual: 4000, stok: 45, terjual: 20, basi: 2, retur: 1 },
-      { id: 6, name: 'DONAT TIPIS/GULA', kulak: 2200, jual: 3500, stok: 50, terjual: 25, basi: 3, retur: 0 },
-      { id: 7, name: 'KUE SEBRA', kulak: 2000, jual: 3500, stok: 30, terjual: 10, basi: 1, retur: 0 },
-      { id: 8, name: 'KUE GABIN', kulak: 1800, jual: 3000, stok: 30, terjual: 15, basi: 0, retur: 0 },
-      { id: 9, name: 'KUE PIA', kulak: 2200, jual: 3500, stok: 30, terjual: 12, basi: 0, retur: 0 },
-      { id: 10, name: 'KUE AMANDEL', kulak: 2500, jual: 4000, stok: 30, terjual: 14, basi: 2, retur: 0 },
-      { id: 11, name: 'ROTI O', kulak: 3200, jual: 5000, stok: 30, terjual: 18, basi: 2, retur: 0 },
-      { id: 12, name: 'ROTI PISANG', kulak: 2800, jual: 4500, stok: 30, terjual: 15, basi: 1, retur: 0 },
-      { id: 13, name: 'ROTI GULUNG', kulak: 2800, jual: 4500, stok: 30, terjual: 10, basi: 1, retur: 0 },
-      { id: 14, name: 'ROTI SOSIS', kulak: 3200, jual: 5000, stok: 30, terjual: 15, basi: 2, retur: 0 },
-      { id: 15, name: 'ROTI SUSIR', kulak: 2500, jual: 4000, stok: 30, terjual: 10, basi: 1, retur: 0 },
-      { id: 16, name: 'PUTU AYU (DESI)', kulak: 1800, jual: 3000, stok: 40, terjual: 20, basi: 3, retur: 0 },
-      { id: 17, name: 'PASTEL', kulak: 2800, jual: 4500, stok: 35, terjual: 15, basi: 2, retur: 0 },
+      { id: 5, name: 'DONAT TEBAL', kulak: 2500, jual: 3000, stok: 45, terjual: 20, basi: 2, retur: 1 },
+      { id: 6, name: 'DONAT TIPIS/GULA', kulak: 1500, jual: 2000, stok: 50, terjual: 25, basi: 3, retur: 0 },
+      { id: 7, name: 'KUE SEBRA', kulak: 1200, jual: 2000, stok: 30, terjual: 10, basi: 1, retur: 0 },
+      { id: 8, name: 'KUE GABIN', kulak: 1200, jual: 2000, stok: 30, terjual: 15, basi: 0, retur: 0 },
+      { id: 9, name: 'KUE PIA', kulak: 2200, jual: 3000, stok: 30, terjual: 12, basi: 0, retur: 0 },
+      { id: 10, name: 'KUE AMANDEL', kulak: 1200, jual: 2000, stok: 30, terjual: 14, basi: 2, retur: 0 },
+      { id: 11, name: 'ROTI O', kulak: 2500, jual: 3000, stok: 30, terjual: 18, basi: 2, retur: 0 },
+      { id: 12, name: 'ROTI PISANG', kulak: 2200, jual: 3000, stok: 30, terjual: 15, basi: 1, retur: 0 },
+      { id: 13, name: 'ROTI GULUNG', kulak: 2500, jual: 3000, stok: 30, terjual: 10, basi: 1, retur: 0 },
+      { id: 14, name: 'ROTI SOSIS', kulak: 2500, jual: 3000, stok: 30, terjual: 15, basi: 2, retur: 0 },
+      { id: 15, name: 'ROTI SISIR', kulak: 2500, jual: 3000, stok: 30, terjual: 10, basi: 1, retur: 0 },
+      { id: 16, name: 'PUTU AYU (DESI)', kulak: 1500, jual: 2000, stok: 40, terjual: 20, basi: 3, retur: 0 },
+      { id: 17, name: 'PASTEL', kulak: 1200, jual: 2000, stok: 35, terjual: 15, basi: 2, retur: 0 },
       { id: 18, name: 'KUE CUM-CUM', kulak: 2500, jual: 4000, stok: 30, terjual: 10, basi: 1, retur: 0 },
-      { id: 19, name: 'BIKANG', kulak: 1800, jual: 3000, stok: 40, terjual: 20, basi: 2, retur: 0 },
-      { id: 20, name: 'NOGOSARI', kulak: 2000, jual: 3500, stok: 35, terjual: 15, basi: 1, retur: 0 },
-      { id: 21, name: 'AREM-AREM', kulak: 2400, jual: 4000, stok: 40, terjual: 20, basi: 2, retur: 0 },
-      { id: 22, name: 'LEMPER BIASA', kulak: 2200, jual: 3500, stok: 35, terjual: 18, basi: 1, retur: 0 },
-      { id: 23, name: 'LEMPER BAKAR', kulak: 2500, jual: 4000, stok: 35, terjual: 15, basi: 1, retur: 0 },
+      { id: 19, name: 'BIKANG', kulak: 1200, jual: 2000, stok: 40, terjual: 20, basi: 2, retur: 0 },
+      { id: 20, name: 'NOGOSARI', kulak: 1500, jual: 2000, stok: 35, terjual: 15, basi: 1, retur: 0 },
+      { id: 21, name: 'AREM-AREM', kulak: 1200, jual: 2000, stok: 40, terjual: 20, basi: 2, retur: 0 },
+      { id: 22, name: 'LEMPER BIASA', kulak: 1500, jual: 2000, stok: 35, terjual: 18, basi: 1, retur: 0 },
+      { id: 23, name: 'LEMPER BAKAR', kulak: 2000, jual: 2500, stok: 35, terjual: 15, basi: 1, retur: 0 },
       { id: 24, name: 'LEMPER (SRI)', kulak: 2200, jual: 3500, stok: 35, terjual: 15, basi: 1, retur: 0 },
-      { id: 25, name: 'ONDE-ONDE', kulak: 1800, jual: 3000, stok: 40, terjual: 20, basi: 2, retur: 0 },
-      { id: 26, name: 'KELEPON', kulak: 1800, jual: 3000, stok: 40, terjual: 20, basi: 2, retur: 0 },
-      { id: 27, name: 'KUE CUCUR', kulak: 1800, jual: 3000, stok: 35, terjual: 15, basi: 1, retur: 0 },
-      { id: 28, name: 'STIK', kulak: 1500, jual: 2500, stok: 30, terjual: 10, basi: 0, retur: 0 },
-      { id: 29, name: 'KERIPIK', kulak: 1800, jual: 3000, stok: 30, terjual: 10, basi: 0, retur: 0 },
-      { id: 30, name: 'PUDING', kulak: 2000, jual: 3500, stok: 35, terjual: 15, basi: 1, retur: 0 },
-      { id: 31, name: 'KUE LAPIS', kulak: 2000, jual: 3500, stok: 35, terjual: 15, basi: 1, retur: 0 },
-      { id: 32, name: 'JADAH PUTIH', kulak: 1800, jual: 3000, stok: 30, terjual: 10, basi: 1, retur: 0 },
-      { id: 33, name: 'WAJIK', kulak: 2000, jual: 3500, stok: 30, terjual: 10, basi: 1, retur: 0 },
+      { id: 25, name: 'ONDE-ONDE', kulak: 1200, jual: 1500, stok: 40, terjual: 20, basi: 2, retur: 0 },
+      { id: 26, name: 'KELEPON', kulak: 1200, jual: 1500, stok: 40, terjual: 20, basi: 2, retur: 0 },
+      { id: 27, name: 'KUE CUCUR', kulak: 1200, jual: 1500, stok: 35, terjual: 15, basi: 1, retur: 0 },
+      { id: 28, name: 'STIK', kulak: 800, jual: 1000, stok: 30, terjual: 10, basi: 0, retur: 0 },
+      { id: 29, name: 'KERIPIK', kulak: 800, jual: 1000, stok: 30, terjual: 10, basi: 0, retur: 0 },
+      { id: 30, name: 'PUDING', kulak: 1500, jual: 2000, stok: 35, terjual: 15, basi: 1, retur: 0 },
+      { id: 31, name: 'KUE LAPIS', kulak: 1200, jual: 2000, stok: 35, terjual: 15, basi: 1, retur: 0 },
+      { id: 32, name: 'JADAH PUTIH', kulak: 1200, jual: 2000, stok: 30, terjual: 10, basi: 1, retur: 0 },
+      { id: 33, name: 'WAJIK', kulak: 1200, jual: 2000, stok: 30, terjual: 10, basi: 1, retur: 0 },
       { id: 34, name: 'RISOLES', kulak: 2800, jual: 4500, stok: 40, terjual: 20, basi: 2, retur: 0 },
       { id: 35, name: 'KUE POKIS', kulak: 1800, jual: 3000, stok: 35, terjual: 15, basi: 1, retur: 0 },
       { id: 36, name: 'KUE LUMPUR', kulak: 2200, jual: 3500, stok: 30, terjual: 10, basi: 1, retur: 0 },
-      { id: 37, name: 'KETAN', kulak: 1800, jual: 3000, stok: 30, terjual: 10, basi: 1, retur: 0 },
-      { id: 38, name: 'MENIRAN', kulak: 1800, jual: 3000, stok: 30, terjual: 10, basi: 1, retur: 0 },
-      { id: 39, name: 'MARTABAK', kulak: 2500, jual: 4000, stok: 35, terjual: 15, basi: 1, retur: 0 },
-      { id: 40, name: 'NASI BALI (EMAK)', kulak: 4500, jual: 7000, stok: 25, terjual: 10, basi: 0, retur: 0 },
-      { id: 41, name: 'JENTIK MANIS', kulak: 1800, jual: 3000, stok: 30, terjual: 10, basi: 1, retur: 0 },
-      { id: 42, name: 'NASI (ANA)', kulak: 4000, jual: 6000, stok: 25, terjual: 10, basi: 0, retur: 0 },
-      { id: 43, name: 'SUSU DELE', kulak: 2500, jual: 4000, stok: 30, terjual: 10, basi: 0, retur: 0 },
-      { id: 44, name: 'DADAR GULUNG', kulak: 1800, jual: 3000, stok: 35, terjual: 15, basi: 1, retur: 0 },
-      { id: 45, name: 'ROTI SIFON', kulak: 2800, jual: 4500, stok: 30, terjual: 10, basi: 0, retur: 0 },
-      { id: 46, name: 'BOLU MAWAR', kulak: 1800, jual: 3000, stok: 30, terjual: 10, basi: 0, retur: 0 },
-      { id: 47, name: 'ROTI MUFFIN', kulak: 2800, jual: 4500, stok: 30, terjual: 10, basi: 0, retur: 0 },
-      { id: 48, name: 'ROTI COKELAT GARIS', kulak: 2800, jual: 4500, stok: 30, terjual: 10, basi: 0, retur: 0 },
-      { id: 49, name: 'ROTI BELAH', kulak: 2500, jual: 4000, stok: 30, terjual: 10, basi: 0, retur: 0 },
-      { id: 50, name: 'ROTI TAMPAH', kulak: 3200, jual: 5000, stok: 25, terjual: 8, basi: 0, retur: 0 },
-      { id: 51, name: 'ROTI AGAR', kulak: 2200, jual: 3500, stok: 30, terjual: 10, basi: 0, retur: 0 },
-      { id: 52, name: 'ROTI KEJU BULAT', kulak: 3200, jual: 5000, stok: 30, terjual: 10, basi: 0, retur: 0 },
-      { id: 53, name: 'ROTI KEJU', kulak: 2800, jual: 4500, stok: 30, terjual: 10, basi: 0, retur: 0 }
+      { id: 37, name: 'KETAN', kulak: 1200, jual: 2000, stok: 30, terjual: 10, basi: 1, retur: 0 },
+      { id: 38, name: 'MENIRAN', kulak: 1200, jual: 2000, stok: 30, terjual: 10, basi: 1, retur: 0 },
+      { id: 39, name: 'MARTABAK', kulak: 1200, jual: 2000, stok: 35, terjual: 15, basi: 1, retur: 0 },
+      { id: 40, name: 'NASI BALI (EMAK)', kulak: 5000, jual: 6000, stok: 25, terjual: 10, basi: 0, retur: 0 },
+      { id: 41, name: 'JENTIK MANIS', kulak: 1200, jual: 2000, stok: 30, terjual: 10, basi: 1, retur: 0 },
+      { id: 43, name: 'SUSU DELE', kulak: 800, jual: 1500, stok: 30, terjual: 10, basi: 0, retur: 0 },
+      { id: 44, name: 'DADAR GULUNG', kulak: 1200, jual: 2000, stok: 35, terjual: 15, basi: 1, retur: 0 },
+      { id: 45, name: 'ROTI SIFON', kulak: 1500, jual: 2000, stok: 30, terjual: 10, basi: 0, retur: 0 },
+      { id: 46, name: 'BOLU MAWAR', kulak: 1200, jual: 2000, stok: 30, terjual: 10, basi: 0, retur: 0 },
+      { id: 47, name: 'ROTI MUFFIN', kulak: 1200, jual: 2000, stok: 30, terjual: 10, basi: 0, retur: 0 },
+      { id: 48, name: 'ROTI COKELAT GARIS', kulak: 1200, jual: 2000, stok: 30, terjual: 10, basi: 0, retur: 0 },
+      { id: 49, name: 'ROTI BELAH', kulak: 2500, jual: 3000, stok: 30, terjual: 10, basi: 0, retur: 0 },
+      { id: 50, name: 'ROTI TAMPAH', kulak: 2500, jual: 3000, stok: 25, terjual: 8, basi: 0, retur: 0 },
+      { id: 51, name: 'ROTI AGAR', kulak: 1200, jual: 2000, stok: 30, terjual: 10, basi: 0, retur: 0 },
+      { id: 52, name: 'ROTI KEJU BULAT', kulak: 3000, jual: 3500, stok: 30, terjual: 10, basi: 0, retur: 0 },
+      { id: 53, name: 'ROTI KEJU', kulak: 3500, jual: 4000, stok: 30, terjual: 10, basi: 0, retur: 0 }
     ];
 
+    const DEFAULT_BRANCHES = [
+      { id: 'pusat', name: 'Toko Pusat', isDefault: true, pic: 'Pusat Operasional' },
+      { id: 'serayu', name: 'Cabang Serayu', isDefault: false, pic: 'Pak Joko' }
+    ];
+
+    let branches = [];
+    let currentBranchId = 'pusat';
     let products = [];
     let expenses = [];
     let savedHistories = [];
@@ -567,7 +605,182 @@ Cetak PDF
 
     const formatRp = (num) => 'Rp ' + (Number(num) || 0).toLocaleString('id-ID');
 
-    // 24-HOUR AUTOMATIC DAILY RESET LOGIC
+    function getStorageKey(type, branchId) {
+      return `NR_BRANCH_V4_${type}_${branchId}`;
+    }
+
+    // Cabang Management
+    function loadBranches() {
+      try {
+        const stored = localStorage.getItem('NR_BRANCHES_LIST_V4');
+        if (stored) {
+          branches = JSON.parse(stored);
+        } else {
+          branches = JSON.parse(JSON.stringify(DEFAULT_BRANCHES));
+          localStorage.setItem('NR_BRANCHES_LIST_V4', JSON.stringify(branches));
+        }
+      } catch (e) {
+        branches = JSON.parse(JSON.stringify(DEFAULT_BRANCHES));
+      }
+
+      const lastActive = localStorage.getItem('NR_CURRENT_BRANCH_ID_V4');
+      if (lastActive && branches.some(b => b.id === lastActive)) {
+        currentBranchId = lastActive;
+      } else {
+        currentBranchId = 'pusat';
+      }
+    }
+
+    function saveBranchesList() {
+      localStorage.setItem('NR_BRANCHES_LIST_V4', JSON.stringify(branches));
+    }
+
+    function renderBranchBar() {
+      const container = document.getElementById('branchBarContainer');
+      if (!container) return;
+      container.innerHTML = '';
+
+      branches.forEach(b => {
+        const isActive = b.id === currentBranchId;
+        const isMain = b.id === 'pusat' || b.isDefault;
+
+        const btnWrap = document.createElement('div');
+        if (isActive) {
+          btnWrap.className = "inline-flex items-center bg-[#B91C1C] text-white text-xs font-bold px-3 py-1.5 rounded-xl shadow-sm transition gap-1.5 cursor-pointer ring-2 ring-red-400/40";
+        } else {
+          btnWrap.className = "inline-flex items-center bg-white text-slate-700 border border-slate-200 hover:border-red-300 hover:bg-slate-50 text-xs font-semibold px-3 py-1.5 rounded-xl shadow-2xs transition gap-1.5 cursor-pointer";
+        }
+
+        const icon = isMain ? '🏪' : '📍';
+        btnWrap.innerHTML = `
+          <span class="cursor-pointer flex items-center gap-1" onclick="switchBranch('${b.id}')">
+            <span>${icon}</span>
+            <span>${b.name}</span>
+          </span>
+          ${!isMain ? `
+            <button onclick="event.stopPropagation(); deleteBranch('${b.id}')" class="ml-1 text-slate-400 hover:text-red-600 font-bold px-1 rounded hover:bg-red-50 text-xs transition leading-none" title="Hapus cabang ${b.name}">✕</button>
+          ` : ''}
+        `;
+        container.appendChild(btnWrap);
+      });
+
+      // Tombol Tambah Cabang yang mencolok (Hijau Emerald)
+      const addBtn = document.createElement('button');
+      addBtn.className = "px-3.5 py-1.5 bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold rounded-xl flex items-center gap-1.5 shadow-xs transition cursor-pointer";
+      addBtn.onclick = openAddBranchModal;
+      addBtn.innerHTML = `
+        <span class="text-white font-extrabold text-sm leading-none">+</span>
+        <span>Tambah Cabang</span>
+      `;
+      container.appendChild(addBtn);
+
+      // Perbarui label indikator cabang aktif
+      const currentBranch = branches.find(b => b.id === currentBranchId) || branches[0];
+      const activeBranchName = currentBranch ? currentBranch.name : 'Toko Pusat';
+      const ind = document.getElementById('activeBranchIndicator');
+      if (ind) ind.innerText = `Aktif: ${activeBranchName}`;
+
+      const expSub = document.getElementById('expenseBranchSubtitle');
+      if (expSub) expSub.innerText = `Biaya kemasan & operasional untuk ${activeBranchName}`;
+
+      const repSub = document.getElementById('reportBranchSubtitle');
+      if (repSub) repSub.innerText = `Breakdown performa keuangan ${activeBranchName}`;
+    }
+
+    function switchBranch(branchId) {
+      if (branchId === currentBranchId) return;
+      currentBranchId = branchId;
+      localStorage.setItem('NR_CURRENT_BRANCH_ID_V4', currentBranchId);
+      loadBranchData(currentBranchId);
+      renderBranchBar();
+      renderTable();
+    }
+
+    function openAddBranchModal() {
+      document.getElementById('addBranchForm').reset();
+      document.getElementById('addBranchModal').classList.remove('hidden');
+    }
+
+    function closeAddBranchModal() {
+      document.getElementById('addBranchModal').classList.add('hidden');
+    }
+
+    function submitNewBranch(e) {
+      e.preventDefault();
+      const name = document.getElementById('newBranchName').value.trim();
+      const pic = document.getElementById('newBranchPic').value.trim();
+      const loc = document.getElementById('newBranchLocation').value.trim();
+
+      if (!name) {
+        alert('Mohon masukkan nama cabang.');
+        return;
+      }
+
+      const branchId = 'br_' + Date.now();
+      const newBranch = {
+        id: branchId,
+        name,
+        pic: pic || 'Penanggung Jawab',
+        location: loc || '',
+        isDefault: false
+      };
+
+      branches.push(newBranch);
+      saveBranchesList();
+
+      // Buat database produk terpisah untuk cabang baru ini (default 52 produk)
+      const freshBranchProducts = INITIAL_52_PRODUCTS.map(p => ({
+        ...p,
+        stok: p.stok,
+        terjual: 0,
+        basi: 0,
+        retur: 0
+      }));
+
+      localStorage.setItem(getStorageKey('PROD', branchId), JSON.stringify(freshBranchProducts));
+      localStorage.setItem(getStorageKey('EXP', branchId), JSON.stringify([]));
+      localStorage.setItem(getStorageKey('HIST', branchId), JSON.stringify([]));
+
+      // Otomatis aktifkan cabang baru
+      currentBranchId = branchId;
+      localStorage.setItem('NR_CURRENT_BRANCH_ID_V4', currentBranchId);
+
+      loadBranchData(branchId);
+      renderBranchBar();
+      renderTable();
+      closeAddBranchModal();
+    }
+
+    function deleteBranch(branchId) {
+      const bIndex = branches.findIndex(b => b.id === branchId);
+      if (bIndex === -1) return;
+      const bObj = branches[bIndex];
+
+      if (bObj.isDefault || branchId === 'pusat') {
+        alert('Toko Pusat adalah cabang utama dan tidak dapat dihapus.');
+        return;
+      }
+
+      if (confirm(`Apakah Anda yakin ingin menghapus "${bObj.name}"?\nSemua database produk, penjualan, dan riwayat cabang ini akan dihapus.`)) {
+        localStorage.removeItem(getStorageKey('PROD', branchId));
+        localStorage.removeItem(getStorageKey('EXP', branchId));
+        localStorage.removeItem(getStorageKey('HIST', branchId));
+
+        branches.splice(bIndex, 1);
+        saveBranchesList();
+
+        // Jika cabang yang dihapus sedang aktif, kembali ke Toko Pusat
+        if (currentBranchId === branchId) {
+          currentBranchId = 'pusat';
+          localStorage.setItem('NR_CURRENT_BRANCH_ID_V4', currentBranchId);
+        }
+
+        loadBranchData(currentBranchId);
+        renderBranchBar();
+        renderTable();
+      }
+    }
+
     function getTodayDateString() {
       const now = new Date();
       return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
@@ -575,25 +788,20 @@ Cetak PDF
 
     function checkAndExecuteDailyReset() {
       const today = getTodayDateString();
-      const lastResetDate = localStorage.getItem('NR_LAST_RESET_DATE');
-      const lastResetTimestamp = Number(localStorage.getItem('NR_LAST_RESET_TIMESTAMP')) || 0;
+      const lastResetDate = localStorage.getItem(`NR_LAST_RESET_DATE_${currentBranchId}`);
+      const lastResetTimestamp = Number(localStorage.getItem(`NR_LAST_RESET_TIMESTAMP_${currentBranchId}`)) || 0;
       const nowTs = Date.now();
       const ONE_DAY_MS = 24 * 60 * 60 * 1000;
 
-      // Check if day has changed OR more than 24 hours elapsed
       if (!lastResetDate) {
-        // Initialize if first time
-        localStorage.setItem('NR_LAST_RESET_DATE', today);
-        localStorage.setItem('NR_LAST_RESET_TIMESTAMP', String(nowTs));
-        updateResetIndicators();
+        localStorage.setItem(`NR_LAST_RESET_DATE_${currentBranchId}`, today);
+        localStorage.setItem(`NR_LAST_RESET_TIMESTAMP_${currentBranchId}`, String(nowTs));
         return;
       }
 
       if (lastResetDate !== today || (nowTs - lastResetTimestamp >= ONE_DAY_MS)) {
-        // Auto archive to history before resetting quantities
         autoArchiveDailyHistory(lastResetDate);
 
-        // Reset all products' Qty Stok, Qty Terjual, Basi, and Retur to 0
         products = products.map(p => ({
           ...p,
           stok: 0,
@@ -602,13 +810,11 @@ Cetak PDF
           retur: 0
         }));
 
-        localStorage.setItem('NR_LAST_RESET_DATE', today);
-        localStorage.setItem('NR_LAST_RESET_TIMESTAMP', String(nowTs));
+        localStorage.setItem(`NR_LAST_RESET_DATE_${currentBranchId}`, today);
+        localStorage.setItem(`NR_LAST_RESET_TIMESTAMP_${currentBranchId}`, String(nowTs));
         saveData();
         renderTable();
-        console.log(`[Ngenal Rasa] 24-Hour Reset triggered for ${today}. All quantities reset to 0.`);
       }
-      updateResetIndicators();
     }
 
     function autoArchiveDailyHistory(previousDateLabel) {
@@ -628,7 +834,6 @@ Cetak PDF
         totalBasi += (basi * kulak);
       });
 
-      // Only archive if there was activity
       if (hasTransactions) {
         const totalBeban = getTotalExpenses();
         const netProfit = totalKotor - totalBasi - totalBeban;
@@ -648,106 +853,84 @@ Cetak PDF
       }
     }
 
-    function triggerManualReset() {
-      if (confirm('Apakah Anda yakin ingin me-reset kuantitas seluruh produk (Qty Stok, Qty Terjual, Basi, Retur) menjadi 0 sekarang?\n\n(Data harga kulak & harga jual tetap aman tersimpan)')) {
-        autoArchiveDailyHistory(getTodayDateString());
-        products = products.map(p => ({
-          ...p,
-          stok: 0,
-          terjual: 0,
-          basi: 0,
-          retur: 0
-        }));
-        const nowTs = Date.now();
-        localStorage.setItem('NR_LAST_RESET_DATE', getTodayDateString());
-        localStorage.setItem('NR_LAST_RESET_TIMESTAMP', String(nowTs));
-        saveData();
-        renderTable();
-        updateResetIndicators();
-        alert('Kuantitas berhasil di-reset ke 0 dan snapshot hari ini telah otomatis diarsipkan.');
-      }
-    }
-
-    function updateResetIndicators() {
-      const lastResetDate = localStorage.getItem('NR_LAST_RESET_DATE') || getTodayDateString();
-      const lastResetEl = document.getElementById('lastResetDateText');
-      if (lastResetEl) lastResetEl.innerText = lastResetDate;
-
-      // Calculate time until next midnight (00:00)
-      const now = new Date();
-      const midnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 0);
-      const diffMs = midnight - now;
-
-      const hours = Math.floor(diffMs / (1000 * 60 * 60));
-      const mins = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
-      const secs = Math.floor((diffMs % (1000 * 60)) / 1000);
-
-      const countdownEl = document.getElementById('resetCountdownBadge');
-      if (countdownEl) {
-        countdownEl.innerText = `${String(hours).padStart(2, '0')}:${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')} s/d 00:00`;
-      }
-    }
-
-    function loadData() {
+    function loadBranchData(branchId) {
       try {
-        const storedProd = localStorage.getItem('NR_SIMPLE_SALES_53');
+        const keyProd = getStorageKey('PROD', branchId);
+        const storedProd = localStorage.getItem(keyProd);
         if (storedProd) {
           const parsed = JSON.parse(storedProd);
           if (Array.isArray(parsed) && parsed.length > 0) {
-            products = parsed;
+            products = parsed.filter(item => item.name !== 'NASI (ANA)');
           } else {
-            products = JSON.parse(JSON.stringify(INITIAL_53_PRODUCTS));
+            products = JSON.parse(JSON.stringify(INITIAL_52_PRODUCTS));
           }
         } else {
-          products = JSON.parse(JSON.stringify(INITIAL_53_PRODUCTS));
+          // Fallback legacy Toko Pusat jika pernah simpan
+          if (branchId === 'pusat') {
+            const legacy = localStorage.getItem('NR_SIMPLE_SALES_52_V2');
+            if (legacy) {
+              products = JSON.parse(legacy).filter(item => item.name !== 'NASI (ANA)');
+            } else {
+              products = JSON.parse(JSON.stringify(INITIAL_52_PRODUCTS));
+            }
+          } else {
+            products = JSON.parse(JSON.stringify(INITIAL_52_PRODUCTS));
+          }
         }
 
-        const storedExp = localStorage.getItem('NR_EXPENSES_LIST');
+        const keyExp = getStorageKey('EXP', branchId);
+        const storedExp = localStorage.getItem(keyExp);
         if (storedExp) {
           expenses = JSON.parse(storedExp);
         } else {
           expenses = [];
         }
 
-        const storedHist = localStorage.getItem('NR_SALES_HISTORIES');
+        const keyHist = getStorageKey('HIST', branchId);
+        const storedHist = localStorage.getItem(keyHist);
         if (storedHist) {
           savedHistories = JSON.parse(storedHist);
         } else {
           savedHistories = [];
         }
       } catch (e) {
-        products = JSON.parse(JSON.stringify(INITIAL_53_PRODUCTS));
+        products = JSON.parse(JSON.stringify(INITIAL_52_PRODUCTS));
         expenses = [];
         savedHistories = [];
       }
     }
 
     function saveData() {
-      localStorage.setItem('NR_SIMPLE_SALES_53', JSON.stringify(products));
+      localStorage.setItem(getStorageKey('PROD', currentBranchId), JSON.stringify(products));
+      // simpan juga ke master legacy jika cabang pusat
+      if (currentBranchId === 'pusat') {
+        localStorage.setItem('NR_SIMPLE_SALES_52_V2', JSON.stringify(products));
+      }
       updateCountsAndBadges();
     }
 
     function saveExpenses() {
-      localStorage.setItem('NR_EXPENSES_LIST', JSON.stringify(expenses));
+      localStorage.setItem(getStorageKey('EXP', currentBranchId), JSON.stringify(expenses));
       renderExpenseList();
       renderTable();
     }
 
     function saveHistoriesToStorage() {
-      localStorage.setItem('NR_SALES_HISTORIES', JSON.stringify(savedHistories));
+      localStorage.setItem(getStorageKey('HIST', currentBranchId), JSON.stringify(savedHistories));
       renderHistoryList();
     }
 
     function resetDefaults() {
-      if (confirm('Reset seluruh nilai tabel dan daftar pengeluaran ke master produk default 53 jajanan pasar?')) {
-        products = JSON.parse(JSON.stringify(INITIAL_53_PRODUCTS));
+      const curBranchObj = branches.find(b => b.id === currentBranchId);
+      const bName = curBranchObj ? curBranchObj.name : 'cabang aktif';
+      if (confirm(`Reset seluruh nilai tabel dan daftar pengeluaran untuk ${bName} ke master default 52 jajanan pasar?`)) {
+        products = JSON.parse(JSON.stringify(INITIAL_52_PRODUCTS));
         expenses = [];
-        localStorage.setItem('NR_LAST_RESET_DATE', getTodayDateString());
-        localStorage.setItem('NR_LAST_RESET_TIMESTAMP', String(Date.now()));
+        localStorage.setItem(`NR_LAST_RESET_DATE_${currentBranchId}`, getTodayDateString());
+        localStorage.setItem(`NR_LAST_RESET_TIMESTAMP_${currentBranchId}`, String(Date.now()));
         saveData();
         saveExpenses();
         renderTable();
-        updateResetIndicators();
       }
     }
 
@@ -774,7 +957,6 @@ Cetak PDF
       const fastBtn = document.getElementById('filterFastBtn');
       const slowBtn = document.getElementById('filterSlowBtn');
 
-      // Update button styling
       allBtn.className = filter === 'all' 
         ? "px-3 py-1.5 text-xs font-bold rounded-xl transition bg-slate-900 text-white shadow-xs" 
         : "px-3 py-1.5 text-xs font-bold rounded-xl transition bg-white text-slate-700 border border-slate-200 hover:bg-slate-50";
@@ -802,8 +984,8 @@ Cetak PDF
       document.getElementById('countAllBadge').innerText = products.length;
       document.getElementById('countFastBadge').innerText = countFast;
       document.getElementById('countSlowBadge').innerText = countSlow;
-      document.getElementById('headerProductCount').innerText = products.length;
-      document.getElementById('footProductCount').innerText = `${products.length} Varian`;
+      const footCountEl = document.getElementById('footProductCount');
+      if (footCountEl) footCountEl.innerText = `${products.length} Varian`;
     }
 
     function getTotalExpenses() {
@@ -813,7 +995,7 @@ Cetak PDF
     function deleteProduct(index) {
       const prod = products[index];
       if (!prod) return;
-      if (confirm(`Hapus produk "${prod.name}" dari tabel penjualan?`)) {
+      if (confirm(`Hapus produk "${prod.name}" dari cabang ini?`)) {
         products.splice(index, 1);
         saveData();
         renderTable();
@@ -836,7 +1018,6 @@ Cetak PDF
       let totalHppAll = 0;
       let countVisible = 0;
 
-      // Filtered display
       products.forEach((p, index) => {
         const kulak = Number(p.kulak) || 0;
         const jual = Number(p.jual) || 0;
@@ -862,12 +1043,10 @@ Cetak PDF
         totalOmzetAll += omzet;
         totalHppAll += hpp;
 
-        // Apply search
         if (search && !p.name.toLowerCase().includes(search)) {
           return;
         }
 
-        // Apply category filter
         if (currentMovingFilter === 'fast' && !isFastMoving(p)) return;
         if (currentMovingFilter === 'slow' && !isSlowMoving(p)) return;
 
@@ -939,9 +1118,7 @@ Cetak PDF
         tbody.innerHTML = `<tr><td colspan="11" class="py-8 text-center text-slate-400 text-xs">Tidak ada varian jajanan yang cocok dengan kriteria filter.</td></tr>`;
       }
 
-      // Hitung Pengeluaran Operasional
       const totalExpense = getTotalExpenses();
-      // LABA BERSIH AKHIR = Total Laba Kotor - Total Loss Basi - Beban Operasional
       const finalNetProfit = totalLabaKotorAll - totalLossBasiAll - totalExpense;
 
       // Update Summary Cards
@@ -999,7 +1176,6 @@ Cetak PDF
         lbEl.className = `py-2.5 px-3 text-right font-black text-xs ${labaBersih >= 0 ? 'text-[#15803D] bg-emerald-100/40' : 'text-red-700 bg-red-100/40'} whitespace-nowrap`;
       }
 
-      // Re-sum & refresh summary
       let totalStokAll = 0, totalTerjualAll = 0, totalBasiAll = 0, totalReturAll = 0;
       let totalMarginSum = 0, totalLabaKotorAll = 0, totalLossBasiAll = 0;
       let totalOmzetAll = 0, totalHppAll = 0;
@@ -1161,7 +1337,9 @@ Cetak PDF
       document.getElementById('saveHistoryModal').classList.remove('hidden');
       const now = new Date();
       const dateStr = now.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' });
-      document.getElementById('historyNote').value = `Rekap Penjualan ${selectedSavePeriod} (${dateStr})`;
+      const curBranchObj = branches.find(b => b.id === currentBranchId);
+      const bName = curBranchObj ? curBranchObj.name : 'Toko';
+      document.getElementById('historyNote').value = `Rekap ${bName} ${selectedSavePeriod} (${dateStr})`;
       renderHistoryList();
     }
 
@@ -1181,7 +1359,9 @@ Cetak PDF
       });
       const now = new Date();
       const dateStr = now.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' });
-      document.getElementById('historyNote').value = `Rekap Penjualan ${period} (${dateStr})`;
+      const curBranchObj = branches.find(b => b.id === currentBranchId);
+      const bName = curBranchObj ? curBranchObj.name : 'Toko';
+      document.getElementById('historyNote').value = `Rekap ${bName} ${period} (${dateStr})`;
     }
 
     function commitSaveHistory() {
@@ -1201,10 +1381,13 @@ Cetak PDF
 
       const totalBeban = getTotalExpenses();
       const netProfit = totalKotor - totalBasi - totalBeban;
-      const note = document.getElementById('historyNote').value.trim() || `Rekap ${selectedSavePeriod}`;
+      const curBranchObj = branches.find(b => b.id === currentBranchId);
+      const bName = curBranchObj ? curBranchObj.name : 'Toko';
+      const note = document.getElementById('historyNote').value.trim() || `Rekap ${bName} ${selectedSavePeriod}`;
 
       const historyItem = {
         id: Date.now(),
+        branchName: bName,
         date: new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }),
         period: selectedSavePeriod,
         note,
@@ -1215,7 +1398,7 @@ Cetak PDF
 
       savedHistories.unshift(historyItem);
       saveHistoriesToStorage();
-      alert('Riwayat rekapitulasi berhasil disimpan!');
+      alert(`Riwayat rekapitulasi untuk ${bName} berhasil disimpan!`);
     }
 
     function renderHistoryList() {
@@ -1242,7 +1425,7 @@ Cetak PDF
     }
 
     function clearAllHistory() {
-      if (confirm('Hapus semua arsip riwayat rekap?')) {
+      if (confirm('Hapus semua arsip riwayat rekap di cabang ini?')) {
         savedHistories = [];
         saveHistoriesToStorage();
       }
@@ -1288,7 +1471,6 @@ Cetak PDF
 
       periodLabel.innerText = label;
 
-      // Hitung angka laporan
       let baseOmzet = 0;
       let baseHpp = 0;
       let baseKotor = 0;
@@ -1325,7 +1507,6 @@ Cetak PDF
       document.getElementById('repCalcExpense').innerText = `- ${formatRp(repExpense)}`;
       document.getElementById('repNetProfit').innerText = formatRp(repNet);
 
-      // Top Fast & Top Basi List
       const sortedFast = [...products].sort((a, b) => (Number(b.terjual) || 0) - (Number(a.terjual) || 0)).slice(0, 3);
       const topFastList = document.getElementById('repTopFastList');
       topFastList.innerHTML = sortedFast.map((p, i) => `
@@ -1346,11 +1527,12 @@ Cetak PDF
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-      loadData();
+      loadBranches();
+      loadBranchData(currentBranchId);
       checkAndExecuteDailyReset();
+      renderBranchBar();
       renderTable();
 
-      // Input delegation for instant table reactive calculation
       document.getElementById('tableBody').addEventListener('input', (e) => {
         const target = e.target;
         const idx = target.getAttribute('data-idx');
@@ -1362,15 +1544,9 @@ Cetak PDF
         }
       });
 
-      // Realtime Search
       document.getElementById('searchInput').addEventListener('input', () => {
         renderTable();
       });
-
-      // Regular check interval for 24h reset & countdown every second
-      setInterval(() => {
-        updateResetIndicators();
-      }, 1000);
 
       setInterval(() => {
         checkAndExecuteDailyReset();
