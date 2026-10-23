@@ -90,7 +90,7 @@
 <span>💾 Simpan Riwayat</span>
 </button>
 <button class="px-3 py-2 bg-[#B91C1C] hover:bg-red-800 text-white text-xs font-bold rounded-xl flex items-center gap-1.5 transition shadow-sm" onclick="openReportModal()">
-<svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
 <span>📊 Rekapitulasi Laporan</span>
 </button>
 <button class="px-3 py-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold rounded-xl flex items-center gap-1.5 transition shadow-sm" onclick="window.print()">
@@ -142,7 +142,7 @@
 <div class="flex items-center gap-1.5 flex-wrap justify-center sm:justify-start">
 <span class="text-xs font-bold text-slate-500 mr-1 hidden sm:inline">Filter Kategori:</span>
 <button class="px-3 py-1.5 text-xs font-bold rounded-xl transition bg-slate-900 text-white shadow-xs" id="filterAllBtn" onclick="setMovingFilter('all')">
-Semua Produk (<span id="countAllBadge">52</span>)
+Semua Produk (<span id="countAllBadge">56</span>)
 </button>
 <button class="px-3 py-1.5 text-xs font-bold rounded-xl transition bg-white text-emerald-700 border border-emerald-200 hover:bg-emerald-50" id="filterFastBtn" onclick="setMovingFilter('fast')">
 🔥 Fast Moving (<span id="countFastBadge">0</span>)
@@ -217,7 +217,7 @@ Aksi
 <tfoot class="bg-slate-50 border-t-2 border-slate-200 text-xs font-bold text-slate-900">
 <tr>
 <td class="py-3.5 px-3 sticky left-0 bg-slate-50 z-10 border-r border-slate-200">
-TOTAL (<span id="footProductCount">52 Varian</span>)
+TOTAL (<span id="footProductCount">56 Varian</span>)
 </td>
 <td class="py-3.5 px-2 text-center text-slate-500 font-normal">-</td>
 <td class="py-3.5 px-2 text-center text-slate-500 font-normal">-</td>
@@ -533,8 +533,12 @@ Cetak PDF
 </div>
 </div>
 <script>
-    // 52 MASTER VARIAN JAJANAN PASAR NGENAL RASA (SEMUA QTY AWAL & TERJUAL DEFAULT 0 SIAP INPUT HARIAN)
-    const INITIAL_52_PRODUCTS = [
+    // 56 MASTER VARIAN JAJANAN PASAR NGENAL RASA (4 PRODUK BARU DI ATAS)
+    const INITIAL_56_PRODUCTS = [
+      { id: 101, name: 'SERABI', kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+      { id: 102, name: 'ONGOL-ONGOL', kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+      { id: 103, name: 'SOSIS SOLO', kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+      { id: 104, name: 'PEYEK', kulak: 2500, jual: 3000, stok: 0, terjual: 0, basi: 0, retur: 0 },
       { id: 1, name: 'KUE SUS', kulak: 2000, jual: 3000, stok: 0, terjual: 0, basi: 0, retur: 0 },
       { id: 2, name: 'BAKPAO', kulak: 2200, jual: 3000, stok: 0, terjual: 0, basi: 0, retur: 0 },
       { id: 3, name: 'BOLEN PISANG', kulak: 2200, jual: 3000, stok: 0, terjual: 0, basi: 0, retur: 0 },
@@ -734,8 +738,8 @@ Cetak PDF
       branches.push(newBranch);
       saveBranchesList();
 
-      // Buat database produk terpisah untuk cabang baru ini (default 52 produk, stok & terjual 0)
-      const freshBranchProducts = INITIAL_52_PRODUCTS.map(p => ({
+      // Buat database produk terpisah untuk cabang baru ini (default 56 produk, stok & terjual 0)
+      const freshBranchProducts = INITIAL_56_PRODUCTS.map(p => ({
         ...p,
         stok: 0,
         terjual: 0,
@@ -875,9 +879,39 @@ Cetak PDF
       }
     }
 
+    // Pastikan 4 varian jajanan baru berada di urutan paling atas
+    function ensureTopProducts(productList) {
+      const topDefaults = [
+        { id: 101, name: 'SERABI', kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+        { id: 102, name: 'ONGOL-ONGOL', kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+        { id: 103, name: 'SOSIS SOLO', kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+        { id: 104, name: 'PEYEK', kulak: 2500, jual: 3000, stok: 0, terjual: 0, basi: 0, retur: 0 }
+      ];
+
+      const existingNames = new Set(productList.map(p => p.name));
+      const missingTop = [];
+
+      topDefaults.forEach(def => {
+        const found = productList.find(p => p.name === def.name);
+        if (!found) {
+          missingTop.push(def);
+        }
+      });
+
+      // Filter yang bukan 4 item ini
+      const remainingList = productList.filter(p => !topDefaults.some(t => t.name === p.name));
+      // Ambil objek 4 item teratas (baik yang sudah ada atau default baru)
+      const topList = topDefaults.map(def => {
+        const exist = productList.find(p => p.name === def.name);
+        return exist ? exist : def;
+      });
+
+      return [...topList, ...remainingList];
+    }
+
     // Penyesuaian harga revisi master spesifik
     function syncRevisedPrices(productList) {
-      return productList.map(item => {
+      const updated = productList.map(item => {
         if (item.name === 'KUE CUM-CUM') {
           return { ...item, kulak: 1200, jual: 2000 };
         }
@@ -887,8 +921,21 @@ Cetak PDF
         if (item.name === 'KUE LUMPUR') {
           return { ...item, kulak: 1200, jual: 2000 };
         }
+        if (item.name === 'SERABI') {
+          return { ...item, kulak: 1200, jual: 2000 };
+        }
+        if (item.name === 'ONGOL-ONGOL') {
+          return { ...item, kulak: 1200, jual: 2000 };
+        }
+        if (item.name === 'SOSIS SOLO') {
+          return { ...item, kulak: 1200, jual: 2000 };
+        }
+        if (item.name === 'PEYEK') {
+          return { ...item, kulak: 2500, jual: 3000 };
+        }
         return item;
       });
+      return ensureTopProducts(updated);
     }
 
     function loadBranchData(branchId) {
@@ -905,11 +952,11 @@ Cetak PDF
           if (Array.isArray(parsed) && parsed.length > 0) {
             products = syncRevisedPrices(parsed.filter(item => item.name !== 'NASI (ANA)'));
           } else {
-            products = JSON.parse(JSON.stringify(INITIAL_52_PRODUCTS));
+            products = JSON.parse(JSON.stringify(INITIAL_56_PRODUCTS));
           }
         } else {
-          // Default ke master 52 produk dengan stok dan terjual 0
-          products = JSON.parse(JSON.stringify(INITIAL_52_PRODUCTS));
+          // Default ke master 56 produk dengan stok dan terjual 0
+          products = JSON.parse(JSON.stringify(INITIAL_56_PRODUCTS));
         }
 
         localStorage.setItem(keyProd, JSON.stringify(products));
@@ -930,7 +977,7 @@ Cetak PDF
           savedHistories = [];
         }
       } catch (e) {
-        products = JSON.parse(JSON.stringify(INITIAL_52_PRODUCTS));
+        products = JSON.parse(JSON.stringify(INITIAL_56_PRODUCTS));
         expenses = [];
         savedHistories = [];
       }
@@ -955,8 +1002,8 @@ Cetak PDF
     function resetDefaults() {
       const curBranchObj = branches.find(b => b.id === currentBranchId);
       const bName = curBranchObj ? curBranchObj.name : 'cabang aktif';
-      if (confirm(`Reset seluruh nilai tabel dan daftar pengeluaran untuk ${bName} ke master default 52 jajanan pasar (Stok & Terjual = 0)?`)) {
-        products = JSON.parse(JSON.stringify(INITIAL_52_PRODUCTS));
+      if (confirm(`Reset seluruh nilai tabel dan daftar pengeluaran untuk ${bName} ke master default 56 jajanan pasar (Stok & Terjual = 0)?`)) {
+        products = JSON.parse(JSON.stringify(INITIAL_56_PRODUCTS));
         expenses = [];
         localStorage.setItem(`NR_LAST_RESET_DATE_${currentBranchId}`, getTodayDateString());
         localStorage.setItem(`NR_LAST_RESET_TIMESTAMP_${currentBranchId}`, String(Date.now()));
