@@ -142,7 +142,7 @@
 <div class="flex items-center gap-1.5 flex-wrap justify-center sm:justify-start">
 <span class="text-xs font-bold text-slate-500 mr-1 hidden sm:inline">Filter Kategori:</span>
 <button class="px-3 py-1.5 text-xs font-bold rounded-xl transition bg-slate-900 text-white shadow-xs" id="filterAllBtn" onclick="setMovingFilter('all')">
-Semua Produk (<span id="countAllBadge">56</span>)
+Semua Produk (<span id="countAllBadge">59</span>)
 </button>
 <button class="px-3 py-1.5 text-xs font-bold rounded-xl transition bg-white text-emerald-700 border border-emerald-200 hover:bg-emerald-50" id="filterFastBtn" onclick="setMovingFilter('fast')">
 🔥 Fast Moving (<span id="countFastBadge">0</span>)
@@ -217,7 +217,7 @@ Aksi
 <tfoot class="bg-slate-50 border-t-2 border-slate-200 text-xs font-bold text-slate-900">
 <tr>
 <td class="py-3.5 px-3 sticky left-0 bg-slate-50 z-10 border-r border-slate-200">
-TOTAL (<span id="footProductCount">56 Varian</span>)
+TOTAL (<span id="footProductCount">59 Varian</span>)
 </td>
 <td class="py-3.5 px-2 text-center text-slate-500 font-normal">-</td>
 <td class="py-3.5 px-2 text-center text-slate-500 font-normal">-</td>
@@ -533,12 +533,15 @@ Cetak PDF
 </div>
 </div>
 <script>
-    // 56 MASTER VARIAN JAJANAN PASAR NGENAL RASA (4 PRODUK BARU DI ATAS)
+    // 59 MASTER VARIAN JAJANAN PASAR NGENAL RASA (7 PRODUK DI ATAS)
     const INITIAL_56_PRODUCTS = [
       { id: 101, name: 'SERABI', kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
       { id: 102, name: 'ONGOL-ONGOL', kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
       { id: 103, name: 'SOSIS SOLO', kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
       { id: 104, name: 'PEYEK', kulak: 2500, jual: 3000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+      { id: 105, name: 'ANEKA JENANG', kulak: 2300, jual: 2500, stok: 0, terjual: 0, basi: 0, retur: 0 },
+      { id: 106, name: 'KETAN PUTIH', kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+      { id: 107, name: 'MENDUT', kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
       { id: 1, name: 'KUE SUS', kulak: 2000, jual: 3000, stok: 0, terjual: 0, basi: 0, retur: 0 },
       { id: 2, name: 'BAKPAO', kulak: 2200, jual: 3000, stok: 0, terjual: 0, basi: 0, retur: 0 },
       { id: 3, name: 'BOLEN PISANG', kulak: 2200, jual: 3000, stok: 0, terjual: 0, basi: 0, retur: 0 },
@@ -738,7 +741,7 @@ Cetak PDF
       branches.push(newBranch);
       saveBranchesList();
 
-      // Buat database produk terpisah untuk cabang baru ini (default 56 produk, stok & terjual 0)
+      // Buat database produk terpisah untuk cabang baru ini (default 59 produk, stok & terjual 0)
       const freshBranchProducts = INITIAL_56_PRODUCTS.map(p => ({
         ...p,
         stok: 0,
@@ -879,28 +882,21 @@ Cetak PDF
       }
     }
 
-    // Pastikan 4 varian jajanan baru berada di urutan paling atas
+    // Pastikan 7 varian jajanan teratas berada di urutan paling atas secara tepat
     function ensureTopProducts(productList) {
       const topDefaults = [
         { id: 101, name: 'SERABI', kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
         { id: 102, name: 'ONGOL-ONGOL', kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
         { id: 103, name: 'SOSIS SOLO', kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
-        { id: 104, name: 'PEYEK', kulak: 2500, jual: 3000, stok: 0, terjual: 0, basi: 0, retur: 0 }
+        { id: 104, name: 'PEYEK', kulak: 2500, jual: 3000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+        { id: 105, name: 'ANEKA JENANG', kulak: 2300, jual: 2500, stok: 0, terjual: 0, basi: 0, retur: 0 },
+        { id: 106, name: 'KETAN PUTIH', kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+        { id: 107, name: 'MENDUT', kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 }
       ];
 
-      const existingNames = new Set(productList.map(p => p.name));
-      const missingTop = [];
-
-      topDefaults.forEach(def => {
-        const found = productList.find(p => p.name === def.name);
-        if (!found) {
-          missingTop.push(def);
-        }
-      });
-
-      // Filter yang bukan 4 item ini
+      // Filter yang bukan salah satu dari 7 item ini
       const remainingList = productList.filter(p => !topDefaults.some(t => t.name === p.name));
-      // Ambil objek 4 item teratas (baik yang sudah ada atau default baru)
+      // Ambil objek 7 item teratas (baik yang sudah ada atau default baru)
       const topList = topDefaults.map(def => {
         const exist = productList.find(p => p.name === def.name);
         return exist ? exist : def;
@@ -933,6 +929,15 @@ Cetak PDF
         if (item.name === 'PEYEK') {
           return { ...item, kulak: 2500, jual: 3000 };
         }
+        if (item.name === 'ANEKA JENANG') {
+          return { ...item, kulak: 2300, jual: 2500 };
+        }
+        if (item.name === 'KETAN PUTIH') {
+          return { ...item, kulak: 1200, jual: 2000 };
+        }
+        if (item.name === 'MENDUT') {
+          return { ...item, kulak: 1200, jual: 2000 };
+        }
         return item;
       });
       return ensureTopProducts(updated);
@@ -955,7 +960,7 @@ Cetak PDF
             products = JSON.parse(JSON.stringify(INITIAL_56_PRODUCTS));
           }
         } else {
-          // Default ke master 56 produk dengan stok dan terjual 0
+          // Default ke master 59 produk dengan stok dan terjual 0
           products = JSON.parse(JSON.stringify(INITIAL_56_PRODUCTS));
         }
 
@@ -1002,7 +1007,7 @@ Cetak PDF
     function resetDefaults() {
       const curBranchObj = branches.find(b => b.id === currentBranchId);
       const bName = curBranchObj ? curBranchObj.name : 'cabang aktif';
-      if (confirm(`Reset seluruh nilai tabel dan daftar pengeluaran untuk ${bName} ke master default 56 jajanan pasar (Stok & Terjual = 0)?`)) {
+      if (confirm(`Reset seluruh nilai tabel dan daftar pengeluaran untuk ${bName} ke master default 59 jajanan pasar (Stok & Terjual = 0)?`)) {
         products = JSON.parse(JSON.stringify(INITIAL_56_PRODUCTS));
         expenses = [];
         localStorage.setItem(`NR_LAST_RESET_DATE_${currentBranchId}`, getTodayDateString());
