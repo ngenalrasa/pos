@@ -68,72 +68,25 @@
     -moz-appearance: textfield;
   }
 </style>
-<style data-purpose="print-styling">
+<style>
   @media print {
     body {
-      background: #ffffff !important;
-      padding: 0 !important;
-      color: #000 !important;
+      background: white !important;
+      color: black !important;
     }
-    header, #branch-pills-container, section, .no-print, #mitra-share-panel, button, input {
-      /* Handled selectively */
+    #header-export-date-badge {
+      display: inline-flex !important;
     }
-    .print-only-header {
-      display: block !important;
-    }
-    .screen-only {
-      display: none !important;
-    }
-    #pos-table th, #pos-table td {
-      border: 1px solid #cbd5e1 !important;
-      padding: 4px 6px !important;
-      font-size: 9px !important;
-    }
-    .pill-input {
-      border: none !important;
-      box-shadow: none !important;
-      font-size: 9px !important;
-      padding: 0 !important;
-      text-align: center !important;
-      background: transparent !important;
-    }
-    @page {
-      size: A4 portrait;
-      margin: 10mm 8mm;
-    }
-  }
-  .print-only-header {
-    display: none;
   }
 </style>
 </head>
 <body class="bg-[#f4f7f6] text-slate-800 antialiased font-sans pb-16 selection:bg-rose-100 selection:text-brand-red">
-<!-- BEGIN: Dedicated Print / PDF Header (Explicit Full Date) -->
-<div class="print-only-header w-full pb-3 mb-3 border-b-2 border-slate-800">
-<div class="flex items-center justify-between gap-4">
-<div class="w-44">
-<img alt="Ngenal Rasa Logo" class="h-10 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDqWvsi_6huHpp8SdRMeZcDk7MKMFx3GCWoo3d7H6kmHEAYErKC21MjTsUsIS0e4b87DSuD7tOmcr991DTcwCC7UwQsOp3apTEYNwhnoxzQ7UeE-YTvhgt2dLjRB54RYhN5YmwEJga_vtzeGx9BGdfFID5nuFL4VgEwhVsmWkLQT7e0cXhF8vC3xO3UmebU78CE9WBoeBKj-0-AYweXqwo7r-coMAMkqJZiMdrFiJGAFJvWEYtOSaEaOh3KGaE-LmL9Ww"/>
-</div>
-<div class="text-right">
-<h1 class="text-base font-black text-slate-900 uppercase tracking-wide">LAPORAN PENJUALAN HARIAN &amp; BAGI HASIL</h1>
-<div class="text-xs font-bold text-emerald-800" id="print-header-branch">CABANG: TOKO PUSAT (DB_PUSAT)</div>
-<div class="text-xs font-extrabold text-red-700 mt-0.5" id="print-header-date">Tanggal Laporan: -</div>
-</div>
-</div>
-<div class="grid grid-cols-4 gap-2 mt-2 pt-2 border-t border-slate-300 text-[10px]">
-<div>Omzet: <strong class="text-slate-900" id="print-stat-omzet">Rp 0</strong></div>
-<div>HPP/Modal: <strong class="text-slate-900" id="print-stat-modal">Rp 0</strong></div>
-<div>Laba Bersih: <strong class="text-emerald-800" id="print-stat-bersih">Rp 0</strong></div>
-<div>Bagi Mitra: <strong class="text-blue-800" id="print-stat-mitra">Rp 0</strong></div>
-</div>
-</div>
-<!-- END: Dedicated Print / PDF Header -->
 <!-- BEGIN: MainHeader -->
-<header class="bg-white border-b border-slate-200 pt-4 pb-3 px-4 shadow-sm screen-only">
+<header class="bg-white border-b border-slate-200 pt-4 pb-3 px-4 shadow-sm">
 <div class="max-w-7xl mx-auto flex flex-col items-center">
 <!-- Brand Logo Centered -->
 <div class="w-48 sm:w-56 mb-2">
-<img alt="Ngenal Rasa Logo" class="w-full h-auto object-contain mx-auto" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDqWvsi_6huHpp8SdRMeZcDk7MKMFx3GCWoo3d7H6kmHEAYErKC21MjTsUsIS0e4b87DSuD7tOmcr991DTcwCC7UwQsOp3apTEYNwhnoxzQ7UeE-YTvhgt2dLjRB54RYhN5YmwEJga_vtzeGx9BGdfFID5nuFL4VgEwhVsmWkLQT7e0cXhF8vC3xO3UmebU78CE9WBoeBKj-0-AYweXqwo7r-coMAMkqJZiMdrFiJGAFJvWEYtOSaEaOh3KGaE-LmL9Ww"/>
+<img alt="Ngenal Rasa Logo" class="w-full h-auto object-contain mx-auto" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5ZSAsvKfpfLVlJpiXGyQXb0mJC5jFReixOMDbQjldZZ9_P_8MbtQVyKXu84AvMdAVUBjWqaTLoLZL5nWtOYdZZ7qeM2bwZwkuj-EfcxjvVFKSRjM-JgAub3wKagrgGjBeca7LtRQsfPZtmcu2hPJYspoj75ZMdYDRMnZp_9SnGTZ6YEeNdj1Ex_nI_iug-q3L15CL4qqUJUWm3RTWPSgoh7-IoEd34oaJ_5oOfN9dUDZatHv-54VcwLiJqnKPDf75Tg"/>
 </div>
 <!-- Cloud Status & Branch Info Header -->
 <div class="flex items-center gap-2 mb-2 text-xs font-semibold">
@@ -149,16 +102,23 @@
 <div class="flex flex-wrap items-center justify-center gap-2 mb-2" id="branch-pills-container">
 <!-- Dynamic branches -->
 </div>
-<!-- Database status tag indicator -->
+<!-- Database status tag indicator & Hari Tanggal Bulan Tahun saat Export/Tampilan -->
+<div class="flex flex-wrap items-center justify-center gap-2 mb-1">
 <div class="text-[11px] text-slate-500 flex items-center gap-1.5 bg-slate-100 px-3 py-0.5 rounded-full">
 <span>Koneksi DB Terisolasi:</span>
 <code class="font-bold text-slate-700" id="active-db-badge">DB_PUSAT</code>
+</div>
+<!-- TANGGAL LENGKAP: HARI, TANGGAL BULAN TAHUN -->
+<div class="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full text-xs font-bold bg-red-50 text-red-600 border border-red-200 shadow-sm" id="header-export-date-badge">
+<span>📅</span>
+<span id="export-full-date-display">Senin, 26 Oktober 2026</span>
+</div>
 </div>
 </div>
 </header>
 <!-- END: MainHeader -->
 <!-- BEGIN: ToolbarContainer -->
-<section class="max-w-7xl mx-auto px-3 sm:px-4 mt-3 screen-only">
+<section class="max-w-7xl mx-auto px-3 sm:px-4 mt-3">
 <div class="bg-white p-3 rounded-2xl border border-slate-200/80 shadow-sm space-y-2.5">
 <!-- Search and Add Product Bar -->
 <div class="grid grid-cols-1 sm:grid-cols-12 gap-2">
@@ -185,9 +145,7 @@
 <button class="flex items-center gap-1 px-3 py-1.5 rounded-xl bg-[#b91c1c] hover:bg-[#991b1b] text-white text-xs font-semibold shadow-sm transition active:scale-95" onclick="openRekapitulasiModal()" type="button">
 <span>📊</span> Rekapitulasi Laporan
       </button>
-<button class="flex items-center gap-1 px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold shadow-sm transition active:scale-95" onclick="cetakLaporanA4()" type="button">
-<span>🖨️</span> Cetak A4
-      </button>
+<button class="flex items-center gap-1 px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold shadow-sm transition active:scale-95" onclick="cetakLaporanA4()" type="button"><span>🖨️</span> Cetak A4 / Export PDF</button><span class="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-slate-100 border border-slate-200 text-[11px] text-slate-600 font-medium" id="toolbar-print-date-display"><span>🗓️</span><span id="toolbar-print-timestamp">-</span></span>
 <button class="flex items-center gap-1 px-3 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white text-xs font-semibold shadow-sm transition active:scale-95" onclick="confirmResetHarian()" type="button">
 <span>🔄</span> Reset Harian (Set 0)
       </button>
@@ -199,7 +157,7 @@
 </section>
 <!-- END: ToolbarContainer -->
 <!-- BEGIN: StatsMetricCards -->
-<section class="max-w-7xl mx-auto px-3 sm:px-4 mt-3 screen-only">
+<section class="max-w-7xl mx-auto px-3 sm:px-4 mt-3">
 <!-- Grid of 6 Main Cards -->
 <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-3">
 <!-- 1. Total Omzet (Penjualan) -->
@@ -299,13 +257,13 @@
 </section>
 <!-- END: StatsMetricCards -->
 <!-- BEGIN: FilterSection -->
-<section class="max-w-7xl mx-auto px-3 sm:px-4 mt-3 screen-only">
+<section class="max-w-7xl mx-auto px-3 sm:px-4 mt-3">
 <div class="bg-white p-2.5 rounded-2xl border border-slate-200 shadow-sm flex flex-wrap items-center justify-between gap-2 text-xs">
 <!-- Filter Buttons Left -->
 <div class="flex flex-wrap items-center gap-1.5">
 <span class="text-slate-500 font-medium text-xs">Filter Kategori:</span>
 <button class="px-2.5 py-1 rounded-full bg-slate-900 text-white text-[11px] font-bold shadow-sm transition" id="btn-filter-all" onclick="applyFilter('all')">
-        Semua Produk (<span id="badge-total-produk">67</span>)
+        Semua Produk (<span id="badge-total-produk">69</span>)
       </button>
 <button class="px-2.5 py-1 rounded-full bg-emerald-50 border border-emerald-300 text-emerald-800 hover:bg-emerald-100 text-[11px] font-semibold transition" id="btn-filter-fast" onclick="applyFilter('fast')">
         🔥 Fast Moving (<span id="badge-fast-moving">0</span>)
@@ -327,7 +285,7 @@
 </section>
 <!-- END: FilterSection -->
 <!-- BEGIN: MainProductTable -->
-<main class="max-w-7xl mx-auto px-3 sm:px-4 mt-3">
+<main class="max-w-7xl mx-auto px-3 sm:px-4 mt-3"><div class="p-4 mb-3 border-b-2 border-slate-800 bg-white hidden" id="print-a4-header"><div class="flex items-center justify-between"><div class="flex items-center gap-3"><img alt="Ngenal Rasa" class="h-10 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5ZSAsvKfpfLVlJpiXGyQXb0mJC5jFReixOMDbQjldZZ9_P_8MbtQVyKXu84AvMdAVUBjWqaTLoLZL5nWtOYdZZ7qeM2bwZwkuj-EfcxjvVFKSRjM-JgAub3wKagrgGjBeca7LtRQsfPZtmcu2hPJYspoj75ZMdYDRMnZp_9SnGTZ6YEeNdj1Ex_nI_iug-q3L15CL4qqUJUWm3RTWPSgoh7-IoEd34oaJ_5oOfN9dUDZatHv-54VcwLiJqnKPDf75Tg"/><div><h1 class="text-base font-black tracking-wide text-slate-900 uppercase">Laporan Penjualan &amp; Rekapitulasi POS Jajanan Pasar</h1><p class="text-xs text-slate-600 font-semibold">Ngenal Rasa — Cabang: <span class="font-black text-slate-900 uppercase" id="print-branch-title">Toko Pusat</span></p></div></div><div class="text-right text-xs"><div class="font-extrabold text-slate-900" id="print-full-date-badge">-</div><div class="text-[10px] text-slate-500 font-medium">Dokumen Sah Laporan Rekap Harian A4 / PDF</div></div></div></div>
 <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
 <div class="overflow-x-auto">
 <table class="w-full text-left text-xs whitespace-nowrap border-collapse" id="pos-table">
@@ -344,7 +302,7 @@
 <th class="py-2.5 px-2 text-center min-w-[75px] uppercase" scope="col">LABA KOTOR</th>
 <th class="py-2.5 px-2 text-center min-w-[75px] uppercase text-emerald-600" scope="col">LABA BERSIH</th>
 <th class="py-2.5 px-2 text-center min-w-[75px] uppercase text-blue-600" scope="col">BAGI MITRA</th>
-<th class="py-2.5 px-2 text-center min-w-[40px] uppercase screen-only" scope="col">AKSI</th>
+<th class="py-2.5 px-2 text-center min-w-[40px] uppercase" scope="col">AKSI</th>
 </tr>
 </thead>
 <tbody class="divide-y divide-slate-100 font-medium" id="product-table-body">
@@ -384,7 +342,7 @@
 </div>
 <div class="flex items-center gap-1.5 text-xs text-slate-600 bg-white px-2.5 py-1 rounded-lg border border-slate-200/80 w-fit">
 <span>📅</span>
-<span class="font-medium">Tanggal Laporan Lengkap:</span>
+<span class="font-medium">Tanggal Periode Aktif:</span>
 <span class="font-bold text-emerald-800" id="active-rekap-date-display">-</span>
 </div>
 </div>
@@ -440,14 +398,9 @@
 <button class="px-4 py-1.5 rounded-xl border border-slate-300 text-xs font-semibold text-slate-700 hover:bg-slate-100 transition" onclick="closeRekapitulasiModal()">
         Tutup
       </button>
-<div class="flex items-center gap-2">
-<button class="px-3.5 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-xs font-semibold text-white shadow-sm transition active:scale-95 flex items-center gap-1" onclick="cetakLaporanA4()">
-<span>🖨️</span> Cetak Rekap A4
-</button>
 <button class="px-4 py-1.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-xs font-semibold text-white shadow-sm transition active:scale-95 flex items-center gap-1" onclick="saveCurrentPeriodRecap()">
 <span>💾</span> Simpan Rekap Periode Ini
-</button>
-</div>
+      </button>
 </div>
 </div>
 </div>
@@ -542,9 +495,9 @@
 <!-- END: AddNewProductModal -->
 <!-- BEGIN: ApplicationLogicScripts -->
 <script data-purpose="app-core-store">
-  const CATALOG_VERSION = "v_67_master_bolu_marmer";
+  const CATALOG_VERSION = "v_69_master_kue_tok_gabin_rizki_risoles_heni";
 
-  // Master 67 authentic Indonesian traditional market snacks with 0 quantity defaults
+  // Master 69 authentic Indonesian traditional market snacks with 0 quantity defaults
   const DEFAULT_PRODUCTS = [
     { name: "SERABI", kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
     { name: "ONGOL-ONGOL", kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
@@ -589,7 +542,7 @@
     { name: "KUE LAPIS", kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
     { name: "JADAH PUTIH", kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
     { name: "WAJIK", kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
-    { name: "RISOLES", kulak: 2500, jual: 3000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "RISOLES HENI", kulak: 2500, jual: 3000, stok: 0, terjual: 0, basi: 0, retur: 0 },
     { name: "KUE POKIS", kulak: 1600, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
     { name: "KUE LUMPUR", kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
     { name: "KETAN", kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
@@ -612,7 +565,9 @@
     { name: "BUNGGOLO", kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
     { name: "PIA KERING", kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
     { name: "NASI KUNING DESI", kulak: 5000, jual: 6000, stok: 0, terjual: 0, basi: 0, retur: 0 },
-    { name: "BOLU MARMER", kulak: 2000, jual: 2500, stok: 0, terjual: 0, basi: 0, retur: 0 }
+    { name: "BOLU MARMER", kulak: 2000, jual: 2500, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "KUE TOK", kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "KUE GABIN RIZKI", kulak: 2000, jual: 2500, stok: 0, terjual: 0, basi: 0, retur: 0 }
   ];
 
   let branches = [{ id: "DB_PUSAT", name: "Toko Pusat" }];
@@ -621,20 +576,6 @@
 
   function formatRupiah(number) {
     return "Rp " + Number(number || 0).toLocaleString('id-ID');
-  }
-
-  // Indonesian Full Date Formatter: "Senin, 26 Oktober 2026"
-  function getFullIndonesianDate(dateObj = new Date()) {
-    const days = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
-    const months = [
-      "Januari", "Februari", "Maret", "April", "Mei", "Juni",
-      "Juli", "Agustus", "September", "Oktober", "November", "Desember"
-    ];
-    const dayName = days[dateObj.getDay()];
-    const dayDate = dateObj.getDate();
-    const monthName = months[dateObj.getMonth()];
-    const year = dateObj.getFullYear();
-    return `${dayName}, ${dayDate} ${monthName} ${year}`;
   }
 
   function getStoreKey(suffix) {
@@ -662,7 +603,7 @@
     if (activeProductStr) {
       try {
         const parsed = JSON.parse(activeProductStr);
-        if (Array.isArray(parsed) && parsed.length >= 67) return parsed;
+        if (Array.isArray(parsed) && parsed.length >= 69) return parsed;
         return JSON.parse(JSON.stringify(DEFAULT_PRODUCTS));
       } catch (e) {
         return JSON.parse(JSON.stringify(DEFAULT_PRODUCTS));
@@ -722,32 +663,56 @@
     calculateTotals();
     recalculateBagiHasil();
     setupSearchFilter();
-    setupDatePickerDefault();
+    setupDatePicker();
+    updateHeaderExportDate();
   }
 
-  function setupDatePickerDefault() {
-    const picker = document.getElementById("rekap-date-picker");
-    const today = new Date();
-    const yyyy = today.getFullYear();
-    const mm = String(today.getMonth() + 1).padStart(2, '0');
-    const dd = String(today.getDate()).padStart(2, '0');
-    if (picker) {
-      picker.value = `${yyyy}-${mm}-${dd}`;
+  function updateHeaderExportDate() {
+    const d = new Date();
+    const formatted = d.toLocaleDateString('id-ID', {
+      weekday: 'long',
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric'
+    });
+    const headerDisplay = document.getElementById("export-full-date-display");
+    if (headerDisplay) {
+      headerDisplay.innerText = formatted;
     }
-    const disp = document.getElementById("active-rekap-date-display");
-    if (disp) {
-      disp.innerText = getFullIndonesianDate(today);
+    const tbTimestamp = document.getElementById("toolbar-print-timestamp");
+    if (tbTimestamp) {
+      tbTimestamp.innerText = formatted;
+    }
+    const printDate = document.getElementById("print-full-date-badge");
+    if (printDate) {
+      printDate.innerText = formatted;
+    }
+  }
+
+  function setupDatePicker() {
+    const datePicker = document.getElementById("rekap-date-picker");
+    const today = new Date().toISOString().split('T')[0];
+    if (datePicker && !datePicker.value) {
+      datePicker.value = today;
+      onRekapDateChange(today);
     }
   }
 
   function onRekapDateChange(val) {
-    if (!val) return;
-    const parts = val.split("-");
-    const d = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
-    const disp = document.getElementById("active-rekap-date-display");
-    if (disp) {
-      disp.innerText = getFullIndonesianDate(d);
+    const display = document.getElementById("active-rekap-date-display");
+    if (!display) return;
+    if (!val) {
+      display.innerText = "-";
+      return;
     }
+    const d = new Date(val);
+    const formatted = d.toLocaleDateString('id-ID', {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+    display.innerText = formatted;
   }
 
   function renderBranchButtons() {
@@ -927,11 +892,6 @@
     if (modalMitra) {
       modalMitra.innerText = formatRupiah(hakMitraNominal);
     }
-
-    const printMitra = document.getElementById("print-stat-mitra");
-    if (printMitra) {
-      printMitra.innerText = formatRupiah(hakMitraNominal);
-    }
   }
 
   // Update only text nodes in rows for Bagi Mitra column without losing input focus
@@ -1046,7 +1006,7 @@
         <td class="py-2 px-2 text-center font-bold text-blue-700 text-xs" id="row-mitra-${index}">
           ${formatRupiah(hakMitra)}
         </td>
-        <td class="py-2 px-1 text-center screen-only">
+        <td class="py-2 px-1 text-center">
           <button 
             type="button" 
             onclick="deleteProduct(${index})" 
@@ -1169,16 +1129,6 @@
     document.getElementById("stat-item-biaya").innerText = expensesList.length;
     document.getElementById("btn-count-operasional").innerText = expensesList.length;
     document.getElementById("stat-laba-bersih").innerText = formatRupiah(labaBersihAkhir);
-
-    // Update print header totals
-    const pOmzet = document.getElementById("print-stat-omzet");
-    if (pOmzet) pOmzet.innerText = formatRupiah(totalOmzet);
-    const pModal = document.getElementById("print-stat-modal");
-    if (pModal) pModal.innerText = formatRupiah(totalModalKulak);
-    const pBersih = document.getElementById("print-stat-bersih");
-    if (pBersih) pBersih.innerText = formatRupiah(labaBersihAkhir);
-    const pMitraElem = document.getElementById("print-stat-mitra");
-    if (pMitraElem) pMitraElem.innerText = formatRupiah(totalSetorMitra);
 
     return latestTotals;
   }
@@ -1324,7 +1274,7 @@
       alert("Isi nama operasional dan nominal yang valid.");
       return;
     }
-    expensesList.push({ ket, nominal: nom, date: getFullIndonesianDate() });
+    expensesList.push({ ket, nominal: nom, date: new Date().toLocaleDateString('id-ID') });
     saveBranchExpenses(expensesList);
     document.getElementById("op-keterangan").value = "";
     document.getElementById("op-nominal").value = "";
@@ -1369,7 +1319,7 @@
   function openRekapitulasiModal() {
     const activeBranch = branches.find(b => b.id === currentBranchId);
     document.getElementById("modal-branch-name").innerText = activeBranch ? activeBranch.name : currentBranchId;
-    setupDatePickerDefault();
+    setupDatePicker();
     selectPeriod('harian');
     renderSavedRecapList();
     document.getElementById("modal-rekapitulasi").classList.remove("hidden");
@@ -1410,12 +1360,10 @@
   function saveCurrentPeriodRecap() {
     const totals = calculateTotals();
     const currentBranch = branches.find(b => b.id === currentBranchId)?.name || currentBranchId;
-    const pickerVal = document.getElementById("rekap-date-picker")?.value;
-    let explicitDate = getFullIndonesianDate();
-    if (pickerVal) {
-      const parts = pickerVal.split("-");
-      explicitDate = getFullIndonesianDate(new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2])));
-    }
+    const datePickerVal = document.getElementById("rekap-date-picker")?.value;
+    const fullDateStr = datePickerVal 
+      ? new Date(datePickerVal).toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
+      : new Date().toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
 
     const rec = {
       id: Date.now(),
@@ -1424,7 +1372,7 @@
       omzet: totals.totalOmzet,
       labaBersih: totals.labaBersihAkhir,
       setorMitra: totals.totalSetorMitra,
-      timestamp: explicitDate
+      timestamp: fullDateStr + " (" + new Date().toLocaleTimeString('id-ID') + ")"
     };
 
     const key = getStoreKey("SAVED_REKAPS");
@@ -1432,7 +1380,7 @@
     saved.unshift(rec);
     localStorage.setItem(key, JSON.stringify(saved));
     renderSavedRecapList();
-    alert(`Rekapitulasi Periode ${currentRecapPeriod.toUpperCase()} tanggal ${explicitDate} berhasil disimpan ke Database ${currentBranchId}!`);
+    alert(`Rekapitulasi Periode ${currentRecapPeriod.toUpperCase()} berhasil disimpan ke Database ${currentBranchId}!`);
   }
 
   function renderSavedRecapList() {
@@ -1452,7 +1400,7 @@
       div.innerHTML = `
         <div>
           <div class="font-bold text-slate-800">[${item.periode}] - ${item.branch}</div>
-          <div class="text-[10px] text-slate-500 font-semibold">📅 ${item.timestamp}</div>
+          <div class="text-[10px] text-slate-400">${item.timestamp}</div>
         </div>
         <div class="text-right">
           <div class="font-bold text-emerald-700">Bersih: ${formatRupiah(item.labaBersih)}</div>
@@ -1480,13 +1428,13 @@
   }
 
   function confirmResetMaster() {
-    if (confirm("Reset Master: Apakah Anda yakin ingin mengatur ulang katalog produk cabang ini ke daftar master lengkap 67 jajanan pasar (dengan semua Qty 0)?")) {
+    if (confirm("Reset Master: Apakah Anda yakin ingin mengatur ulang katalog produk cabang ini ke daftar master lengkap 69 jajanan pasar (dengan semua Qty 0)?")) {
       productsList = JSON.parse(JSON.stringify(DEFAULT_PRODUCTS));
       saveBranchData(productsList);
       buildTable();
       calculateTotals();
       recalculateBagiHasil();
-      alert("Katalog telah di-reset ke Master Lengkap 67 Jajanan Pasar (semua Qty bernilai 0).");
+      alert("Katalog telah di-reset ke Master Lengkap 69 Jajanan Pasar (semua Qty bernilai 0).");
     }
   }
 
@@ -1533,9 +1481,16 @@
   function simpanRiwayatPenjualan() {
     const totals = calculateTotals();
     const currentBranch = branches.find(b => b.id === currentBranchId)?.name || currentBranchId;
-    const fullDate = getFullIndonesianDate();
+    const fullDateStr = new Date().toLocaleDateString('id-ID', {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
     const snapshot = {
-      date: fullDate,
+      date: fullDateStr,
       branch: currentBranch,
       omzet: totals.totalOmzet,
       labaBersih: totals.labaBersihAkhir,
@@ -1547,29 +1502,24 @@
     hist.unshift(snapshot);
     localStorage.setItem(key, JSON.stringify(hist));
 
-    alert(`✅ Riwayat Penjualan untuk ${currentBranch} berhasil disimpan!\nTanggal: ${fullDate}\nTotal Omzet: ${formatRupiah(totals.totalOmzet)}`);
+    alert(`✅ Riwayat Penjualan untuk ${currentBranch} berhasil disimpan!\nTanggal: ${fullDateStr}\nTotal Omzet: ${formatRupiah(totals.totalOmzet)}`);
   }
 
   function cetakLaporanA4() {
-    // Synchronize full Indonesian date and branch info on print header
-    const fullDate = getFullIndonesianDate();
-    const activeBranch = branches.find(b => b.id === currentBranchId);
-    const branchName = activeBranch ? activeBranch.name : "Toko Pusat";
-
-    const pDate = document.getElementById("print-header-date");
-    if (pDate) {
-      pDate.innerText = `Tanggal Laporan: ${fullDate}`;
-    }
-
-    const pBranch = document.getElementById("print-header-branch");
-    if (pBranch) {
-      pBranch.innerText = `CABANG: ${branchName.toUpperCase()} (${currentBranchId})`;
-    }
-
-    calculateTotals();
-    recalculateBagiHasil();
-
+    updateHeaderExportDate();
+    const now = new Date();
+    const fullDate = now.toLocaleDateString('id-ID', {
+      weekday: 'long',
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric'
+    });
+    const originalTitle = document.title;
+    document.title = `Laporan Penjualan - Ngenal Rasa - ${fullDate}`;
     window.print();
+    setTimeout(() => {
+      document.title = originalTitle;
+    }, 1000);
   }
 
   window.addEventListener("DOMContentLoaded", () => {
