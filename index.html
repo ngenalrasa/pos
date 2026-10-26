@@ -3,1663 +3,1421 @@
 <html lang="id"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
-<title>Ngenal Rasa - Tabel Penjualan Harian Lengkap Multi Cabang</title>
+<title>Ngenal Rasa - POS Jajanan Pasar</title>
+<!-- Tailwind CSS v3 with Plugins -->
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            brand: {
-              red: '#B91C1C',
-              redHover: '#991B1B',
-              cream: '#FEF9E7',
-              green: '#15803D'
-            }
-          },
-          fontFamily: {
-            sans: ['-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', 'Helvetica', 'Arial', 'sans-serif']
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          brand: {
+            red: '#d9232a',
+            darkred: '#b91c1c',
+            green: '#10b981',
+            darkgreen: '#059669',
+            bglight: '#f8fafc',
           }
+        },
+        fontFamily: {
+          sans: ['-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'],
         }
       }
-    };
-  </script>
-<style>
-    body {
-      background-color: #F8FAFC;
-      color: #0F172A;
-      -webkit-tap-highlight-color: transparent;
     }
-    .table-container {
-      border-radius: 1rem;
-      border: 1px solid #E2E8F0;
-      background: #FFFFFF;
-      box-shadow: 0 4px 16px -2px rgba(0, 0, 0, 0.05);
-      overflow-x: auto;
-    }
-    .no-scrollbar::-webkit-scrollbar { display: none; }
-    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-    input[type=number]::-webkit-inner-spin-button, 
-    input[type=number]::-webkit-outer-spin-button { 
-      -webkit-appearance: none; 
-      margin: 0; 
-    }
-    @media print {
-      body { background-color: white !important; padding: 0 !important; }
-      header, .action-bar, .modal-backdrop, .no-print, .reset-banner, #branchBarContainer { display: none !important; }
-      .table-container { box-shadow: none !important; border: 1px solid #ccc !important; }
-    }
-  </style>
+  }
+</script>
+<style data-purpose="custom-scrollbars">
+  ::-webkit-scrollbar {
+    height: 6px;
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+  }
+</style>
+<style data-purpose="table-pills">
+  .pill-input {
+    border-radius: 9999px;
+    text-align: center;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    padding: 0.25rem 0.4rem;
+    width: 100%;
+    min-width: 58px;
+    border-width: 1.5px;
+    outline: none;
+    transition: border-color 0.15s ease-in-out;
+  }
+  .pill-input:focus {
+    box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
+  }
+  input[type=number]::-webkit-inner-spin-button, 
+  input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none; 
+    margin: 0; 
+  }
+  input[type=number] {
+    -moz-appearance: textfield;
+  }
+</style>
 </head>
-<body class="bg-[#F8FAFC] antialiased text-slate-800 p-3 sm:p-6 pb-20">
-<div class="max-w-6xl mx-auto flex flex-col items-center">
-<!-- Centered Top Header with Prominent Logo -->
-<header class="w-full mb-5 bg-white p-5 sm:p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col items-center text-center">
-<!-- Prominent Centered Logo -->
-<div class="mb-3 flex justify-center">
-<img alt="Logo Ngenal Rasa" class="h-14 sm:h-16 w-auto object-contain drop-shadow-xs" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCff31hXw8lGrKg_5s_6tjkECeYpjEbOizQkCeCDHf3bi-Uoceo5I7m-jhmJjAmwvtnXXkNZ8beMJzRQLb1JLMnaXU7dJzjwswuLsw-VJaJM9rfEyo9laosLwh3DTH8qi_BHSVkNz8T88yoexZ1VfeZLTtQbnMn8kl9ozzpKbUI-WvHXXV4emNwMdc_7t7V07HBETL1nsPxIVaUe_MAN2MTtsmo5DGgTBBGbqX5VNqYKM6oefpeFLDgXQ"/>
+<body class="bg-[#f4f7f6] text-slate-800 antialiased font-sans pb-16 selection:bg-rose-100 selection:text-brand-red">
+<!-- BEGIN: MainHeader -->
+<header class="bg-white border-b border-slate-200 pt-4 pb-3 px-4 shadow-sm">
+<div class="max-w-7xl mx-auto flex flex-col items-center">
+<!-- Brand Logo Centered -->
+<div class="w-48 sm:w-56 mb-2">
+<img alt="Ngenal Rasa Logo" class="w-full h-auto object-contain mx-auto" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAwCEgSbTSLSOtbFteXrMgqux07z-kmHBmtgTMRF1Owt3i0MVRlAO2rCFc5wHRkSq2puTaEzsDK5d5zxQ-PwuDYmztcVpI6IYU07Kub83BpbCvqRkiTosNnqQs9p882qEcF2XdO03JClq2Ywjxx_eVHy1RMQPC7h8VUl9Mm42jWrKSbUALGIJQ4rW4cdjRVcOKu9V7_BACyEM7Uqaj6FEnRNeEURs_OGE6-xOSlbQfpMOd6rusYpM1hwNgUhEHYAOCItA"/>
 </div>
-<!-- Multi-Cabang Store Navigation Bar Dinamis & 100% Aktif -->
-<div class="w-full mb-3 pb-3 border-b border-slate-100 flex flex-col items-center gap-2">
-<div class="flex items-center gap-1.5 text-xs text-slate-500 font-semibold">
-<svg class="w-3.5 h-3.5 text-red-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-<span>PILIH CABANG TOKO:</span>
-<span class="ml-2 inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 shadow-2xs" id="cloudSyncBadge" title="Status sinkronisasi Firebase Firestore"><span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" id="cloudSyncDot"></span><span id="cloudSyncText">Cloud Online</span></span></div>
-<div class="flex items-center justify-center flex-wrap gap-2 w-full" id="branchBarContainer">
-<!-- Cabang buttons will render here dynamically -->
+<!-- Cloud Status & Branch Info Header -->
+<div class="flex items-center gap-2 mb-2 text-xs font-semibold">
+<span class="text-slate-600 flex items-center gap-1">
+<span class="text-slate-400">🏢</span> PILIH CABANG TOKO:
+      </span>
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-300">
+<span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+        Cloud Online
+      </span>
 </div>
+<!-- Branch Switcher & Multi-Branch Actions -->
+<div class="flex flex-wrap items-center justify-center gap-2 mb-2" id="branch-pills-container">
+<!-- Dynamic branches -->
 </div>
-<!-- 6 Toolbar Action Buttons -->
-<div class="w-full flex items-center justify-center flex-wrap gap-2.5 pt-1 border-t border-slate-100">
-<div class="relative w-full sm:w-64">
-<span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
-<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-</span>
-<input class="w-full pl-9 pr-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-red-500 focus:ring-red-500 transition font-medium" id="searchInput" placeholder="Cari jajanan pasar..." type="text"/>
+<!-- Database status tag indicator -->
+<div class="text-[11px] text-slate-500 flex items-center gap-1.5 bg-slate-100 px-3 py-0.5 rounded-full">
+<span>Koneksi DB Terisolasi:</span>
+<code class="font-bold text-slate-700" id="active-db-badge">DB_PUSAT</code>
 </div>
-<button class="px-3 py-2 bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold rounded-xl flex items-center gap-1.5 transition shadow-sm" onclick="openAddProductModal()">
-<svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M12 4v16m8-8H4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path></svg>
-<span>+ Tambah Produk</span>
-</button>
-<button class="px-3 py-2 bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200 text-xs font-bold rounded-xl flex items-center gap-1.5 transition shadow-xs" onclick="openExpenseModal()">
-<svg class="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-<span>💸 Biaya Operasional (<span id="headerExpenseCount">0</span>)</span>
-</button>
-<button class="px-3 py-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 text-xs font-bold rounded-xl flex items-center gap-1.5 transition shadow-xs" onclick="openSaveHistoryModal()">
-<svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-<span>💾 Simpan Riwayat</span>
-</button>
-<button class="px-3 py-2 bg-[#B91C1C] hover:bg-red-800 text-white text-xs font-bold rounded-xl flex items-center gap-1.5 transition shadow-sm" onclick="openReportModal()">
-<svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-<span>📊 Rekapitulasi Laporan</span>
-</button>
-<button class="px-3 py-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold rounded-xl flex items-center gap-1.5 transition shadow-sm" onclick="window.print()">
-<svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-<span>Cetak A4</span>
-</button>
-<button class="px-3 py-2 bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold rounded-xl flex items-center gap-1.5 transition shadow-sm" onclick="resetDailyQuantities()" title="Reset seluruh Qty Stok, Terjual, Basi &amp; Retur menjadi 0 untuk cabang aktif"><svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg><span>🔄 Reset Harian (Set 0)</span></button><button class="px-2.5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-600 text-xs font-semibold rounded-xl transition" onclick="resetDefaults()">Reset Master</button>
 </div>
 </header>
-<!-- Summary Cards Bar (Total Omzet, Total HPP, Laba Kotor, Loss Basi, Beban Operasional, Laba Bersih Akhir) -->
-<section class="w-full mb-5 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-<div class="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-xs text-center sm:text-left">
-<span class="text-[11px] font-semibold text-slate-500 block">Total Omzet (Penjualan)</span>
-<span class="text-base font-black text-slate-900 block mt-1" id="statOmzet">Rp 0</span>
-<span class="text-[10px] text-slate-400 block mt-0.5" id="statTerjualPcs">0 pcs terjual</span>
+<!-- END: MainHeader -->
+<!-- BEGIN: ToolbarContainer -->
+<section class="max-w-7xl mx-auto px-3 sm:px-4 mt-3">
+<div class="bg-white p-3 rounded-2xl border border-slate-200/80 shadow-sm space-y-2.5">
+<!-- Search and Add Product Bar -->
+<div class="grid grid-cols-1 sm:grid-cols-12 gap-2">
+<div class="relative sm:col-span-5">
+<span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 text-sm">
+          🔍
+        </span>
+<input class="w-full pl-9 pr-3 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm focus:ring-2 focus:ring-emerald-500 focus:bg-white transition" id="search-input" placeholder="Cari jajanan pasar..." type="text"/>
 </div>
-<div class="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-xs text-center sm:text-left">
-<span class="text-[11px] font-semibold text-slate-500 block">Total Modal Kulak (HPP)</span>
-<span class="text-base font-black text-slate-700 block mt-1" id="statHpp">Rp 0</span>
-<span class="text-[10px] text-slate-400 block mt-0.5">Biaya pokok kulakan</span>
+<div class="flex flex-wrap sm:col-span-7 items-center gap-1.5 justify-start sm:justify-end">
+<button class="flex items-center gap-1 px-3 py-1.5 rounded-xl bg-emerald-800 hover:bg-emerald-900 text-white text-xs font-semibold shadow-sm transition active:scale-95" onclick="openNewProductModal()" type="button">
+<span>+</span> Tambah Produk
+        </button>
+<button class="flex items-center gap-1 px-3 py-1.5 rounded-xl bg-amber-50 border border-amber-300 text-amber-800 hover:bg-amber-100 text-xs font-semibold shadow-sm transition active:scale-95" onclick="openOperasionalModal()" type="button">
+<span>💸</span> Biaya Operasional ( <span id="btn-count-operasional">0</span> )
+        </button>
+<button class="flex items-center gap-1 px-3 py-1.5 rounded-xl bg-emerald-50 border border-emerald-300 text-emerald-800 hover:bg-emerald-100 text-xs font-semibold shadow-sm transition active:scale-95" onclick="simpanRiwayatPenjualan()" type="button">
+<span>💾</span> Simpan Riwayat
+        </button>
 </div>
-<div class="bg-white p-3.5 rounded-2xl border border-emerald-200 bg-emerald-50/20 shadow-xs text-center sm:text-left">
-<span class="text-[11px] font-semibold text-emerald-800 block">Total Laba Kotor</span>
-<span class="text-base font-black text-emerald-700 block mt-1" id="statLabaKotor">Rp 0</span>
-<span class="text-[10px] text-emerald-600 font-medium block mt-0.5">Omzet - Modal Kulak</span>
 </div>
-<div class="bg-white p-3.5 rounded-2xl border border-red-200 bg-red-50/20 shadow-xs text-center sm:text-left">
-<span class="text-[11px] font-semibold text-red-700 block">Total Loss Basi</span>
-<span class="text-base font-black text-red-600 block mt-1" id="statLossBasi">Rp 0</span>
-<span class="text-[10px] text-red-500 font-medium block mt-0.5" id="statBasiPcs">0 pcs basi</span>
+<!-- Quick Action Buttons -->
+<div class="flex flex-wrap items-center gap-2 pt-1 border-t border-slate-100">
+<button class="flex items-center gap-1 px-3 py-1.5 rounded-xl bg-[#b91c1c] hover:bg-[#991b1b] text-white text-xs font-semibold shadow-sm transition active:scale-95" onclick="openRekapitulasiModal()" type="button">
+<span>📊</span> Rekapitulasi Laporan
+      </button>
+<button class="flex items-center gap-1 px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold shadow-sm transition active:scale-95" onclick="cetakLaporanA4()" type="button">
+<span>🖨️</span> Cetak A4
+      </button>
+<button class="flex items-center gap-1 px-3 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white text-xs font-semibold shadow-sm transition active:scale-95" onclick="confirmResetHarian()" type="button">
+<span>🔄</span> Reset Harian (Set 0)
+      </button>
+<button class="flex items-center gap-1 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-medium border border-slate-300 transition active:scale-95" onclick="confirmResetMaster()" type="button">
+        Reset Master
+      </button>
 </div>
-<div class="bg-white p-3.5 rounded-2xl border border-amber-200 bg-amber-50/20 shadow-xs cursor-pointer hover:border-amber-400 transition text-center sm:text-left" onclick="openExpenseModal()">
-<div class="flex items-center justify-between">
-<span class="text-[11px] font-semibold text-amber-800 block">Beban Operasional</span>
-<span class="text-[9px] bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded font-bold">+ Edit</span>
-</div>
-<span class="text-base font-black text-amber-700 block mt-1" id="statExpense">Rp 0</span>
-<span class="text-[10px] text-amber-600 font-medium block mt-0.5" id="statExpenseCount">0 item biaya</span>
-</div>
-<div class="bg-emerald-600 p-3.5 rounded-2xl text-white shadow-sm flex flex-col justify-between text-center sm:text-left">
-<span class="text-[11px] font-bold text-emerald-100 block">LABA BERSIH AKHIR</span>
-<span class="text-lg font-black text-white block mt-1" id="statLabaBersih">Rp 0</span>
-<span class="text-[10px] text-emerald-100 block mt-0.5 font-medium">Kotor - Basi - Beban</span>
 </div>
 </section>
-<!-- Main Table Section Centered -->
-<main class="w-full">
-<div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 mb-4 bg-white p-3 rounded-2xl border border-slate-200 shadow-2xs">
-<div class="flex items-center gap-1.5 flex-wrap justify-center sm:justify-start">
-<span class="text-xs font-bold text-slate-500 mr-1 hidden sm:inline">Filter Kategori:</span>
-<button class="px-3 py-1.5 text-xs font-bold rounded-xl transition bg-slate-900 text-white shadow-xs" id="filterAllBtn" onclick="setMovingFilter('all')">
-Semua Produk (<span id="countAllBadge">62</span>)
-</button>
-<button class="px-3 py-1.5 text-xs font-bold rounded-xl transition bg-white text-emerald-700 border border-emerald-200 hover:bg-emerald-50" id="filterFastBtn" onclick="setMovingFilter('fast')">
-🔥 Fast Moving (<span id="countFastBadge">0</span>)
-</button>
-<button class="px-3 py-1.5 text-xs font-bold rounded-xl transition bg-white text-red-700 border border-red-200 hover:bg-red-50" id="filterSlowBtn" onclick="setMovingFilter('slow')">
-⚠️ Slow Moving / Basi (<span id="countSlowBadge">0</span>)
-</button>
+<!-- END: ToolbarContainer -->
+<!-- BEGIN: StatsMetricCards -->
+<section class="max-w-7xl mx-auto px-3 sm:px-4 mt-3">
+<!-- Grid of 6 Main Cards -->
+<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-3">
+<!-- 1. Total Omzet (Penjualan) -->
+<div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
+<div>
+<div class="text-[11px] font-semibold text-slate-500">Total Omzet (Penjualan)</div>
+<div class="text-base sm:text-lg font-black text-slate-900 mt-1" id="stat-omzet">Rp 0</div>
 </div>
-<div class="flex items-center justify-center sm:justify-end gap-2 text-xs text-slate-500 flex-wrap">
-<span class="inline-flex items-center gap-1 bg-emerald-50 text-emerald-800 px-2 py-1 rounded-lg border border-emerald-200 font-semibold text-[11px]">
-<span class="w-2 h-2 rounded-full bg-emerald-600"></span> Fast: Penjualan ≥ 40% &amp; Basi ≤ 2
-</span>
-<span class="inline-flex items-center gap-1 bg-red-50 text-red-700 px-2 py-1 rounded-lg border border-red-200 font-semibold text-[11px]">
-<span class="w-2 h-2 rounded-full bg-red-500"></span> Slow: Basi ≥ 3 atau Penjualan &lt; 40%
-</span>
+<div class="text-[10px] text-slate-400 mt-1"><span id="stat-pcs-terjual">0</span> pcs terjual</div>
+</div>
+<!-- 2. Total Modal Kulak (HPP) -->
+<div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
+<div>
+<div class="text-[11px] font-semibold text-slate-500">Total Modal Kulak (HPP)</div>
+<div class="text-base sm:text-lg font-black text-slate-900 mt-1" id="stat-modal-kulak">Rp 0</div>
+</div>
+<div class="text-[10px] text-slate-400 mt-1">Biaya pokok kulakan</div>
+</div>
+<!-- 3. Total Laba Kotor -->
+<div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
+<div>
+<div class="text-[11px] font-semibold text-slate-500">Total Laba Kotor</div>
+<div class="text-base sm:text-lg font-black text-slate-900 mt-1" id="stat-laba-kotor">Rp 0</div>
+</div>
+<div class="text-[10px] text-slate-400 mt-1">Omzet - Modal Kulak</div>
+</div>
+<!-- 4. Total Loss Basi -->
+<div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
+<div>
+<div class="text-[11px] font-semibold text-red-600">Total Loss Basi</div>
+<div class="text-base sm:text-lg font-black text-red-600 mt-1" id="stat-loss-basi">Rp 0</div>
+</div>
+<div class="text-[10px] text-red-500 mt-1"><span id="stat-pcs-basi">0</span> pcs basi</div>
+</div>
+<!-- 5. Beban Operasional -->
+<div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
+<div class="flex items-start justify-between">
+<div>
+<div class="text-[11px] font-semibold text-amber-700">Beban Operasional</div>
+<div class="text-base sm:text-lg font-black text-amber-700 mt-1" id="stat-beban-operasional">Rp 0</div>
+</div>
+<button class="text-[10px] bg-amber-100 hover:bg-amber-200 text-amber-900 px-1.5 py-0.5 rounded font-bold transition" onclick="openOperasionalModal()">
+          + Edit
+        </button>
+</div>
+<div class="text-[10px] text-slate-400 mt-1"><span id="stat-item-biaya">0</span> item biaya</div>
+</div>
+<!-- 6. Laba Bersih Akhir -->
+<div class="bg-emerald-600 text-white p-3 rounded-2xl shadow-sm flex flex-col justify-between">
+<div>
+<div class="text-[10px] font-extrabold tracking-wider uppercase opacity-90">LABA BERSIH AKHIR</div>
+<div class="text-base sm:text-lg font-black mt-1" id="stat-laba-bersih">Rp 0</div>
+</div>
+<div class="text-[10px] opacity-80 mt-1">Kotor - Basi - Beban</div>
 </div>
 </div>
-<div class="table-container bg-white shadow-sm overflow-hidden">
-<div class="overflow-x-auto no-scrollbar">
-<table class="w-full text-left border-collapse" id="salesTable">
+<!-- Realtime Hak Setor Mitra Complement Strip -->
+<div class="mt-2.5 bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-xl p-2.5 space-y-2 text-xs" id="mitra-share-panel">
+<div class="flex flex-wrap items-center justify-between gap-2">
+<div class="flex items-center gap-2">
+<span class="px-2 py-0.5 bg-blue-600 text-white font-bold rounded-lg text-[10px] uppercase tracking-wide flex items-center gap-1">
+<span>🤝</span> BAGI HASIL MITRA REALTIME
+        </span>
+<span class="text-[11px] text-blue-900 font-semibold">Skema Bagi Hasil Fleksibel (Ketik Bebas):</span>
+</div>
+<span class="text-[10px] text-blue-600 font-medium bg-white px-2 py-0.5 rounded-md border border-blue-200">Dihitung dari Laba Bersih Akhir (Kotor - Basi - Beban)</span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-12 gap-2 pt-1 border-t border-blue-200/70 items-center">
+<div class="sm:col-span-5 flex flex-wrap items-center gap-2">
+<div class="flex items-center gap-1.5">
+<label class="text-[11px] font-bold text-blue-950 whitespace-nowrap" for="mitraPercent">% Mitra:</label>
+<div class="relative flex items-center w-20">
+<input class="w-full text-center text-xs font-bold py-1 px-1 pr-4 bg-white border border-blue-300 rounded-lg text-blue-900 focus:ring-2 focus:ring-blue-500 outline-none" id="mitraPercent" max="100" min="0" type="number" value="20"/>
+<span class="absolute right-1.5 text-[11px] font-bold text-blue-500 pointer-events-none">%</span>
+</div>
+</div>
+<div class="flex items-center gap-1.5">
+<label class="text-[11px] font-bold text-emerald-950 whitespace-nowrap" for="tokoPercent">% Toko:</label>
+<div class="relative flex items-center w-20">
+<input class="w-full text-center text-xs font-bold py-1 px-1 pr-4 bg-white border border-emerald-300 rounded-lg text-emerald-900 focus:ring-2 focus:ring-emerald-500 outline-none" id="tokoPercent" max="100" min="0" type="number" value="80"/>
+<span class="absolute right-1.5 text-[11px] font-bold text-emerald-600 pointer-events-none">%</span>
+</div>
+</div>
+</div>
+<div class="sm:col-span-7 flex flex-wrap items-center justify-between sm:justify-end gap-2.5 text-xs">
+<div class="flex items-center gap-1.5 bg-white/80 px-2.5 py-1 rounded-lg border border-blue-200/80">
+<span class="text-[11px] text-blue-900 font-semibold" id="label-stat-setor-mitra">Hak Mitra (20% Laba Bersih):</span>
+<span class="text-sm font-black text-blue-800" id="stat-setor-mitra">Rp 0</span>
+</div>
+<div class="flex items-center gap-1.5 bg-white/80 px-2.5 py-1 rounded-lg border border-emerald-200/80">
+<span class="text-[11px] text-emerald-900 font-semibold" id="label-stat-laba-toko">Bagian Toko (80% Laba Bersih):</span>
+<span class="text-sm font-black text-emerald-700" id="stat-laba-toko">Rp 0</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- END: StatsMetricCards -->
+<!-- BEGIN: FilterSection -->
+<section class="max-w-7xl mx-auto px-3 sm:px-4 mt-3">
+<div class="bg-white p-2.5 rounded-2xl border border-slate-200 shadow-sm flex flex-wrap items-center justify-between gap-2 text-xs">
+<!-- Filter Buttons Left -->
+<div class="flex flex-wrap items-center gap-1.5">
+<span class="text-slate-500 font-medium text-xs">Filter Kategori:</span>
+<button class="px-2.5 py-1 rounded-full bg-slate-900 text-white text-[11px] font-bold shadow-sm transition" id="btn-filter-all" onclick="applyFilter('all')">
+        Semua Produk (<span id="badge-total-produk">67</span>)
+      </button>
+<button class="px-2.5 py-1 rounded-full bg-emerald-50 border border-emerald-300 text-emerald-800 hover:bg-emerald-100 text-[11px] font-semibold transition" id="btn-filter-fast" onclick="applyFilter('fast')">
+        🔥 Fast Moving (<span id="badge-fast-moving">0</span>)
+      </button>
+<button class="px-2.5 py-1 rounded-full bg-rose-50 border border-rose-300 text-rose-800 hover:bg-rose-100 text-[11px] font-semibold transition" id="btn-filter-slow" onclick="applyFilter('slow')">
+        ⚠️ Slow Moving / Basi (<span id="badge-slow-moving">0</span>)
+      </button>
+</div>
+<!-- Indicator Legend Right -->
+<div class="flex flex-wrap items-center gap-1.5 text-[10px]">
+<span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-semibold border border-emerald-200">
+        ● Fast: Penjualan ≥ 40% &amp; Basi ≤ 2
+      </span>
+<span class="px-2 py-0.5 rounded-full bg-rose-100 text-rose-800 font-semibold border border-rose-200">
+        ● Slow: Basi ≥ 3 atau Penjualan &lt; 40%
+      </span>
+</div>
+</div>
+</section>
+<!-- END: FilterSection -->
+<!-- BEGIN: MainProductTable -->
+<main class="max-w-7xl mx-auto px-3 sm:px-4 mt-3">
+<div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full text-left text-xs whitespace-nowrap border-collapse" id="pos-table">
 <thead>
-<tr class="bg-[#FEF9E7] text-slate-800 text-xs font-bold border-b border-amber-200/80 uppercase tracking-tight">
-<!-- 1. Nama Produk -->
-<th class="py-3.5 px-3 text-left whitespace-nowrap min-w-[170px] sticky left-0 bg-[#FEF9E7] z-10 border-r border-amber-100">
-Nama Produk
-</th>
-<!-- 2. Harga Kulak -->
-<th class="py-3.5 px-2 text-center whitespace-nowrap min-w-[95px] text-slate-700">
-Harga Kulak
-</th>
-<!-- 3. Harga Jual -->
-<th class="py-3.5 px-2 text-center whitespace-nowrap min-w-[95px] text-[#B91C1C]">
-Harga Jual
-</th>
-<!-- 4. Qty Stok -->
-<th class="py-3.5 px-2 text-center whitespace-nowrap min-w-[75px] text-slate-700">
-Qty Stok
-</th>
-<!-- 5. Qty Terjual -->
-<th class="py-3.5 px-2 text-center whitespace-nowrap min-w-[75px] text-emerald-700 bg-emerald-50/50">
-Qty Terjual
-</th>
-<!-- 6. Basi -->
-<th class="py-3.5 px-2 text-center whitespace-nowrap min-w-[65px] text-red-600 bg-red-50/40">
-Basi
-</th>
-<!-- 7. Retur -->
-<th class="py-3.5 px-2 text-center whitespace-nowrap min-w-[65px] text-amber-600">
-Retur
-</th>
-<!-- 8. Marjin Bersih -->
-<th class="py-3.5 px-2.5 text-right whitespace-nowrap min-w-[95px] text-[#15803D]">
-Marjin Bersih
-</th>
-<!-- 9. Laba Kotor -->
-<th class="py-3.5 px-3 text-right whitespace-nowrap min-w-[105px] text-emerald-800 bg-emerald-50/30">
-Laba Kotor
-</th>
-<!-- 10. Laba Bersih -->
-<th class="py-3.5 px-3 text-right whitespace-nowrap min-w-[110px] text-[#15803D] bg-emerald-100/40 font-black">
-Laba Bersih
-</th>
-<!-- 11. Aksi -->
-<th class="py-3.5 px-2.5 text-center whitespace-nowrap min-w-[60px] text-slate-600">
-Aksi
-</th>
+<tr class="bg-slate-50 border-b border-slate-200 text-[11px] font-bold text-slate-700 tracking-wider">
+<th class="py-2.5 px-3 min-w-[140px] uppercase" scope="col">NAMA PRODUK</th>
+<th class="py-2.5 px-2 text-center min-w-[70px] uppercase" scope="col">HARGA KULAK</th>
+<th class="py-2.5 px-2 text-center min-w-[70px] uppercase text-red-600" scope="col">HARGA JUAL</th>
+<th class="py-2.5 px-2 text-center min-w-[60px] uppercase" scope="col">QTY STOK</th>
+<th class="py-2.5 px-2 text-center min-w-[60px] uppercase text-emerald-600" scope="col">QTY TERJUAL</th>
+<th class="py-2.5 px-2 text-center min-w-[55px] uppercase text-red-600" scope="col">BASI</th>
+<th class="py-2.5 px-2 text-center min-w-[55px] uppercase text-amber-600" scope="col">RETUR</th>
+<th class="py-2.5 px-2 text-center min-w-[75px] uppercase text-emerald-700" scope="col">MARJIN BERSIH</th>
+<th class="py-2.5 px-2 text-center min-w-[75px] uppercase" scope="col">LABA KOTOR</th>
+<th class="py-2.5 px-2 text-center min-w-[75px] uppercase text-emerald-600" scope="col">LABA BERSIH</th>
+<th class="py-2.5 px-2 text-center min-w-[75px] uppercase text-blue-600" scope="col">BAGI MITRA</th>
+<th class="py-2.5 px-2 text-center min-w-[40px] uppercase" scope="col">AKSI</th>
 </tr>
 </thead>
-<tbody class="text-xs divide-y divide-slate-100 font-medium text-slate-800" id="tableBody">
-<!-- Dynamically populated products -->
+<tbody class="divide-y divide-slate-100 font-medium" id="product-table-body">
+<!-- Built dynamically without destroying input on typing -->
 </tbody>
-<tfoot class="bg-slate-50 border-t-2 border-slate-200 text-xs font-bold text-slate-900">
-<tr>
-<td class="py-3.5 px-3 sticky left-0 bg-slate-50 z-10 border-r border-slate-200">
-TOTAL (<span id="footProductCount">62 Varian</span>)
-</td>
-<td class="py-3.5 px-2 text-center text-slate-500 font-normal">-</td>
-<td class="py-3.5 px-2 text-center text-slate-500 font-normal">-</td>
-<td class="py-3.5 px-2 text-center text-slate-800 font-extrabold" id="footTotalStok">0</td>
-<td class="py-3.5 px-2 text-center text-emerald-800 font-black bg-emerald-50/80" id="footTotalTerjual">0</td>
-<td class="py-3.5 px-2 text-center text-red-700 font-black bg-red-50/80" id="footTotalBasi">0</td>
-<td class="py-3.5 px-2 text-center text-amber-700 font-black" id="footTotalRetur">0</td>
-<td class="py-3.5 px-2.5 text-right text-emerald-700 font-extrabold" id="footAvgMargin">Rp 0</td>
-<td class="py-3.5 px-3 text-right text-emerald-800 font-black bg-emerald-50/80" id="footTotalLabaKotor">Rp 0</td>
-<td class="py-3.5 px-3 text-right text-emerald-900 font-black bg-emerald-100/70" id="footTotalLabaBersih">Rp 0</td>
-<td class="py-3.5 px-2 text-center text-slate-400">-</td>
-</tr>
-</tfoot>
 </table>
 </div>
 </div>
-<!-- Legend / Formula Explanations -->
-<div class="mt-4 p-4 bg-white rounded-2xl border border-slate-200 text-xs text-slate-500 space-y-1.5 shadow-2xs">
-<div class="font-bold text-slate-800 text-[11px] uppercase tracking-wider mb-1">
-<div class="flex items-center justify-between flex-wrap gap-1 font-bold text-slate-800 text-[11px] uppercase tracking-wider">
-<span>Keterangan Rumus Kolom:</span>
-<span class="text-[#B91C1C] normal-case font-bold" id="activeBranchIndicator">Aktif: Toko Pusat</span>
-</div>
-</div>
-<div class="grid grid-cols-1 md:grid-cols-3 gap-2 text-[11px]">
-<div>• <strong>Marjin Bersih (per pcs)</strong> = Harga Jual - Harga Kulak</div>
-<div>• <strong>Laba Kotor</strong> = Qty Terjual × Marjin Bersih</div>
-<div>• <strong>Laba Bersih Produk</strong> = Laba Kotor - (Basi × Harga Kulak Modal)</div>
-</div>
-<div class="pt-1 text-[11px] text-emerald-700 font-semibold border-t border-slate-100 mt-1">
-• <strong>LABA BERSIH AKHIR KESELURUHAN</strong> = Total Seluruh Laba Kotor - Total Loss Basi - Beban Biaya Operasional
-</div>
-</div>
 </main>
-</div>
-<!-- Modal 1: Tambah Produk Baru -->
-<div class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-50 hidden flex items-center justify-center p-4" id="addProductModal">
-<div class="bg-white rounded-2xl max-w-md w-full border border-slate-200 shadow-2xl overflow-hidden">
-<div class="bg-emerald-50 p-4 border-b border-emerald-100 flex items-center justify-between">
+<!-- END: MainProductTable -->
+<!-- BEGIN: MultiPeriodReportModal -->
+<div class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-3 overflow-y-auto" id="modal-rekapitulasi">
+<div class="bg-white w-full max-w-2xl rounded-2xl shadow-2xl border border-slate-200 overflow-hidden transform transition-all my-8">
+<div class="bg-slate-900 text-white px-5 py-3.5 flex items-center justify-between">
 <div class="flex items-center gap-2">
-<span class="w-8 h-8 rounded-lg bg-emerald-700 text-white flex items-center justify-center font-bold text-sm">+</span>
+<span class="text-xl">📊</span>
+<h3 class="text-sm font-bold tracking-wide">REKAPITULASI LAPORAN KEUANGAN &amp; BAGI HASIL</h3>
+</div>
+<button class="text-slate-400 hover:text-white text-lg font-bold" onclick="closeRekapitulasiModal()">✕</button>
+</div>
+<div class="p-5 space-y-4">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-50 p-3 rounded-xl border border-slate-200">
 <div>
-<h3 class="text-sm font-bold text-emerald-950">Tambah Varian Produk Baru</h3>
-<p class="text-[11px] text-emerald-700">Masukkan data kulak &amp; jual jajanan pasar</p>
+<label class="block text-xs font-semibold text-slate-700 mb-1">Pilih Rentang Periode Rekap:</label>
+<div class="inline-flex rounded-lg border border-slate-300 p-0.5 bg-white" id="period-switcher">
+<button class="period-btn px-3 py-1 rounded text-xs font-semibold bg-emerald-600 text-white" onclick="selectPeriod('harian', event)">Harian</button>
+<button class="period-btn px-3 py-1 rounded text-xs font-semibold text-slate-600 hover:bg-slate-100" onclick="selectPeriod('mingguan', event)">Mingguan</button>
+<button class="period-btn px-3 py-1 rounded text-xs font-semibold text-slate-600 hover:bg-slate-100" onclick="selectPeriod('bulanan', event)">Bulanan</button>
+<button class="period-btn px-3 py-1 rounded text-xs font-semibold text-slate-600 hover:bg-slate-100" onclick="selectPeriod('tahunan', event)">Tahunan</button>
 </div>
 </div>
-<button class="text-slate-400 hover:text-slate-700 font-bold text-lg" onclick="closeAddProductModal()">×</button>
-</div>
-<form class="p-4 space-y-3" id="addProductForm" onsubmit="submitNewProduct(event)">
-<div>
-<label class="block text-[11px] font-bold text-slate-700 mb-1">Nama Jajanan / Produk <span class="text-red-500">*</span></label>
-<input class="w-full text-xs p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-emerald-600 focus:ring-emerald-600 font-medium" id="newProdName" placeholder="Contoh: KUE LUMPUR SURABAYA" required="" type="text"/>
-</div>
-<div class="grid grid-cols-2 gap-3">
-<div>
-<label class="block text-[11px] font-bold text-slate-700 mb-1">Harga Kulak (Rp) <span class="text-red-500">*</span></label>
-<input class="w-full text-xs p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-emerald-600 focus:ring-emerald-600 font-semibold" id="newProdKulak" min="0" placeholder="2500" required="" type="number"/>
-</div>
-<div>
-<label class="block text-[11px] font-bold text-slate-700 mb-1">Harga Jual (Rp) <span class="text-red-500">*</span></label>
-<input class="w-full text-xs p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-red-500 focus:ring-red-500 font-bold text-red-600" id="newProdJual" min="0" placeholder="3500" required="" type="number"/>
+<div class="text-right text-xs">
+<span class="text-slate-500">Cabang Aktif:</span>
+<div class="font-bold text-emerald-800 text-sm" id="modal-branch-name">Toko Pusat</div>
 </div>
 </div>
-<div class="grid grid-cols-3 gap-2">
-<div>
-<label class="block text-[11px] font-bold text-slate-700 mb-1">Qty Stok Awal</label>
-<input class="w-full text-xs p-2 bg-slate-50 border border-slate-200 rounded-xl font-medium" id="newProdStok" min="0" placeholder="0" type="number" value="0"/>
+<div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 text-xs">
+<div class="p-2.5 bg-slate-50 rounded-xl border border-slate-200">
+<div class="text-slate-500 font-medium text-[11px]">Total Omzet</div>
+<div class="text-sm font-bold text-slate-900 mt-0.5" id="modal-omzet">Rp 0</div>
 </div>
-<div>
-<label class="block text-[11px] font-bold text-slate-700 mb-1">Qty Terjual</label>
-<input class="w-full text-xs p-2 bg-slate-50 border border-slate-200 rounded-xl font-medium" id="newProdTerjual" min="0" placeholder="0" type="number" value="0"/>
+<div class="p-2.5 bg-slate-50 rounded-xl border border-slate-200">
+<div class="text-slate-500 font-medium text-[11px]">Modal Kulak (HPP)</div>
+<div class="text-sm font-bold text-slate-900 mt-0.5" id="modal-modal">Rp 0</div>
 </div>
-<div>
-<label class="block text-[11px] font-bold text-slate-700 mb-1">Basi (pcs)</label>
-<input class="w-full text-xs p-2 bg-slate-50 border border-slate-200 rounded-xl font-medium" id="newProdBasi" min="0" placeholder="0" type="number" value="0"/>
+<div class="p-2.5 bg-slate-50 rounded-xl border border-slate-200">
+<div class="text-slate-500 font-medium text-[11px]">Laba Kotor</div>
+<div class="text-sm font-bold text-emerald-700 mt-0.5" id="modal-laba-kotor">Rp 0</div>
 </div>
+<div class="p-2.5 bg-rose-50 rounded-xl border border-rose-200">
+<div class="text-rose-700 font-medium text-[11px]">Loss Basi</div>
+<div class="text-sm font-bold text-rose-700 mt-0.5" id="modal-loss-basi">Rp 0</div>
 </div>
-<div class="p-3 bg-slate-50 border-t border-slate-100 -mx-4 -mb-4 mt-4 flex items-center justify-end gap-2">
-<button class="px-3.5 py-2 text-slate-600 text-xs font-semibold rounded-xl hover:bg-slate-200 transition" onclick="closeAddProductModal()" type="button">Batal</button>
-<button class="px-4 py-2 bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold rounded-xl transition shadow-xs flex items-center gap-1.5" type="submit">
-<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-<span>Simpan Produk</span>
-</button>
+<div class="p-2.5 bg-amber-50 rounded-xl border border-amber-200">
+<div class="text-amber-700 font-medium text-[11px]">Beban Operasional</div>
+<div class="text-sm font-bold text-amber-800 mt-0.5" id="modal-beban">Rp 0</div>
 </div>
-</form>
-</div>
-</div>
-<!-- Modal 2: Biaya Operasional -->
-<div class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-50 hidden flex items-center justify-center p-4" id="expenseModal">
-<div class="bg-white rounded-2xl max-w-lg w-full border border-slate-200 shadow-2xl overflow-hidden">
-<div class="bg-[#FEF9E7] p-4 border-b border-amber-200/80 flex items-center justify-between">
-<div class="flex items-center gap-2">
-<span class="w-8 h-8 rounded-lg bg-amber-600 text-white flex items-center justify-center font-bold text-sm">💸</span>
-<div>
-<h3 class="text-sm font-bold text-slate-900">Catat Pengeluaran Operasional</h3>
-<p class="text-[11px] text-slate-500" id="expenseBranchSubtitle">Biaya operasional untuk cabang aktif</p>
+<div class="p-2.5 bg-emerald-50 rounded-xl border border-emerald-200">
+<div class="text-emerald-700 font-medium text-[11px]">Laba Bersih Akhir</div>
+<div class="text-sm font-bold text-emerald-800 mt-0.5" id="modal-laba-bersih">Rp 0</div>
 </div>
 </div>
-<button class="text-slate-400 hover:text-slate-700 font-bold text-lg" onclick="closeExpenseModal()">×</button>
+<div class="border border-blue-200 bg-blue-50/70 rounded-xl p-3">
+<div class="flex items-center justify-between mb-2">
+<h4 class="text-xs font-bold text-blue-900 flex items-center gap-1.5">
+<span>🤝</span> Hak Bagi Hasil Mitra (Dihitung dari Laba Bersih Akhir)
+          </h4>
+<span class="text-[11px] font-bold text-blue-800" id="modal-total-setor-mitra">Rp 0</span>
+</div>
+<p class="text-[11px] text-blue-700 leading-relaxed">
+          Perhitungan realtime dialokasikan langsung dari persentase Laba Bersih Akhir toko (setelah dikurangi total loss basi dan beban operasional).
+        </p>
+</div>
+<div class="border-t border-slate-200 pt-3">
+<h5 class="text-xs font-bold text-slate-700 mb-2">Riwayat Rekap Tersimpan di Database Cabang:</h5>
+<div class="max-h-36 overflow-y-auto space-y-1.5" id="saved-rekap-list">
+<div class="text-center text-xs text-slate-400 py-3">Belum ada rekap yang tersimpan permanen untuk periode ini.</div>
+</div>
+</div>
+</div>
+<div class="bg-slate-50 px-5 py-3 border-t border-slate-200 flex flex-wrap items-center justify-between gap-2">
+<button class="px-4 py-1.5 rounded-xl border border-slate-300 text-xs font-semibold text-slate-700 hover:bg-slate-100 transition" onclick="closeRekapitulasiModal()">
+        Tutup
+      </button>
+<button class="px-4 py-1.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-xs font-semibold text-white shadow-sm transition active:scale-95 flex items-center gap-1" onclick="saveCurrentPeriodRecap()">
+<span>💾</span> Simpan Rekap Periode Ini
+      </button>
+</div>
+</div>
+</div>
+<!-- END: MultiPeriodReportModal -->
+<!-- BEGIN: OperationalCostModal -->
+<div class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-3" id="modal-operasional">
+<div class="bg-white w-full max-w-md rounded-2xl shadow-2xl border border-slate-200 overflow-hidden transform transition">
+<div class="bg-amber-600 text-white px-4 py-3 flex items-center justify-between">
+<h3 class="text-xs font-bold flex items-center gap-1.5">
+<span>💸</span> KELOLA BIAYA OPERASIONAL CABANG
+      </h3>
+<button class="text-amber-100 hover:text-white font-bold text-lg" onclick="closeOperasionalModal()">✕</button>
 </div>
 <div class="p-4 space-y-3">
-<div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
-<div class="sm:col-span-2">
-<label class="block text-[11px] font-bold text-slate-600 mb-1">Keterangan Pengeluaran</label>
-<input class="w-full text-xs p-2 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-red-500" id="expenseName" placeholder="Contoh: Plastik Klip &amp; Mika Box" type="text"/>
+<div class="space-y-2 bg-amber-50/60 p-3 rounded-xl border border-amber-200">
+<input class="w-full text-xs rounded-lg border-slate-300 focus:ring-amber-500" id="op-keterangan" placeholder="Keterangan (misal: Plastik, Es Batu, Listrik)" type="text"/>
+<input class="w-full text-xs rounded-lg border-slate-300 focus:ring-amber-500" id="op-nominal" placeholder="Nominal (Rp)" type="number"/>
+<button class="w-full py-1.5 bg-amber-700 hover:bg-amber-800 text-white text-xs font-bold rounded-lg transition" onclick="addOperationalCost()">
+          + Tambahkan Biaya
+        </button>
 </div>
-<div>
-<label class="block text-[11px] font-bold text-slate-600 mb-1">Kategori</label>
-<select class="w-full text-xs p-2 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white" id="expenseCategory">
-<option value="Kemasan">Kemasan</option>
-<option value="Operasional">Operasional</option>
-<option value="Logistik/Transport">Logistik</option>
-<option value="Lain-lain">Lain-lain</option>
-</select>
+<div class="max-h-48 overflow-y-auto divide-y divide-slate-100" id="op-list-items">
+<!-- Dynamic Items -->
 </div>
 </div>
-<div class="flex gap-2 items-end">
-<div class="flex-1">
-<label class="block text-[11px] font-bold text-slate-600 mb-1">Nominal (Rp)</label>
-<input class="w-full text-xs p-2 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-red-500 font-bold text-slate-800" id="expenseAmount" placeholder="15000" type="number"/>
-</div>
-<button class="py-2 px-4 bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold rounded-xl transition shadow-xs flex items-center gap-1" onclick="addExpense()">
-+ Tambah Beban
-</button>
-</div>
-<div class="border-t border-slate-100 pt-3">
-<div class="flex items-center justify-between mb-2">
-<span class="text-xs font-bold text-slate-700">Daftar Pengeluaran Aktif</span>
-<span class="text-xs font-black text-amber-700" id="modalExpenseTotal">Total: Rp 0</span>
-</div>
-<div class="max-h-48 overflow-y-auto space-y-1.5" id="expenseListContainer">
-<p class="text-center text-slate-400 text-xs py-4">Belum ada pengeluaran tambahan.</p>
+<div class="bg-slate-50 px-4 py-2.5 border-t border-slate-200 text-right">
+<button class="px-4 py-1.5 bg-slate-800 text-white rounded-lg text-xs font-semibold" onclick="closeOperasionalModal()">Selesai</button>
 </div>
 </div>
 </div>
-<div class="p-3 bg-slate-50 border-t border-slate-100 flex justify-end">
-<button class="px-4 py-2 bg-slate-900 text-white text-xs font-bold rounded-xl hover:bg-slate-800 transition" onclick="closeExpenseModal()">Selesai &amp; Terapkan</button>
-</div>
-</div>
-</div>
-<!-- Modal 3: Simpan & Riwayat Rekap -->
-<div class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-50 hidden flex items-center justify-center p-4" id="saveHistoryModal">
-<div class="bg-white rounded-2xl max-w-lg w-full border border-slate-200 shadow-2xl overflow-hidden">
-<div class="bg-emerald-50 p-4 border-b border-emerald-100 flex items-center justify-between">
-<div class="flex items-center gap-2">
-<span class="w-8 h-8 rounded-lg bg-emerald-600 text-white flex items-center justify-center font-bold text-sm">💾</span>
-<div>
-<h3 class="text-sm font-bold text-emerald-950">Simpan Riwayat Rekapitulasi</h3>
-<p class="text-[11px] text-emerald-700" id="historyBranchSubtitle">Arsipkan performa jajanan pasar Ngenal Rasa</p>
-</div>
-</div>
-<button class="text-slate-400 hover:text-slate-700 font-bold text-lg" onclick="closeSaveHistoryModal()">×</button>
+<!-- END: OperationalCostModal -->
+<!-- BEGIN: AddBranchModal -->
+<div class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-3" id="modal-add-branch">
+<div class="bg-white w-full max-w-sm rounded-2xl shadow-2xl border border-slate-200 overflow-hidden transform transition">
+<div class="bg-emerald-800 text-white px-4 py-3 flex items-center justify-between">
+<h3 class="text-xs font-bold flex items-center gap-1.5">
+<span>🏢</span> Tambah Cabang Baru (Database Mandiri)
+      </h3>
+<button class="text-emerald-200 hover:text-white font-bold text-lg" onclick="closeAddBranchModal()">✕</button>
 </div>
 <div class="p-4 space-y-3">
-<label class="block text-xs font-bold text-slate-700">Pilih Periode Rekap:</label>
-<div class="grid grid-cols-3 gap-2">
-<button class="period-btn py-2 text-xs font-bold rounded-xl border border-emerald-600 bg-emerald-600 text-white" id="periodBtnHarian" onclick="selectSavePeriod('Harian')" type="button">Harian</button>
-<button class="period-btn py-2 text-xs font-bold rounded-xl border border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100" id="periodBtnMingguan" onclick="selectSavePeriod('Mingguan')" type="button">Mingguan</button>
-<button class="period-btn py-2 text-xs font-bold rounded-xl border border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100" id="periodBtnBulanan" onclick="selectSavePeriod('Bulanan')" type="button">Bulanan</button>
+<div>
+<label class="block text-xs font-semibold text-slate-700 mb-1">Nama Cabang / Toko Baru:</label>
+<input class="w-full text-xs rounded-lg border-slate-300 focus:ring-emerald-500" id="new-branch-name" placeholder="Contoh: Cabang Malioboro" type="text"/>
+</div>
+<p class="text-[11px] text-slate-500 leading-normal">
+        Sistem akan membuat ruang penyimpanan terisolasi (<code class="bg-slate-100 px-1 rounded">DB_CABANG_[NAMA]</code>). Data transaksi cabang tidak akan tercampur dengan toko lain.
+      </p>
+</div>
+<div class="bg-slate-50 px-4 py-2.5 border-t border-slate-200 flex justify-end gap-2">
+<button class="px-3 py-1.5 text-xs text-slate-600 hover:text-slate-800" onclick="closeAddBranchModal()">Batal</button>
+<button class="px-4 py-1.5 bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold rounded-lg" onclick="createNewBranch()">Buat Cabang</button>
+</div>
+</div>
+</div>
+<!-- END: AddBranchModal -->
+<!-- BEGIN: AddNewProductModal -->
+<div class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-3" id="modal-add-product">
+<div class="bg-white w-full max-w-md rounded-2xl shadow-2xl border border-slate-200 overflow-hidden transform transition">
+<div class="bg-slate-900 text-white px-4 py-3 flex items-center justify-between">
+<h3 class="text-xs font-bold flex items-center gap-1.5">
+<span>🥟</span> Tambah Produk Baru ke Toko Ini
+      </h3>
+<button class="text-slate-400 hover:text-white font-bold text-lg" onclick="closeNewProductModal()">✕</button>
+</div>
+<div class="p-4 space-y-2.5 text-xs">
+<div>
+<label class="block font-semibold text-slate-700 mb-0.5">Nama Jajanan / Produk:</label>
+<input class="w-full text-xs rounded-lg border-slate-300" id="np-name" placeholder="Misal: Lemper Ayam Special" type="text"/>
+</div>
+<div class="grid grid-cols-2 gap-2">
+<div>
+<label class="block font-semibold text-slate-700 mb-0.5">Harga Kulak (Rp):</label>
+<input class="w-full text-xs rounded-lg border-slate-300" id="np-kulak" placeholder="2000" type="number"/>
 </div>
 <div>
-<label class="block text-[11px] font-bold text-slate-600 mb-1">Label / Catatan Tanggal</label>
-<input class="w-full text-xs p-2 bg-slate-50 border border-slate-200 rounded-xl font-medium" id="historyNote" type="text" value="Rekap Penjualan Harian - Aktif"/>
+<label class="block font-semibold text-red-600 mb-0.5">Harga Jual (Rp):</label>
+<input class="w-full text-xs rounded-lg border-slate-300" id="np-jual" placeholder="3000" type="number"/>
 </div>
-<div class="bg-slate-50 p-3 rounded-xl border border-slate-200 text-xs space-y-1">
-<div class="flex justify-between">
-<span class="text-slate-500">Total Omzet Saat Ini:</span>
-<span class="font-bold text-slate-800" id="histSnapOmzet">Rp 0</span>
-</div>
-<div class="flex justify-between">
-<span class="text-slate-500">Laba Bersih Akhir Saat Ini:</span>
-<span class="font-black text-emerald-700" id="histSnapLaba">Rp 0</span>
-</div>
-</div>
-<div class="border-t border-slate-100 pt-2">
-<div class="flex items-center justify-between mb-2">
-<span class="text-xs font-bold text-slate-700">Daftar Riwayat Tersimpan:</span>
-<button class="text-[10px] text-red-600 font-bold hover:underline" onclick="clearAllHistory()">Hapus Semua</button>
-</div>
-<div class="max-h-36 overflow-y-auto space-y-1.5" id="savedHistoryList">
-<p class="text-xs text-slate-400 text-center py-2">Belum ada riwayat tersimpan.</p>
-</div>
-</div>
-</div>
-<div class="p-3 bg-slate-50 border-t border-slate-100 flex items-center justify-end gap-2">
-<button class="px-3 py-2 text-slate-600 text-xs font-semibold rounded-xl hover:bg-slate-100" onclick="closeSaveHistoryModal()">Batal</button>
-<button class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl transition shadow-xs flex items-center gap-1.5" onclick="commitSaveHistory()">
-<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-<span>Simpan Riwayat Baru</span>
-</button>
-</div>
-</div>
-</div>
-<!-- Modal 4: Rekapitulasi Laporan Komprehensif -->
-<div class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-50 hidden flex items-center justify-center p-3 sm:p-5 overflow-y-auto" id="reportModal">
-<div class="bg-white rounded-2xl max-w-3xl w-full border border-slate-200 shadow-2xl my-auto overflow-hidden">
-<div class="bg-[#FEF9E7] p-4 border-b border-amber-200/80 flex items-center justify-between">
-<div class="flex items-center gap-2.5">
-<img alt="Ngenal Rasa" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCff31hXw8lGrKg_5s_6tjkECeYpjEbOizQkCeCDHf3bi-Uoceo5I7m-jhmJjAmwvtnXXkNZ8beMJzRQLb1JLMnaXU7dJzjwswuLsw-VJaJM9rfEyo9laosLwh3DTH8qi_BHSVkNz8T88yoexZ1VfeZLTtQbnMn8kl9ozzpKbUI-WvHXXV4emNwMdc_7t7V07HBETL1nsPxIVaUe_MAN2MTtsmo5DGgTBBGbqX5VNqYKM6oefpeFLDgXQ"/>
-<div>
-<h3 class="text-base font-bold text-slate-900">Laporan Rekapitulasi Penjualan &amp; Laba</h3>
-<p class="text-xs text-slate-500" id="reportBranchSubtitle">Breakdown performa keuangan Toko Pusat</p>
-</div>
-</div>
-<div class="flex items-center gap-2">
-<button class="px-3 py-1.5 bg-slate-900 text-white text-xs font-bold rounded-xl flex items-center gap-1 hover:bg-slate-800 transition" onclick="window.print()">
-<svg class="w-3.5 h-3.5 text-slate-300" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-Cetak PDF
-</button>
-<button class="text-slate-400 hover:text-slate-700 font-bold text-xl px-2" onclick="closeReportModal()">×</button>
-</div>
-</div>
-<div class="p-4 sm:p-6 space-y-4">
-<div class="flex items-center justify-between flex-wrap gap-2">
-<div class="inline-flex bg-slate-100 p-1 rounded-xl text-xs font-bold" id="reportTabsContainer">
-<button class="px-3 py-1.5 rounded-lg bg-white text-slate-900 shadow-xs" id="tabDaily" onclick="switchReportTab('daily')">Hari Ini (Harian)</button>
-<button class="px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900" id="tabWeekly" onclick="switchReportTab('weekly')">7 Hari (Mingguan)</button>
-<button class="px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900" id="tabMonthly" onclick="switchReportTab('monthly')">Bulan Ini (Bulanan)</button>
-</div>
-<div class="text-xs text-slate-500 font-medium" id="reportPeriodLabel">Periode: Realtime Hari Ini</div>
-</div>
-<div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-<div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
-<span class="text-[10px] font-bold text-slate-400 uppercase block">Total Omzet</span>
-<span class="text-sm font-black text-slate-900 mt-0.5 block" id="repOmzet">Rp 0</span>
-</div>
-<div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
-<span class="text-[10px] font-bold text-slate-400 uppercase block">Modal HPP</span>
-<span class="text-sm font-black text-slate-700 mt-0.5 block" id="repHpp">Rp 0</span>
-</div>
-<div class="bg-emerald-50/60 p-3 rounded-xl border border-emerald-200">
-<span class="text-[10px] font-bold text-emerald-700 uppercase block">Laba Kotor</span>
-<span class="text-sm font-black text-emerald-800 mt-0.5 block" id="repLabaKotor">Rp 0</span>
-</div>
-<div class="bg-red-50/60 p-3 rounded-xl border border-red-200">
-<span class="text-[10px] font-bold text-red-600 uppercase block">Loss Basi</span>
-<span class="text-sm font-black text-red-700 mt-0.5 block" id="repLossBasi">Rp 0</span>
-</div>
-</div>
-<div class="bg-white rounded-xl border border-slate-200 p-4 space-y-2.5">
-<h4 class="text-xs font-black uppercase text-slate-700 tracking-wider">Rekonsiliasi Laba Bersih Akhir:</h4>
-<div class="flex justify-between text-xs py-1 border-b border-slate-100">
-<span class="text-slate-600">Laba Kotor Hasil Penjualan</span>
-<span class="font-bold text-emerald-800" id="repCalcLabaKotor">+ Rp 0</span>
-</div>
-<div class="flex justify-between text-xs py-1 border-b border-slate-100">
-<span class="text-slate-600">Beban Kerugian Produk Basi</span>
-<span class="font-bold text-red-600" id="repCalcLossBasi">- Rp 0</span>
-</div>
-<div class="flex justify-between text-xs py-1 border-b border-slate-100">
-<span class="text-slate-600">Beban Pengeluaran Operasional &amp; Kemasan</span>
-<span class="font-bold text-amber-700" id="repCalcExpense">- Rp 0</span>
-</div>
-<div class="flex justify-between items-center text-sm pt-2 bg-emerald-50/60 p-3 rounded-xl border border-emerald-200">
-<span class="font-black text-emerald-900">LABA BERSIH AKHIR (NET PROFIT)</span>
-<span class="text-base font-black text-emerald-800" id="repNetProfit">Rp 0</span>
-</div>
-</div>
-<div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-<div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
-<div class="font-bold text-slate-800 mb-1.5 flex items-center gap-1.5">
-<span class="text-emerald-600">🔥</span> Top Fast Moving Terlaris
-</div>
-<ul class="space-y-1 text-slate-600" id="repTopFastList"></ul>
-</div>
-<div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
-<div class="font-bold text-slate-800 mb-1.5 flex items-center gap-1.5">
-<span class="text-red-500">⚠️</span> Top Basi / Butuh Evaluasi Stok
-</div>
-<ul class="space-y-1 text-slate-600" id="repTopBasiList"></ul>
-</div>
-</div>
-</div>
-<div class="p-3 bg-slate-50 border-t border-slate-100 flex justify-end">
-<button class="px-4 py-2 bg-slate-900 text-white text-xs font-bold rounded-xl" onclick="closeReportModal()">Tutup Laporan</button>
-</div>
-</div>
-</div>
-<!-- Modal 5: Tambah Cabang Baru -->
-<div class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-50 hidden flex items-center justify-center p-4" id="addBranchModal">
-<div class="bg-white rounded-2xl max-w-md w-full border border-slate-200 shadow-2xl overflow-hidden">
-<div class="bg-[#FEF9E7] p-4 border-b border-amber-200/80 flex items-center justify-between">
-<div class="flex items-center gap-2">
-<span class="w-8 h-8 rounded-lg bg-[#B91C1C] text-white flex items-center justify-center font-bold text-sm">🏪</span>
-<div>
-<h3 class="text-sm font-bold text-slate-900">Tambah Cabang Toko Baru</h3>
-<p class="text-[11px] text-slate-500">Buat outlet baru dengan database penjualan mandiri</p>
-</div>
-</div>
-<button class="text-slate-400 hover:text-slate-700 font-bold text-lg" onclick="closeAddBranchModal()">×</button>
-</div>
-<form class="p-4 space-y-3" id="addBranchForm" onsubmit="submitNewBranch(event)">
-<div>
-<label class="block text-[11px] font-bold text-slate-700 mb-1">Nama Cabang Toko <span class="text-red-500">*</span></label>
-<input class="w-full text-xs p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-red-500 focus:ring-red-500 font-bold text-slate-900" id="newBranchName" placeholder="Contoh: Cabang Kartasura / Outlet Solo Baru" required="" type="text"/>
 </div>
 <div>
-<label class="block text-[11px] font-bold text-slate-700 mb-1">Penanggung Jawab / Mitra (Opsional)</label>
-<input class="w-full text-xs p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-red-500 font-medium" id="newBranchPic" placeholder="Contoh: Mas Budi / Mbak Rina" type="text"/>
-</div>
-<div>
-<label class="block text-[11px] font-bold text-slate-700 mb-1">Lokasi / Alamat (Opsional)</label>
-<input class="w-full text-xs p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-red-500 font-medium" id="newBranchLocation" placeholder="Contoh: Jl. Slamet Riyadi No. 45" type="text"/>
-</div>
-<div class="p-3 bg-slate-50 border-t border-slate-100 -mx-4 -mb-4 mt-4 flex items-center justify-end gap-2">
-<button class="px-3.5 py-2 text-slate-600 text-xs font-semibold rounded-xl hover:bg-slate-200 transition" onclick="closeAddBranchModal()" type="button">Batal</button>
-<button class="px-4 py-2 bg-[#B91C1C] hover:bg-red-800 text-white text-xs font-bold rounded-xl transition shadow-xs flex items-center gap-1.5" type="submit">
-<svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-<span>Simpan Cabang</span>
-</button>
-</div>
-</form>
+<label class="block font-semibold text-slate-700 mb-0.5">Stok Awal:</label>
+<input class="w-full text-xs rounded-lg border-slate-300" id="np-stok" type="number" value="0"/>
 </div>
 </div>
-<script>
-    // 62 MASTER VARIAN JAJANAN PASAR NGENAL RASA (10 PRODUK DI ATAS)
-    const INITIAL_56_PRODUCTS = [
-      { id: 101, name: 'SERABI', kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
-      { id: 102, name: 'ONGOL-ONGOL', kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
-      { id: 103, name: 'SOSIS SOLO', kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
-      { id: 104, name: 'PEYEK', kulak: 2500, jual: 3000, stok: 0, terjual: 0, basi: 0, retur: 0 },
-      { id: 105, name: 'ANEKA JENANG', kulak: 2300, jual: 2500, stok: 0, terjual: 0, basi: 0, retur: 0 },
-      { id: 106, name: 'KETAN PUTIH', kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
-      { id: 107, name: 'MENDUT', kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
-      { id: 108, name: 'TERANG BULAN', kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
-      { id: 109, name: 'BIKA AMBON', kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
-      { id: 110, name: 'WINGKO', kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
-      { id: 1, name: 'KUE SUS', kulak: 2000, jual: 3000, stok: 0, terjual: 0, basi: 0, retur: 0 },
-      { id: 2, name: 'BAKPAO', kulak: 2200, jual: 3000, stok: 0, terjual: 0, basi: 0, retur: 0 },
-      { id: 3, name: 'BOLEN PISANG', kulak: 2200, jual: 3000, stok: 0, terjual: 0, basi: 0, retur: 0 },
-      { id: 4, name: 'KUKUS', kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
-      { id: 5, name: 'DONAT TEBAL', kulak: 2500, jual: 3000, stok: 0, terjual: 0, basi: 0, retur: 0 },
-      { id: 6, name: 'DONAT TIPIS/GULA', kulak: 1500, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
-      { id: 7, name: 'KUE SEBRA', kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
-      { id: 8, name: 'KUE GABIN', kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
-      { id: 9, name: 'KUE PIA', kulak: 2200, jual: 3000, stok: 0, terjual: 0, basi: 0, retur: 0 },
-      { id: 10, name: 'KUE AMANDEL', kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
-      { id: 11, name: 'ROTI O', kulak: 2500, jual: 3000, stok: 0, terjual: 0, basi: 0, retur: 0 },
-      { id: 12, name: 'ROTI PISANG', kulak: 2200, jual: 3000, stok: 0, terjual: 0, basi: 0, retur: 0 },
-      { id: 13, name: 'ROTI GULUNG', kulak: 2500, jual: 3000, stok: 0, terjual: 0, basi: 0, retur: 0 },
-      { id: 14, name: 'ROTI SOSIS', kulak: 2500, jual: 3000, stok: 0, terjual: 0, basi: 0, retur: 0 },
-      { id: 15, name: 'ROTI SISIR', kulak: 2500, jual: 3000, stok: 0, terjual: 0, basi: 0, retur: 0 },
-      { id: 16, name: 'PUTU AYU (DESI)', kulak: 1500, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
-      { id: 17, name: 'PASTEL', kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
-      { id: 18, name: 'KUE CUM-CUM', kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
-      { id: 19, name: 'BIKANG', kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
-      { id: 20, name: 'NOGOSARI', kulak: 1500, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
-      { id: 21, name: 'AREM-AREM', kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
-      { id: 22, name: 'LEMPER BIASA', kulak: 1500, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
-      { id: 23, name: 'LEMPER BAKAR', kulak: 2000, jual: 2500, stok: 0, terjual: 0, basi: 0, retur: 0 },
-      { id: 24, name: 'LEMPER (SRI)', kulak: 2200, jual: 3500, stok: 0, terjual: 0, basi: 0, retur: 0 },
-      { id: 25, name: 'ONDE-ONDE', kulak: 1200, jual: 1500, stok: 0, terjual: 0, basi: 0, retur: 0 },
-      { id: 26, name: 'KELEPON', kulak: 1200, jual: 1500, stok: 0, terjual: 0, basi: 0, retur: 0 },
-      { id: 27, name: 'KUE CUCUR', kulak: 1200, jual: 1500, stok: 0, terjual: 0, basi: 0, retur: 0 },
-      { id: 28, name: 'STIK', kulak: 800, jual: 1000, stok: 0, terjual: 0, basi: 0, retur: 0 },
-      { id: 29, name: 'KERIPIK', kulak: 800, jual: 1000, stok: 0, terjual: 0, basi: 0, retur: 0 },
-      { id: 30, name: 'PUDING', kulak: 1500, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
-      { id: 31, name: 'KUE LAPIS', kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
-      { id: 32, name: 'JADAH PUTIH', kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
-      { id: 33, name: 'WAJIK', kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
-      { id: 34, name: 'RISOLES', kulak: 2500, jual: 3000, stok: 0, terjual: 0, basi: 0, retur: 0 },
-      { id: 35, name: 'KUE POKIS', kulak: 1800, jual: 3000, stok: 0, terjual: 0, basi: 0, retur: 0 },
-      { id: 36, name: 'KUE LUMPUR', kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
-      { id: 37, name: 'KETAN', kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
-      { id: 38, name: 'MENIRAN', kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
-      { id: 39, name: 'MARTABAK', kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
-      { id: 40, name: 'NASI BALI (EMAK)', kulak: 5000, jual: 6000, stok: 0, terjual: 0, basi: 0, retur: 0 },
-      { id: 41, name: 'JENTIK MANIS', kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
-      { id: 43, name: 'SUSU DELE', kulak: 800, jual: 1500, stok: 0, terjual: 0, basi: 0, retur: 0 },
-      { id: 44, name: 'DADAR GULUNG', kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
-      { id: 45, name: 'ROTI SIFON', kulak: 1500, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
-      { id: 46, name: 'BOLU MAWAR', kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
-      { id: 47, name: 'ROTI MUFFIN', kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
-      { id: 48, name: 'ROTI COKELAT GARIS', kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
-      { id: 49, name: 'ROTI BELAH', kulak: 2500, jual: 3000, stok: 0, terjual: 0, basi: 0, retur: 0 },
-      { id: 50, name: 'ROTI TAMPAH', kulak: 2500, jual: 3000, stok: 0, terjual: 0, basi: 0, retur: 0 },
-      { id: 51, name: 'ROTI AGAR', kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
-      { id: 52, name: 'ROTI KEJU BULAT', kulak: 3000, jual: 3500, stok: 0, terjual: 0, basi: 0, retur: 0 },
-      { id: 53, name: 'ROTI KEJU', kulak: 3500, jual: 4000, stok: 0, terjual: 0, basi: 0, retur: 0 }
-    ];
+<div class="bg-slate-50 px-4 py-2.5 border-t border-slate-200 flex justify-end gap-2">
+<button class="px-3 py-1.5 text-xs text-slate-600" onclick="closeNewProductModal()">Batal</button>
+<button class="px-4 py-1.5 bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold rounded-lg" onclick="saveNewProduct()">Simpan Produk</button>
+</div>
+</div>
+</div>
+<!-- END: AddNewProductModal -->
+<!-- BEGIN: ApplicationLogicScripts -->
+<script data-purpose="app-core-store">
+  const CATALOG_VERSION = "v_67_master_bolu_marmer";
 
-    const DEFAULT_BRANCHES = [
-      { id: 'pusat', name: 'Toko Pusat', isDefault: true, pic: 'Pusat Operasional' },
-      { id: 'serayu', name: 'Cabang Serayu', isDefault: false, pic: 'Pak Joko' }
-    ];
+  // Master 67 authentic Indonesian traditional market snacks with 0 quantity defaults
+  const DEFAULT_PRODUCTS = [
+    { name: "SERABI", kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "ONGOL-ONGOL", kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "SOSIS SOLO", kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "PEYEK", kulak: 2500, jual: 3000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "ANEKA JENANG", kulak: 2300, jual: 2500, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "KETAN PUTIH", kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "MENDUT", kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "TERANG BULAN", kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "BIKA AMBON", kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "WINGKO", kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "KUE SUS", kulak: 2000, jual: 3000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "BAKPAO", kulak: 2200, jual: 3000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "BOLEN PISANG", kulak: 2200, jual: 3000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "KUKUS", kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "DONAT TEBAL", kulak: 2500, jual: 3000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "DONAT TIPIS/GULA", kulak: 1500, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "KUE SEBRA", kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "KUE GABIN", kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "KUE PIA", kulak: 2200, jual: 3000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "KUE AMANDEL", kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "ROTI O", kulak: 2500, jual: 3000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "ROTI PISANG", kulak: 2200, jual: 3000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "ROTI GULUNG", kulak: 2500, jual: 3000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "ROTI SOSIS", kulak: 2500, jual: 3000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "ROTI SISIR", kulak: 2500, jual: 3000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "PUTU AYU (DESI)", kulak: 1500, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "PASTEL", kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "KUE CUM-CUM", kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "BIKANG", kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "NOGOSARI", kulak: 1500, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "AREM-AREM", kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "LEMPER BIASA", kulak: 1500, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "LEMPER BAKAR", kulak: 2000, jual: 2500, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "LEMPER (SRI)", kulak: 2200, jual: 3500, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "ONDE-ONDE", kulak: 1200, jual: 1500, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "KELEPON", kulak: 1200, jual: 1500, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "KUE CUCUR", kulak: 1200, jual: 1500, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "STIK", kulak: 800, jual: 1000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "KERIPIK", kulak: 800, jual: 1000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "PUDING", kulak: 1500, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "KUE LAPIS", kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "JADAH PUTIH", kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "WAJIK", kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "RISOLES", kulak: 2500, jual: 3000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "KUE POKIS", kulak: 1600, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "KUE LUMPUR", kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "KETAN", kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "MENIRAN", kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "MARTABAK", kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "NASI BALI (EMAK)", kulak: 5000, jual: 6000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "JENTIK MANIS", kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "SUSU DELE", kulak: 800, jual: 1500, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "DADAR GULUNG", kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "ROTI SIFON", kulak: 2000, jual: 2500, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "BOLU MAWAR", kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "ROTI MUFFIN", kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "ROTI COKELAT GARIS", kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "ROTI BELAH", kulak: 2500, jual: 3000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "ROTI TAMPAH", kulak: 2500, jual: 3000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "ROTI AGAR", kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "ROTI KEJU BULAT", kulak: 3000, jual: 3500, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "ROTI KEJU", kulak: 3500, jual: 4000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "GETUK LINDRI", kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "BUNGGOLO", kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "PIA KERING", kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "NASI KUNING DESI", kulak: 5000, jual: 6000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "BOLU MARMER", kulak: 2000, jual: 2500, stok: 0, terjual: 0, basi: 0, retur: 0 }
+  ];
 
-    let branches = [];
-    let currentBranchId = 'pusat';
-    let products = [];
-    let expenses = [];
-    let savedHistories = [];
-    let currentMovingFilter = 'all'; // 'all', 'fast', 'slow'
-    let selectedSavePeriod = 'Harian';
-    let currentReportTab = 'daily';
+  let branches = [{ id: "DB_PUSAT", name: "Toko Pusat" }];
+  let currentBranchId = "DB_PUSAT";
+  let activeFilter = "all";
 
-    const formatRp = (num) => 'Rp ' + (Number(num) || 0).toLocaleString('id-ID');
+  function formatRupiah(number) {
+    return "Rp " + Number(number || 0).toLocaleString('id-ID');
+  }
 
-    function getStorageKey(type, branchId) {
-      return `NR_BRANCH_V7_${type}_${branchId}`;
-    }
+  function getStoreKey(suffix) {
+    return `NR_${currentBranchId}_${suffix}`;
+  }
 
-    // Cabang Management
-    function loadBranches() {
+  function loadBranchData() {
+    const savedBranches = localStorage.getItem("NR_BRANCH_LIST");
+    if (savedBranches) {
       try {
-        const stored = localStorage.getItem('NR_BRANCHES_LIST_V7');
-        if (stored) {
-          branches = JSON.parse(stored);
-        } else {
-          // Migrasi dari V6 jika ada
-          const prevStored = localStorage.getItem('NR_BRANCHES_LIST_V6');
-          if (prevStored) {
-            branches = JSON.parse(prevStored);
-          } else {
-            branches = JSON.parse(JSON.stringify(DEFAULT_BRANCHES));
-          }
-          localStorage.setItem('NR_BRANCHES_LIST_V7', JSON.stringify(branches));
-        }
+        const parsed = JSON.parse(savedBranches);
+        if (Array.isArray(parsed) && parsed.length > 0) branches = parsed;
+      } catch (e) {}
+    }
+
+    const storedVersion = localStorage.getItem("NR_CATALOG_VERSION");
+    if (storedVersion !== CATALOG_VERSION) {
+      localStorage.setItem("NR_CATALOG_VERSION", CATALOG_VERSION);
+      const initial = JSON.parse(JSON.stringify(DEFAULT_PRODUCTS));
+      localStorage.setItem(getStoreKey("PRODUCTS"), JSON.stringify(initial));
+      return initial;
+    }
+
+    const activeProductStr = localStorage.getItem(getStoreKey("PRODUCTS"));
+    if (activeProductStr) {
+      try {
+        const parsed = JSON.parse(activeProductStr);
+        if (Array.isArray(parsed) && parsed.length >= 67) return parsed;
+        return JSON.parse(JSON.stringify(DEFAULT_PRODUCTS));
       } catch (e) {
-        branches = JSON.parse(JSON.stringify(DEFAULT_BRANCHES));
+        return JSON.parse(JSON.stringify(DEFAULT_PRODUCTS));
       }
-
-      const lastActive = localStorage.getItem('NR_CURRENT_BRANCH_ID_V7') || localStorage.getItem('NR_CURRENT_BRANCH_ID_V6');
-      if (lastActive && branches.some(b => b.id === lastActive)) {
-        currentBranchId = lastActive;
-      } else {
-        currentBranchId = 'pusat';
-      }
+    } else {
+      const initial = JSON.parse(JSON.stringify(DEFAULT_PRODUCTS));
+      localStorage.setItem(getStoreKey("PRODUCTS"), JSON.stringify(initial));
+      return initial;
     }
+  }
 
-    function saveBranchesList() {
-      localStorage.setItem('NR_BRANCHES_LIST_V7', JSON.stringify(branches));
+  function saveBranchData(products) {
+    localStorage.setItem(getStoreKey("PRODUCTS"), JSON.stringify(products));
+  }
+
+  function loadBranchExpenses() {
+    const expStr = localStorage.getItem(getStoreKey("EXPENSES"));
+    if (expStr) {
+      try { return JSON.parse(expStr); } catch (e) {}
     }
+    const defaultExp = [];
+    localStorage.setItem(getStoreKey("EXPENSES"), JSON.stringify(defaultExp));
+    return defaultExp;
+  }
 
-    function renderBranchBar() {
-      const container = document.getElementById('branchBarContainer');
-      if (!container) return;
-      container.innerHTML = '';
+  function saveBranchExpenses(expenses) {
+    localStorage.setItem(getStoreKey("EXPENSES"), JSON.stringify(expenses));
+  }
+</script>
+<script data-purpose="render-and-calculations">
+  let productsList = [];
+  let expensesList = [];
+  let latestTotals = {
+    totalOmzet: 0,
+    totalModalKulak: 0,
+    totalLabaKotor: 0,
+    totalLossBasi: 0,
+    totalBebanOperasional: 0,
+    labaBersihAkhir: 0,
+    totalSetorMitra: 0
+  };
 
-      branches.forEach(b => {
-        const isActive = b.id === currentBranchId;
-        const isMain = b.id === 'pusat' || b.isDefault;
+  let saveDebounceTimer = null;
+  function debounceSave() {
+    clearTimeout(saveDebounceTimer);
+    saveDebounceTimer = setTimeout(() => {
+      saveBranchData(productsList);
+    }, 400);
+  }
 
-        const btnWrap = document.createElement('div');
-        if (isActive) {
-          btnWrap.className = "inline-flex items-center bg-[#B91C1C] text-white text-xs font-bold px-3 py-1.5 rounded-xl shadow-sm transition gap-1.5 cursor-pointer ring-2 ring-red-400/40";
-        } else {
-          btnWrap.className = "inline-flex items-center bg-white text-slate-700 border border-slate-200 hover:border-red-300 hover:bg-slate-50 text-xs font-semibold px-3 py-1.5 rounded-xl shadow-2xs transition gap-1.5 cursor-pointer";
-        }
+  function initApp() {
+    productsList = loadBranchData();
+    expensesList = loadBranchExpenses();
+    renderBranchButtons();
+    setupBagiHasilInputs();
+    buildTable();
+    calculateTotals();
+    recalculateBagiHasil();
+    setupSearchFilter();
+  }
 
-        const icon = isMain ? '🏪' : '📍';
-        btnWrap.innerHTML = `
-          <span class="cursor-pointer flex items-center gap-1" onclick="switchBranch('${b.id}')">
-            <span>${icon}</span>
-            <span>${b.name}</span>
-          </span>
-          ${!isMain ? `
-            <button onclick="event.stopPropagation(); deleteBranch('${b.id}')" class="ml-1 text-slate-400 hover:text-red-600 font-bold px-1 rounded hover:bg-red-50 text-xs transition leading-none" title="Hapus cabang ${b.name}">✕</button>
-          ` : ''}
-        `;
-        container.appendChild(btnWrap);
-      });
+  function renderBranchButtons() {
+    const container = document.getElementById("branch-pills-container");
+    container.innerHTML = "";
 
-      // Tombol Tambah Cabang yang mencolok (Hijau Emerald)
-      const addBtn = document.createElement('button');
-      addBtn.className = "px-3.5 py-1.5 bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold rounded-xl flex items-center gap-1.5 shadow-xs transition cursor-pointer";
-      addBtn.onclick = openAddBranchModal;
-      addBtn.innerHTML = `
-        <span class="text-white font-extrabold text-sm leading-none">+</span>
-        <span>Tambah Cabang</span>
-      `;
-      container.appendChild(addBtn);
+    branches.forEach(branch => {
+      const isActive = branch.id === currentBranchId;
+      const isMainBranch = branch.id === "DB_PUSAT";
 
-      // Perbarui label indikator cabang aktif
-      const currentBranch = branches.find(b => b.id === currentBranchId) || branches[0];
-      const activeBranchName = currentBranch ? currentBranch.name : 'Toko Pusat';
-      const ind = document.getElementById('activeBranchIndicator');
-      if (ind) ind.innerText = `Aktif: ${activeBranchName}`;
+      const branchWrapper = document.createElement("div");
+      branchWrapper.className = "inline-flex items-center rounded-xl p-0.5 " + 
+        (isActive 
+          ? "bg-[#b91c1c] text-white shadow-sm ring-2 ring-red-400/40" 
+          : "bg-white border border-slate-300 text-slate-700 hover:bg-slate-50");
 
-      const expSub = document.getElementById('expenseBranchSubtitle');
-      if (expSub) expSub.innerText = `Biaya kemasan & operasional untuk ${activeBranchName}`;
+      const switchBtn = document.createElement("button");
+      switchBtn.type = "button";
+      switchBtn.className = "flex items-center gap-1.5 px-2.5 py-1 text-xs font-bold transition active:scale-95";
+      switchBtn.onclick = () => switchBranch(branch.id);
+      switchBtn.innerHTML = `<span>🏪</span> <span>${branch.name}</span>`;
+      branchWrapper.appendChild(switchBtn);
 
-      const repSub = document.getElementById('reportBranchSubtitle');
-      if (repSub) repSub.innerText = `Breakdown performa keuangan ${activeBranchName}`;
-    }
-
-    function switchBranch(branchId) {
-      if (branchId === currentBranchId) return;
-      currentBranchId = branchId;
-      localStorage.setItem('NR_CURRENT_BRANCH_ID_V7', currentBranchId);
-      loadBranchData(currentBranchId);
-      renderBranchBar();
-      renderTable();
-    }
-
-    function openAddBranchModal() {
-      document.getElementById('addBranchForm').reset();
-      document.getElementById('addBranchModal').classList.remove('hidden');
-    }
-
-    function closeAddBranchModal() {
-      document.getElementById('addBranchModal').classList.add('hidden');
-    }
-
-    function submitNewBranch(e) {
-      e.preventDefault();
-      const name = document.getElementById('newBranchName').value.trim();
-      const pic = document.getElementById('newBranchPic').value.trim();
-      const loc = document.getElementById('newBranchLocation').value.trim();
-
-      if (!name) {
-        alert('Mohon masukkan nama cabang.');
-        return;
-      }
-
-      const branchId = 'br_' + Date.now();
-      const newBranch = {
-        id: branchId,
-        name,
-        pic: pic || 'Penanggung Jawab',
-        location: loc || '',
-        isDefault: false
-      };
-
-      branches.push(newBranch);
-      saveBranchesList();
-
-      // Buat database produk terpisah untuk cabang baru ini (default 62 produk, stok & terjual 0)
-      const freshBranchProducts = INITIAL_56_PRODUCTS.map(p => ({
-        ...p,
-        stok: 0,
-        terjual: 0,
-        basi: 0,
-        retur: 0
-      }));
-
-      localStorage.setItem(getStorageKey('PROD', branchId), JSON.stringify(freshBranchProducts));
-      localStorage.setItem(getStorageKey('EXP', branchId), JSON.stringify([]));
-      localStorage.setItem(getStorageKey('HIST', branchId), JSON.stringify([]));
-
-      // Otomatis aktifkan cabang baru
-      currentBranchId = branchId;
-      localStorage.setItem('NR_CURRENT_BRANCH_ID_V7', currentBranchId);
-
-      loadBranchData(branchId);
-      renderBranchBar();
-      renderTable();
-      closeAddBranchModal();
-    }
-
-    function deleteBranch(branchId) {
-      const bIndex = branches.findIndex(b => b.id === branchId);
-      if (bIndex === -1) return;
-      const bObj = branches[bIndex];
-
-      if (bObj.isDefault || branchId === 'pusat') {
-        alert('Toko Pusat adalah cabang utama dan tidak dapat dihapus.');
-        return;
-      }
-
-      if (confirm(`Apakah Anda yakin ingin menghapus "${bObj.name}"?\nSemua database produk, penjualan, dan riwayat cabang ini akan dihapus.`)) {
-        localStorage.removeItem(getStorageKey('PROD', branchId));
-        localStorage.removeItem(getStorageKey('EXP', branchId));
-        localStorage.removeItem(getStorageKey('HIST', branchId));
-
-        branches.splice(bIndex, 1);
-        saveBranchesList();
-
-        // Jika cabang yang dihapus sedang aktif, kembali ke Toko Pusat
-        if (currentBranchId === branchId) {
-          currentBranchId = 'pusat';
-          localStorage.setItem('NR_CURRENT_BRANCH_ID_V7', currentBranchId);
-        }
-
-        loadBranchData(currentBranchId);
-        renderBranchBar();
-        renderTable();
-      }
-    }
-
-    function getTodayDateString() {
-      const now = new Date();
-      return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
-    }
-
-    function resetDailyQuantities() {
-      const curBranchObj = branches.find(b => b.id === currentBranchId);
-      const bName = curBranchObj ? curBranchObj.name : 'cabang aktif';
-      if (confirm(`Reset seluruh Qty Stok, Qty Terjual, Basi, dan Retur menjadi 0 untuk ${bName}?\n(Harga Kulak dan Jual tetap aman)`)) {
-        products = products.map(p => ({
-          ...p,
-          stok: 0,
-          terjual: 0,
-          basi: 0,
-          retur: 0
-        }));
-        saveData();
-        renderTable();
-      }
-    }
-
-    function checkAndExecuteDailyReset() {
-      const today = getTodayDateString();
-      const lastResetDate = localStorage.getItem(`NR_LAST_RESET_DATE_${currentBranchId}`);
-      const lastResetTimestamp = Number(localStorage.getItem(`NR_LAST_RESET_TIMESTAMP_${currentBranchId}`)) || 0;
-      const nowTs = Date.now();
-      const ONE_DAY_MS = 24 * 60 * 60 * 1000;
-
-      if (!lastResetDate) {
-        localStorage.setItem(`NR_LAST_RESET_DATE_${currentBranchId}`, today);
-        localStorage.setItem(`NR_LAST_RESET_TIMESTAMP_${currentBranchId}`, String(nowTs));
-        return;
-      }
-
-      if (lastResetDate !== today || (nowTs - lastResetTimestamp >= ONE_DAY_MS)) {
-        autoArchiveDailyHistory(lastResetDate);
-
-        products = products.map(p => ({
-          ...p,
-          stok: 0,
-          terjual: 0,
-          basi: 0,
-          retur: 0
-        }));
-
-        localStorage.setItem(`NR_LAST_RESET_DATE_${currentBranchId}`, today);
-        localStorage.setItem(`NR_LAST_RESET_TIMESTAMP_${currentBranchId}`, String(nowTs));
-        saveData();
-        renderTable();
-      }
-    }
-
-    function autoArchiveDailyHistory(previousDateLabel) {
-      let totalOmzet = 0;
-      let totalKotor = 0;
-      let totalBasi = 0;
-      let hasTransactions = false;
-
-      products.forEach(p => {
-        const kulak = Number(p.kulak) || 0;
-        const jual = Number(p.jual) || 0;
-        const terjual = Number(p.terjual) || 0;
-        const basi = Number(p.basi) || 0;
-        if (terjual > 0 || basi > 0) hasTransactions = true;
-        totalOmzet += (terjual * jual);
-        totalKotor += (terjual * (jual - kulak));
-        totalBasi += (basi * kulak);
-      });
-
-      if (hasTransactions) {
-        const totalBeban = getTotalExpenses();
-        const netProfit = totalKotor - totalBasi - totalBeban;
-
-        const autoHistoryItem = {
-          id: Date.now(),
-          date: new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }),
-          period: 'Harian (Auto-Archive 24 Jam)',
-          note: `Arsip Otomatis 24 Jam (${previousDateLabel || 'Sebelum Reset'})`,
-          omzet: totalOmzet,
-          netProfit,
-          productCount: products.length
+      if (!isMainBranch) {
+        const deleteBtn = document.createElement("button");
+        deleteBtn.type = "button";
+        deleteBtn.title = `Hapus Cabang ${branch.name}`;
+        deleteBtn.className = "ml-0.5 mr-1 px-1.5 py-0.5 rounded-lg text-[10px] font-bold transition " + 
+          (isActive 
+            ? "bg-red-800 hover:bg-red-900 text-white" 
+            : "bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200");
+        deleteBtn.innerHTML = `✕`;
+        deleteBtn.onclick = (e) => {
+          e.stopPropagation();
+          deleteBranch(branch.id, branch.name);
         };
-
-        savedHistories.unshift(autoHistoryItem);
-        saveHistoriesToStorage();
-      }
-    }
-
-    // Pastikan 10 varian jajanan teratas berada di urutan paling atas secara tepat
-    function ensureTopProducts(productList) {
-      const topDefaults = [
-        { id: 101, name: 'SERABI', kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
-        { id: 102, name: 'ONGOL-ONGOL', kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
-        { id: 103, name: 'SOSIS SOLO', kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
-        { id: 104, name: 'PEYEK', kulak: 2500, jual: 3000, stok: 0, terjual: 0, basi: 0, retur: 0 },
-        { id: 105, name: 'ANEKA JENANG', kulak: 2300, jual: 2500, stok: 0, terjual: 0, basi: 0, retur: 0 },
-        { id: 106, name: 'KETAN PUTIH', kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
-        { id: 107, name: 'MENDUT', kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
-        { id: 108, name: 'TERANG BULAN', kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
-        { id: 109, name: 'BIKA AMBON', kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
-        { id: 110, name: 'WINGKO', kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 }
-      ];
-
-      // Filter yang bukan salah satu dari 10 item ini
-      const remainingList = productList.filter(p => !topDefaults.some(t => t.name === p.name));
-      // Ambil objek 10 item teratas (baik yang sudah ada atau default baru)
-      const topList = topDefaults.map(def => {
-        const exist = productList.find(p => p.name === def.name);
-        return exist ? exist : def;
-      });
-
-      return [...topList, ...remainingList];
-    }
-
-    // Penyesuaian harga revisi master spesifik
-    function syncRevisedPrices(productList) {
-      const updated = productList.map(item => {
-        if (item.name === 'KUE CUM-CUM') {
-          return { ...item, kulak: 1200, jual: 2000 };
-        }
-        if (item.name === 'RISOLES') {
-          return { ...item, kulak: 2500, jual: 3000 };
-        }
-        if (item.name === 'KUE LUMPUR') {
-          return { ...item, kulak: 1200, jual: 2000 };
-        }
-        if (item.name === 'SERABI') {
-          return { ...item, kulak: 1200, jual: 2000 };
-        }
-        if (item.name === 'ONGOL-ONGOL') {
-          return { ...item, kulak: 1200, jual: 2000 };
-        }
-        if (item.name === 'SOSIS SOLO') {
-          return { ...item, kulak: 1200, jual: 2000 };
-        }
-        if (item.name === 'PEYEK') {
-          return { ...item, kulak: 2500, jual: 3000 };
-        }
-        if (item.name === 'ANEKA JENANG') {
-          return { ...item, kulak: 2300, jual: 2500 };
-        }
-        if (item.name === 'KETAN PUTIH') {
-          return { ...item, kulak: 1200, jual: 2000 };
-        }
-        if (item.name === 'MENDUT') {
-          return { ...item, kulak: 1200, jual: 2000 };
-        }
-        if (item.name === 'TERANG BULAN') {
-          return { ...item, kulak: 1200, jual: 2000 };
-        }
-        if (item.name === 'BIKA AMBON') {
-          return { ...item, kulak: 1200, jual: 2000 };
-        }
-        if (item.name === 'WINGKO') {
-          return { ...item, kulak: 1200, jual: 2000 };
-        }
-        return item;
-      });
-      return ensureTopProducts(updated);
-    }
-
-    function loadBranchData(branchId) {
-      try {
-        const keyProd = getStorageKey('PROD', branchId);
-        let storedProd = localStorage.getItem(keyProd);
-        if (!storedProd) {
-          // Coba fallback dari V6 atau V5
-          storedProd = localStorage.getItem(`NR_BRANCH_V6_PROD_${branchId}`) || localStorage.getItem(`NR_BRANCH_V5_PROD_${branchId}`);
-        }
-
-        if (storedProd) {
-          const parsed = JSON.parse(storedProd);
-          if (Array.isArray(parsed) && parsed.length > 0) {
-            products = syncRevisedPrices(parsed.filter(item => item.name !== 'NASI (ANA)'));
-          } else {
-            products = JSON.parse(JSON.stringify(INITIAL_56_PRODUCTS));
-          }
-        } else {
-          // Default ke master 62 produk dengan stok dan terjual 0
-          products = JSON.parse(JSON.stringify(INITIAL_56_PRODUCTS));
-        }
-
-        localStorage.setItem(keyProd, JSON.stringify(products));
-
-        const keyExp = getStorageKey('EXP', branchId);
-        let storedExp = localStorage.getItem(keyExp) || localStorage.getItem(`NR_BRANCH_V6_EXP_${branchId}`) || localStorage.getItem(`NR_BRANCH_V5_EXP_${branchId}`);
-        if (storedExp) {
-          expenses = JSON.parse(storedExp);
-        } else {
-          expenses = [];
-        }
-
-        const keyHist = getStorageKey('HIST', branchId);
-        let storedHist = localStorage.getItem(keyHist) || localStorage.getItem(`NR_BRANCH_V6_HIST_${branchId}`) || localStorage.getItem(`NR_BRANCH_V5_HIST_${branchId}`);
-        if (storedHist) {
-          savedHistories = JSON.parse(storedHist);
-        } else {
-          savedHistories = [];
-        }
-      } catch (e) {
-        products = JSON.parse(JSON.stringify(INITIAL_56_PRODUCTS));
-        expenses = [];
-        savedHistories = [];
-      }
-    }
-
-    function saveData() {
-      localStorage.setItem(getStorageKey('PROD', currentBranchId), JSON.stringify(products));
-      updateCountsAndBadges();
-    }
-
-    function saveExpenses() {
-      localStorage.setItem(getStorageKey('EXP', currentBranchId), JSON.stringify(expenses));
-      renderExpenseList();
-      renderTable();
-    }
-
-    function saveHistoriesToStorage() {
-      localStorage.setItem(getStorageKey('HIST', currentBranchId), JSON.stringify(savedHistories));
-      renderHistoryList();
-    }
-
-    function resetDefaults() {
-      const curBranchObj = branches.find(b => b.id === currentBranchId);
-      const bName = curBranchObj ? curBranchObj.name : 'cabang aktif';
-      if (confirm(`Reset seluruh nilai tabel dan daftar pengeluaran untuk ${bName} ke master default 62 jajanan pasar (Stok & Terjual = 0)?`)) {
-        products = JSON.parse(JSON.stringify(INITIAL_56_PRODUCTS));
-        expenses = [];
-        localStorage.setItem(`NR_LAST_RESET_DATE_${currentBranchId}`, getTodayDateString());
-        localStorage.setItem(`NR_LAST_RESET_TIMESTAMP_${currentBranchId}`, String(Date.now()));
-        saveData();
-        saveExpenses();
-        renderTable();
-      }
-    }
-
-    // Klasifikasi Fast vs Slow Moving
-    function isFastMoving(p) {
-      const stok = Number(p.stok) || 0;
-      const terjual = Number(p.terjual) || 0;
-      const basi = Number(p.basi) || 0;
-      if (terjual === 0) return false;
-      const ratio = stok > 0 ? (terjual / stok) : 0;
-      return ratio >= 0.40 && basi <= 2;
-    }
-
-    function isSlowMoving(p) {
-      const stok = Number(p.stok) || 0;
-      const terjual = Number(p.terjual) || 0;
-      const basi = Number(p.basi) || 0;
-      if (basi >= 3) return true;
-      if (terjual > 0 && stok > 0 && (terjual / stok) < 0.40) return true;
-      return false;
-    }
-
-    function setMovingFilter(filter) {
-      currentMovingFilter = filter;
-      const allBtn = document.getElementById('filterAllBtn');
-      const fastBtn = document.getElementById('filterFastBtn');
-      const slowBtn = document.getElementById('filterSlowBtn');
-
-      allBtn.className = filter === 'all' 
-        ? "px-3 py-1.5 text-xs font-bold rounded-xl transition bg-slate-900 text-white shadow-xs" 
-        : "px-3 py-1.5 text-xs font-bold rounded-xl transition bg-white text-slate-700 border border-slate-200 hover:bg-slate-50";
-
-      fastBtn.className = filter === 'fast' 
-        ? "px-3 py-1.5 text-xs font-bold rounded-xl transition bg-emerald-700 text-white shadow-xs" 
-        : "px-3 py-1.5 text-xs font-bold rounded-xl transition bg-white text-emerald-700 border border-emerald-200 hover:bg-emerald-50";
-
-      slowBtn.className = filter === 'slow' 
-        ? "px-3 py-1.5 text-xs font-bold rounded-xl transition bg-red-700 text-white shadow-xs" 
-        : "px-3 py-1.5 text-xs font-bold rounded-xl transition bg-white text-red-700 border border-red-200 hover:bg-red-50";
-
-      renderTable();
-    }
-
-    function updateCountsAndBadges() {
-      let countFast = 0;
-      let countSlow = 0;
-
-      products.forEach(p => {
-        if (isFastMoving(p)) countFast++;
-        if (isSlowMoving(p)) countSlow++;
-      });
-
-      document.getElementById('countAllBadge').innerText = products.length;
-      document.getElementById('countFastBadge').innerText = countFast;
-      document.getElementById('countSlowBadge').innerText = countSlow;
-      const footCountEl = document.getElementById('footProductCount');
-      if (footCountEl) footCountEl.innerText = `${products.length} Varian`;
-    }
-
-    function getTotalExpenses() {
-      return expenses.reduce((sum, item) => sum + (Number(item.amount) || 0), 0);
-    }
-
-    function deleteProduct(index) {
-      const prod = products[index];
-      if (!prod) return;
-      if (confirm(`Hapus produk "${prod.name}" dari cabang ini?`)) {
-        products.splice(index, 1);
-        saveData();
-        renderTable();
-      }
-    }
-
-    function renderTable() {
-      const search = (document.getElementById('searchInput').value || '').toLowerCase().trim();
-      const tbody = document.getElementById('tableBody');
-      tbody.innerHTML = '';
-
-      let totalStokAll = 0;
-      let totalTerjualAll = 0;
-      let totalBasiAll = 0;
-      let totalReturAll = 0;
-      let totalMarginSum = 0;
-      let totalLabaKotorAll = 0;
-      let totalLossBasiAll = 0;
-      let totalOmzetAll = 0;
-      let totalHppAll = 0;
-      let countVisible = 0;
-
-      products.forEach((p, index) => {
-        const kulak = Number(p.kulak) || 0;
-        const jual = Number(p.jual) || 0;
-        const stok = Number(p.stok) || 0;
-        const terjual = Number(p.terjual) || 0;
-        const basi = Number(p.basi) || 0;
-        const retur = Number(p.retur) || 0;
-
-        const marjinBersih = jual - kulak;
-        const labaKotor = terjual * marjinBersih;
-        const lossBasi = basi * kulak;
-        const labaBersih = labaKotor - lossBasi;
-        const omzet = terjual * jual;
-        const hpp = terjual * kulak;
-
-        totalStokAll += stok;
-        totalTerjualAll += terjual;
-        totalBasiAll += basi;
-        totalReturAll += retur;
-        totalMarginSum += marjinBersih;
-        totalLabaKotorAll += labaKotor;
-        totalLossBasiAll += lossBasi;
-        totalOmzetAll += omzet;
-        totalHppAll += hpp;
-
-        if (search && !p.name.toLowerCase().includes(search)) {
-          return;
-        }
-
-        if (currentMovingFilter === 'fast' && !isFastMoving(p)) return;
-        if (currentMovingFilter === 'slow' && !isSlowMoving(p)) return;
-
-        countVisible++;
-
-        const isFast = isFastMoving(p);
-        const isSlow = isSlowMoving(p);
-
-        const tr = document.createElement('tr');
-        tr.className = "hover:bg-slate-50/80 transition border-b border-slate-100";
-        tr.innerHTML = `
-          <!-- 1. Nama Produk -->
-          <td class="py-2.5 px-3 font-bold text-slate-900 tracking-tight sticky left-0 bg-white hover:bg-slate-50 z-10 border-r border-slate-100 whitespace-nowrap">
-            <div class="flex items-center gap-1.5">
-              <span class="text-xs">${p.name}</span>
-              ${isFast ? '<span class="text-[9px] bg-emerald-100 text-emerald-800 px-1 py-0.2 rounded font-extrabold">Fast</span>' : ''}
-              ${isSlow ? '<span class="text-[9px] bg-red-100 text-red-700 px-1 py-0.2 rounded font-extrabold">Slow</span>' : ''}
-            </div>
-          </td>
-          <!-- 2. Harga Kulak -->
-          <td class="py-2 px-1 text-center">
-            <input type="number" data-idx="${index}" data-field="kulak" value="${kulak}" class="w-20 text-center py-1.5 px-1 bg-white border border-slate-200 rounded-lg text-xs font-semibold text-slate-700 focus:border-red-500 focus:ring-red-500">
-          </td>
-          <!-- 3. Harga Jual -->
-          <td class="py-2 px-1 text-center">
-            <input type="number" data-idx="${index}" data-field="jual" value="${jual}" class="w-20 text-center py-1.5 px-1 bg-white border border-slate-200 rounded-lg text-xs font-bold text-[#B91C1C] focus:border-red-500 focus:ring-red-500">
-          </td>
-          <!-- 4. Qty Stok -->
-          <td class="py-2 px-1 text-center">
-            <input type="number" data-idx="${index}" data-field="stok" value="${stok}" placeholder="0" class="w-16 text-center py-1.5 px-1 bg-white border border-slate-200 rounded-lg text-xs font-bold text-slate-800 focus:border-red-500 focus:ring-red-500">
-          </td>
-          <!-- 5. Qty Terjual -->
-          <td class="py-2 px-1 text-center bg-emerald-50/30">
-            <input type="number" data-idx="${index}" data-field="terjual" value="${terjual}" placeholder="0" class="w-16 text-center py-1.5 px-1 bg-emerald-50 border border-emerald-300 rounded-lg text-xs font-black text-emerald-800 focus:border-emerald-600 focus:ring-emerald-600">
-          </td>
-          <!-- 6. Basi -->
-          <td class="py-2 px-1 text-center bg-red-50/20">
-            <input type="number" data-idx="${index}" data-field="basi" value="${basi}" placeholder="0" class="w-14 text-center py-1.5 px-1 bg-red-50/60 border border-red-200 rounded-lg text-xs font-bold text-red-600 focus:border-red-500 focus:ring-red-500">
-          </td>
-          <!-- 7. Retur -->
-          <td class="py-2 px-1 text-center">
-            <input type="number" data-idx="${index}" data-field="retur" value="${retur}" placeholder="0" class="w-14 text-center py-1.5 px-1 bg-amber-50/60 border border-amber-200 rounded-lg text-xs font-bold text-amber-700 focus:border-amber-500 focus:ring-amber-500">
-          </td>
-          <!-- 8. Marjin Bersih -->
-          <td class="py-2.5 px-2.5 text-right font-extrabold text-[#15803D] text-xs whitespace-nowrap" id="mb-${index}">
-            ${formatRp(marjinBersih)}
-          </td>
-          <!-- 9. Laba Kotor -->
-          <td class="py-2.5 px-3 text-right font-extrabold text-emerald-800 text-xs bg-emerald-50/30 whitespace-nowrap" id="lk-${index}">
-            ${formatRp(labaKotor)}
-          </td>
-          <!-- 10. Laba Bersih -->
-          <td class="py-2.5 px-3 text-right font-black text-xs ${labaBersih >= 0 ? 'text-[#15803D] bg-emerald-100/40' : 'text-red-700 bg-red-100/40'} whitespace-nowrap" id="lb-${index}">
-            ${formatRp(labaBersih)}
-          </td>
-          <!-- 11. Kolom Aksi Hapus -->
-          <td class="py-2 px-2 text-center whitespace-nowrap">
-            <button onclick="deleteProduct(${index})" title="Hapus produk ini" class="p-1.5 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-lg transition">
-              <svg class="w-4 h-4 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
-              </svg>
-            </button>
-          </td>
-        `;
-        tbody.appendChild(tr);
-      });
-
-      if (countVisible === 0) {
-        tbody.innerHTML = `<tr><td colspan="11" class="py-8 text-center text-slate-400 text-xs">Tidak ada varian jajanan yang cocok dengan kriteria filter.</td></tr>`;
+        branchWrapper.appendChild(deleteBtn);
       }
 
-      const totalExpense = getTotalExpenses();
-      const finalNetProfit = totalLabaKotorAll - totalLossBasiAll - totalExpense;
+      container.appendChild(branchWrapper);
+    });
 
-      // Update Summary Cards
-      document.getElementById('statOmzet').innerText = formatRp(totalOmzetAll);
-      document.getElementById('statTerjualPcs').innerText = `${totalTerjualAll} pcs terjual`;
-      document.getElementById('statHpp').innerText = formatRp(totalHppAll);
-      document.getElementById('statLabaKotor').innerText = formatRp(totalLabaKotorAll);
-      document.getElementById('statLossBasi').innerText = formatRp(totalLossBasiAll);
-      document.getElementById('statBasiPcs').innerText = `${totalBasiAll} pcs basi`;
-      document.getElementById('statExpense').innerText = formatRp(totalExpense);
-      document.getElementById('statExpenseCount').innerText = `${expenses.length} item biaya`;
-      document.getElementById('headerExpenseCount').innerText = expenses.length;
-      document.getElementById('statLabaBersih').innerText = formatRp(finalNetProfit);
+    const addBtn = document.createElement("button");
+    addBtn.type = "button";
+    addBtn.onclick = openAddBranchModal;
+    addBtn.className = "flex items-center gap-1 px-3 py-1 rounded-xl text-xs font-bold bg-emerald-800 text-white hover:bg-emerald-900 shadow-sm transition active:scale-95";
+    addBtn.innerHTML = `<span>+</span> Tambah Cabang`;
+    container.appendChild(addBtn);
 
-      // Snapshot modal history
-      const histSnapOmzet = document.getElementById('histSnapOmzet');
-      const histSnapLaba = document.getElementById('histSnapLaba');
-      if (histSnapOmzet) histSnapOmzet.innerText = formatRp(totalOmzetAll);
-      if (histSnapLaba) histSnapLaba.innerText = formatRp(finalNetProfit);
+    const badgeElem = document.getElementById("active-db-badge");
+    if (badgeElem) badgeElem.innerText = currentBranchId;
+  }
 
-      // Update Table Footer
-      document.getElementById('footTotalStok').innerText = totalStokAll;
-      document.getElementById('footTotalTerjual').innerText = totalTerjualAll;
-      document.getElementById('footTotalBasi').innerText = totalBasiAll;
-      document.getElementById('footTotalRetur').innerText = totalReturAll;
-      const avgMargin = products.length > 0 ? Math.round(totalMarginSum / products.length) : 0;
-      document.getElementById('footAvgMargin').innerText = formatRp(avgMargin);
-      document.getElementById('footTotalLabaKotor').innerText = formatRp(totalLabaKotorAll);
-      document.getElementById('footTotalLabaBersih').innerText = formatRp(totalLabaKotorAll - totalLossBasiAll);
+  function switchBranch(branchId) {
+    currentBranchId = branchId;
+    productsList = loadBranchData();
+    expensesList = loadBranchExpenses();
+    renderBranchButtons();
+    buildTable();
+    calculateTotals();
+    recalculateBagiHasil();
+  }
 
-      updateCountsAndBadges();
+  function deleteBranch(branchId, branchName) {
+    if (branchId === "DB_PUSAT") {
+      alert("Toko Pusat adalah cabang utama dan tidak dapat dihapus.");
+      return;
     }
 
-    function updateRowCalc(index) {
-      const p = products[index];
-      if (!p) return;
-      const kulak = Number(p.kulak) || 0;
-      const jual = Number(p.jual) || 0;
-      const terjual = Number(p.terjual) || 0;
-      const basi = Number(p.basi) || 0;
+    const confirmed = confirm(`Apakah Anda yakin ingin menghapus cabang "${branchName}" [${branchId}]?\nSemua data stok, riwayat, dan operasional cabang ini akan dihapus permanen!`);
+    if (!confirmed) return;
 
-      const marjinBersih = jual - kulak;
+    branches = branches.filter(b => b.id !== branchId);
+    localStorage.setItem("NR_BRANCH_LIST", JSON.stringify(branches));
+
+    localStorage.removeItem(`NR_${branchId}_PRODUCTS`);
+    localStorage.removeItem(`NR_${branchId}_EXPENSES`);
+    localStorage.removeItem(`NR_${branchId}_SAVED_REKAPS`);
+    localStorage.removeItem(`NR_${branchId}_SALES_HISTORY`);
+
+    if (currentBranchId === branchId) {
+      currentBranchId = "DB_PUSAT";
+    }
+
+    productsList = loadBranchData();
+    expensesList = loadBranchExpenses();
+    renderBranchButtons();
+    buildTable();
+    calculateTotals();
+    recalculateBagiHasil();
+
+    alert(`Cabang "${branchName}" berhasil dihapus. Database dialihkan kembali ke Toko Pusat.`);
+  }
+
+  function setupBagiHasilInputs() {
+    const mitraInput = document.getElementById("mitraPercent");
+    const tokoInput = document.getElementById("tokoPercent");
+
+    if (!mitraInput || !tokoInput) return;
+
+    const handleMitraInput = () => {
+      let val = mitraInput.value;
+      if (val === "") {
+        tokoInput.value = "";
+        recalculateBagiHasil();
+        updateAllRowMitraShares();
+        return;
+      }
+      let numVal = parseFloat(val);
+      if (isNaN(numVal)) numVal = 0;
+      if (numVal < 0) numVal = 0;
+      if (numVal > 100) numVal = 100;
+      
+      tokoInput.value = 100 - numVal;
+      recalculateBagiHasil();
+      updateAllRowMitraShares();
+    };
+
+    const handleTokoInput = () => {
+      let val = tokoInput.value;
+      if (val === "") {
+        mitraInput.value = "";
+        recalculateBagiHasil();
+        updateAllRowMitraShares();
+        return;
+      }
+      let numVal = parseFloat(val);
+      if (isNaN(numVal)) numVal = 0;
+      if (numVal < 0) numVal = 0;
+      if (numVal > 100) numVal = 100;
+
+      mitraInput.value = 100 - numVal;
+      recalculateBagiHasil();
+      updateAllRowMitraShares();
+    };
+
+    mitraInput.addEventListener('input', handleMitraInput);
+    tokoInput.addEventListener('input', handleTokoInput);
+  }
+
+  function recalculateBagiHasil() {
+    const mitraInput = document.getElementById("mitraPercent");
+    const tokoInput = document.getElementById("tokoPercent");
+    const setorMitraElem = document.getElementById("stat-setor-mitra");
+    const labaTokoElem = document.getElementById("stat-laba-toko");
+    const labelMitraElem = document.getElementById("label-stat-setor-mitra");
+    const labelTokoElem = document.getElementById("label-stat-laba-toko");
+
+    if (!mitraInput || !tokoInput || !setorMitraElem || !labaTokoElem) return;
+
+    const pMitra = parseFloat(mitraInput.value) || 0;
+    const pToko = parseFloat(tokoInput.value) || 0;
+
+    if (labelMitraElem) {
+      labelMitraElem.innerText = `Hak Mitra (${pMitra}% Laba Bersih):`;
+    }
+    if (labelTokoElem) {
+      labelMitraElem.innerText = `Bagian Toko (${pToko}% Laba Bersih):`;
+    }
+
+    let hakMitraNominal = 0;
+    let bagianTokoNominal = 0;
+
+    const baseNetProfit = Math.max(0, latestTotals.labaBersihAkhir || 0);
+
+    if (baseNetProfit > 0) {
+      hakMitraNominal = Math.round((pMitra / 100) * baseNetProfit);
+      bagianTokoNominal = Math.round((pToko / 100) * baseNetProfit);
+    }
+
+    latestTotals.totalSetorMitra = hakMitraNominal;
+
+    setorMitraElem.innerText = formatRupiah(hakMitraNominal);
+    labaTokoElem.innerText = formatRupiah(bagianTokoNominal);
+
+    const modalMitra = document.getElementById("modal-total-setor-mitra");
+    if (modalMitra) {
+      modalMitra.innerText = formatRupiah(hakMitraNominal);
+    }
+  }
+
+  // Update only text nodes in rows for Bagi Mitra column without losing input focus
+  function updateAllRowMitraShares() {
+    const pMitra = parseFloat(document.getElementById("mitraPercent")?.value) || 20;
+    productsList.forEach((item, index) => {
+      const cellMitra = document.getElementById(`row-mitra-${index}`);
+      if (cellMitra) {
+        const marjinBersih = Math.max(0, (item.jual || 0) - (item.kulak || 0));
+        const labaKotor = (item.terjual || 0) * marjinBersih;
+        const lossBasi = (item.basi || 0) * (item.kulak || 0);
+        const labaBersih = Math.max(0, labaKotor - lossBasi);
+        const hakMitra = Math.round((pMitra / 100) * labaBersih);
+        cellMitra.innerText = formatRupiah(hakMitra);
+      }
+    });
+  }
+
+  // Build table structure. DOES NOT re-render on user typing inside inputs.
+  function buildTable() {
+    const tbody = document.getElementById("product-table-body");
+    tbody.innerHTML = "";
+
+    const pMitra = parseFloat(document.getElementById("mitraPercent")?.value) || 20;
+
+    productsList.forEach((item, index) => {
+      const kulak = Number(item.kulak) || 0;
+      const jual = Number(item.jual) || 0;
+      const stok = Number(item.stok) || 0;
+      const terjual = Number(item.terjual) || 0;
+      const basi = Number(item.basi) || 0;
+      const retur = Number(item.retur) || 0;
+
+      const marjinBersih = Math.max(0, jual - kulak);
       const labaKotor = terjual * marjinBersih;
       const lossBasi = basi * kulak;
-      const labaBersih = labaKotor - lossBasi;
+      const labaBersih = Math.max(0, labaKotor - lossBasi);
+      const hakMitra = Math.round((pMitra / 100) * labaBersih);
 
-      const mbEl = document.getElementById(`mb-${index}`);
-      const lkEl = document.getElementById(`lk-${index}`);
-      const lbEl = document.getElementById(`lb-${index}`);
+      const tr = document.createElement("tr");
+      tr.id = `product-row-${index}`;
+      tr.className = "hover:bg-slate-50/80 transition-colors border-b border-slate-100";
+      tr.dataset.productName = item.name.toLowerCase();
 
-      if (mbEl) mbEl.innerText = formatRp(marjinBersih);
-      if (lkEl) lkEl.innerText = formatRp(labaKotor);
-      if (lbEl) {
-        lbEl.innerText = formatRp(labaBersih);
-        lbEl.className = `py-2.5 px-3 text-right font-black text-xs ${labaBersih >= 0 ? 'text-[#15803D] bg-emerald-100/40' : 'text-red-700 bg-red-100/40'} whitespace-nowrap`;
-      }
+      tr.innerHTML = `
+        <td class="py-2 px-3 font-bold text-slate-800 text-[11px] sm:text-xs uppercase">
+          ${item.name}
+        </td>
+        <td class="py-1.5 px-1 text-center">
+          <input 
+            type="number" 
+            value="${kulak}" 
+            data-index="${index}"
+            data-field="kulak"
+            class="pill-input border-slate-200 text-slate-800 bg-white"
+          />
+        </td>
+        <td class="py-1.5 px-1 text-center">
+          <input 
+            type="number" 
+            value="${jual}" 
+            data-index="${index}"
+            data-field="jual"
+            class="pill-input border-rose-300 text-red-600 bg-white"
+          />
+        </td>
+        <td class="py-1.5 px-1 text-center">
+          <input 
+            type="number" 
+            value="${stok}" 
+            data-index="${index}"
+            data-field="stok"
+            class="pill-input border-slate-200 text-slate-800 bg-white"
+          />
+        </td>
+        <td class="py-1.5 px-1 text-center">
+          <input 
+            type="number" 
+            value="${terjual}" 
+            data-index="${index}"
+            data-field="terjual"
+            class="pill-input border-emerald-300 text-emerald-700 bg-white"
+          />
+        </td>
+        <td class="py-1.5 px-1 text-center">
+          <input 
+            type="number" 
+            value="${basi}" 
+            data-index="${index}"
+            data-field="basi"
+            class="pill-input border-rose-300 text-rose-600 bg-white"
+          />
+        </td>
+        <td class="py-1.5 px-1 text-center">
+          <input 
+            type="number" 
+            value="${retur}" 
+            data-index="${index}"
+            data-field="retur"
+            class="pill-input border-amber-300 text-amber-700 bg-white"
+          />
+        </td>
+        <td class="py-2 px-2 text-center font-bold text-emerald-700 text-xs" id="row-marjin-${index}">
+          ${formatRupiah(marjinBersih)}
+        </td>
+        <td class="py-2 px-2 text-center font-bold text-slate-800 text-xs" id="row-kotor-${index}">
+          ${formatRupiah(labaKotor)}
+        </td>
+        <td class="py-2 px-2 text-center font-bold text-emerald-800 text-xs" id="row-bersih-${index}">
+          ${formatRupiah(labaBersih)}
+        </td>
+        <td class="py-2 px-2 text-center font-bold text-blue-700 text-xs" id="row-mitra-${index}">
+          ${formatRupiah(hakMitra)}
+        </td>
+        <td class="py-2 px-1 text-center">
+          <button 
+            type="button" 
+            onclick="deleteProduct(${index})" 
+            title="Hapus Jajanan"
+            class="text-slate-400 hover:text-rose-600 font-bold px-1.5 py-0.5 rounded transition">
+            ✕
+          </button>
+        </td>
+      `;
 
-      let totalStokAll = 0, totalTerjualAll = 0, totalBasiAll = 0, totalReturAll = 0;
-      let totalMarginSum = 0, totalLabaKotorAll = 0, totalLossBasiAll = 0;
-      let totalOmzetAll = 0, totalHppAll = 0;
-
-      products.forEach(item => {
-        const k = Number(item.kulak) || 0;
-        const j = Number(item.jual) || 0;
-        const s = Number(item.stok) || 0;
-        const t = Number(item.terjual) || 0;
-        const b = Number(item.basi) || 0;
-        const r = Number(item.retur) || 0;
-
-        const m = j - k;
-        const lk = t * m;
-
-        totalStokAll += s;
-        totalTerjualAll += t;
-        totalBasiAll += b;
-        totalReturAll += r;
-        totalMarginSum += m;
-        totalLabaKotorAll += lk;
-        totalOmzetAll += (t * j);
-        totalHppAll += (t * k);
-        totalLossBasiAll += (b * k);
-      });
-
-      const totalExpense = getTotalExpenses();
-      const finalNetProfit = totalLabaKotorAll - totalLossBasiAll - totalExpense;
-
-      document.getElementById('statOmzet').innerText = formatRp(totalOmzetAll);
-      document.getElementById('statTerjualPcs').innerText = `${totalTerjualAll} pcs terjual`;
-      document.getElementById('statHpp').innerText = formatRp(totalHppAll);
-      document.getElementById('statLabaKotor').innerText = formatRp(totalLabaKotorAll);
-      document.getElementById('statLossBasi').innerText = formatRp(totalLossBasiAll);
-      document.getElementById('statBasiPcs').innerText = `${totalBasiAll} pcs basi`;
-      document.getElementById('statLabaBersih').innerText = formatRp(finalNetProfit);
-
-      document.getElementById('footTotalStok').innerText = totalStokAll;
-      document.getElementById('footTotalTerjual').innerText = totalTerjualAll;
-      document.getElementById('footTotalBasi').innerText = totalBasiAll;
-      document.getElementById('footTotalRetur').innerText = totalReturAll;
-      const avgMargin = products.length > 0 ? Math.round(totalMarginSum / products.length) : 0;
-      document.getElementById('footAvgMargin').innerText = formatRp(avgMargin);
-      document.getElementById('footTotalLabaKotor').innerText = formatRp(totalLabaKotorAll);
-      document.getElementById('footTotalLabaBersih').innerText = formatRp(totalLabaKotorAll - totalLossBasiAll);
-
-      updateCountsAndBadges();
-    }
-
-    // Modal 1: Tambah Produk
-    function openAddProductModal() {
-      document.getElementById('addProductForm').reset();
-      document.getElementById('addProductModal').classList.remove('hidden');
-    }
-
-    function closeAddProductModal() {
-      document.getElementById('addProductModal').classList.add('hidden');
-    }
-
-    function submitNewProduct(e) {
-      e.preventDefault();
-      const name = document.getElementById('newProdName').value.trim();
-      const kulak = Number(document.getElementById('newProdKulak').value) || 0;
-      const jual = Number(document.getElementById('newProdJual').value) || 0;
-      const stok = Number(document.getElementById('newProdStok').value) || 0;
-      const terjual = Number(document.getElementById('newProdTerjual').value) || 0;
-      const basi = Number(document.getElementById('newProdBasi').value) || 0;
-
-      if (!name) {
-        alert('Mohon masukkan nama produk.');
-        return;
-      }
-
-      const newId = Date.now();
-      const newProduct = {
-        id: newId,
-        name: name.toUpperCase(),
-        kulak,
-        jual,
-        stok,
-        terjual,
-        basi,
-        retur: 0
-      };
-
-      products.unshift(newProduct);
-      saveData();
-      renderTable();
-      closeAddProductModal();
-    }
-
-    // Modal 2: Biaya Operasional
-    function openExpenseModal() {
-      document.getElementById('expenseModal').classList.remove('hidden');
-      renderExpenseList();
-    }
-
-    function closeExpenseModal() {
-      document.getElementById('expenseModal').classList.add('hidden');
-      renderTable();
-    }
-
-    function addExpense() {
-      const name = document.getElementById('expenseName').value.trim();
-      const category = document.getElementById('expenseCategory').value;
-      const amount = Number(document.getElementById('expenseAmount').value) || 0;
-
-      if (!name || amount <= 0) {
-        alert('Mohon isi nama pengeluaran dan nominal dengan benar.');
-        return;
-      }
-
-      expenses.push({
-        id: Date.now(),
-        name,
-        category,
-        amount
-      });
-
-      document.getElementById('expenseName').value = '';
-      document.getElementById('expenseAmount').value = '';
-
-      saveExpenses();
-    }
-
-    function removeExpense(id) {
-      expenses = expenses.filter(e => e.id !== id);
-      saveExpenses();
-    }
-
-    function renderExpenseList() {
-      const container = document.getElementById('expenseListContainer');
-      const totalEl = document.getElementById('modalExpenseTotal');
-      const total = getTotalExpenses();
-
-      if (totalEl) totalEl.innerText = `Total: ${formatRp(total)}`;
-
-      if (expenses.length === 0) {
-        container.innerHTML = '<p class="text-center text-slate-400 text-xs py-4">Belum ada pengeluaran tambahan.</p>';
-        return;
-      }
-
-      container.innerHTML = expenses.map(exp => `
-        <div class="flex items-center justify-between p-2 rounded-xl bg-slate-50 border border-slate-200 text-xs">
-          <div>
-            <div class="font-bold text-slate-800">${exp.name}</div>
-            <div class="text-[10px] text-slate-500">${exp.category}</div>
-          </div>
-          <div class="flex items-center gap-3">
-            <span class="font-extrabold text-amber-800">${formatRp(exp.amount)}</span>
-            <button onclick="removeExpense(${exp.id})" class="text-red-500 hover:text-red-700 font-bold text-xs p-1">✕</button>
-          </div>
-        </div>
-      `).join('');
-    }
-
-    // Modal 3: Simpan Riwayat
-    function openSaveHistoryModal() {
-      document.getElementById('saveHistoryModal').classList.remove('hidden');
-      const now = new Date();
-      const dateStr = now.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' });
-      const curBranchObj = branches.find(b => b.id === currentBranchId);
-      const bName = curBranchObj ? curBranchObj.name : 'Toko';
-      document.getElementById('historyNote').value = `Rekap ${bName} ${selectedSavePeriod} (${dateStr})`;
-      renderHistoryList();
-    }
-
-    function closeSaveHistoryModal() {
-      document.getElementById('saveHistoryModal').classList.add('hidden');
-    }
-
-    function selectSavePeriod(period) {
-      selectedSavePeriod = period;
-      ['Harian', 'Mingguan', 'Bulanan'].forEach(p => {
-        const btn = document.getElementById(`periodBtn${p}`);
-        if (p === period) {
-          btn.className = "period-btn py-2 text-xs font-bold rounded-xl border border-emerald-600 bg-emerald-600 text-white";
-        } else {
-          btn.className = "period-btn py-2 text-xs font-bold rounded-xl border border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100";
-        }
-      });
-      const now = new Date();
-      const dateStr = now.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' });
-      const curBranchObj = branches.find(b => b.id === currentBranchId);
-      const bName = curBranchObj ? curBranchObj.name : 'Toko';
-      document.getElementById('historyNote').value = `Rekap ${bName} ${period} (${dateStr})`;
-    }
-
-    function commitSaveHistory() {
-      let totalOmzet = 0;
-      let totalKotor = 0;
-      let totalBasi = 0;
-
-      products.forEach(p => {
-        const kulak = Number(p.kulak) || 0;
-        const jual = Number(p.jual) || 0;
-        const terjual = Number(p.terjual) || 0;
-        const basi = Number(p.basi) || 0;
-        totalOmzet += (terjual * jual);
-        totalKotor += (terjual * (jual - kulak));
-        totalBasi += (basi * kulak);
-      });
-
-      const totalBeban = getTotalExpenses();
-      const netProfit = totalKotor - totalBasi - totalBeban;
-      const curBranchObj = branches.find(b => b.id === currentBranchId);
-      const bName = curBranchObj ? curBranchObj.name : 'Toko';
-      const note = document.getElementById('historyNote').value.trim() || `Rekap ${bName} ${selectedSavePeriod}`;
-
-      const historyItem = {
-        id: Date.now(),
-        branchName: bName,
-        date: new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }),
-        period: selectedSavePeriod,
-        note,
-        omzet: totalOmzet,
-        netProfit,
-        productCount: products.length
-      };
-
-      savedHistories.unshift(historyItem);
-      saveHistoriesToStorage();
-      alert(`Riwayat rekapitulasi untuk ${bName} berhasil disimpan!`);
-    }
-
-    function renderHistoryList() {
-      const container = document.getElementById('savedHistoryList');
-      if (!container) return;
-
-      if (savedHistories.length === 0) {
-        container.innerHTML = '<p class="text-xs text-slate-400 text-center py-2">Belum ada riwayat tersimpan.</p>';
-        return;
-      }
-
-      container.innerHTML = savedHistories.map(h => `
-        <div class="p-2 rounded-xl bg-white border border-slate-200 text-xs flex items-center justify-between shadow-2xs">
-          <div>
-            <div class="font-bold text-slate-800">${h.note}</div>
-            <div class="text-[10px] text-slate-500">${h.date} • <span class="text-emerald-700 font-bold">${h.period}</span></div>
-          </div>
-          <div class="text-right">
-            <div class="font-black text-emerald-800 text-[11px]">${formatRp(h.netProfit)}</div>
-            <div class="text-[10px] text-slate-500">Omzet: ${formatRp(h.omzet)}</div>
-          </div>
-        </div>
-      `).join('');
-    }
-
-    function clearAllHistory() {
-      if (confirm('Hapus semua arsip riwayat rekap di cabang ini?')) {
-        savedHistories = [];
-        saveHistoriesToStorage();
-      }
-    }
-
-    // Modal 4: Rekapitulasi Laporan
-    function openReportModal() {
-      document.getElementById('reportModal').classList.remove('hidden');
-      switchReportTab(currentReportTab);
-    }
-
-    function closeReportModal() {
-      document.getElementById('reportModal').classList.add('hidden');
-    }
-
-    function switchReportTab(tab) {
-      currentReportTab = tab;
-      const dailyBtn = document.getElementById('tabDaily');
-      const weeklyBtn = document.getElementById('tabWeekly');
-      const monthlyBtn = document.getElementById('tabMonthly');
-      const periodLabel = document.getElementById('reportPeriodLabel');
-
-      [dailyBtn, weeklyBtn, monthlyBtn].forEach(b => {
-        b.className = "px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900";
-      });
-
-      let multiplier = 1;
-      let label = "Periode: Realtime Hari Ini";
-
-      if (tab === 'daily') {
-        dailyBtn.className = "px-3 py-1.5 rounded-lg bg-white text-slate-900 shadow-xs font-bold";
-        multiplier = 1;
-        label = "Periode: Realtime Hari Ini (Harian)";
-      } else if (tab === 'weekly') {
-        weeklyBtn.className = "px-3 py-1.5 rounded-lg bg-white text-slate-900 shadow-xs font-bold";
-        multiplier = 7;
-        label = "Periode: Proyeksi / Akumulasi 7 Hari (Mingguan)";
-      } else if (tab === 'monthly') {
-        monthlyBtn.className = "px-3 py-1.5 rounded-lg bg-white text-slate-900 shadow-xs font-bold";
-        multiplier = 30;
-        label = "Periode: Proyeksi / Akumulasi 30 Hari (Bulanan)";
-      }
-
-      periodLabel.innerText = label;
-
-      let baseOmzet = 0;
-      let baseHpp = 0;
-      let baseKotor = 0;
-      let baseLossBasi = 0;
-
-      products.forEach(p => {
-        const kulak = Number(p.kulak) || 0;
-        const jual = Number(p.jual) || 0;
-        const terjual = Number(p.terjual) || 0;
-        const basi = Number(p.basi) || 0;
-
-        baseOmzet += (terjual * jual);
-        baseHpp += (terjual * kulak);
-        baseKotor += (terjual * (jual - kulak));
-        baseLossBasi += (basi * kulak);
-      });
-
-      const baseExpense = getTotalExpenses();
-
-      const repOmzet = baseOmzet * multiplier;
-      const repHpp = baseHpp * multiplier;
-      const repKotor = baseKotor * multiplier;
-      const repLossBasi = baseLossBasi * multiplier;
-      const repExpense = baseExpense * multiplier;
-      const repNet = repKotor - repLossBasi - repExpense;
-
-      document.getElementById('repOmzet').innerText = formatRp(repOmzet);
-      document.getElementById('repHpp').innerText = formatRp(repHpp);
-      document.getElementById('repLabaKotor').innerText = formatRp(repKotor);
-      document.getElementById('repLossBasi').innerText = formatRp(repLossBasi);
-
-      document.getElementById('repCalcLabaKotor').innerText = `+ ${formatRp(repKotor)}`;
-      document.getElementById('repCalcLossBasi').innerText = `- ${formatRp(repLossBasi)}`;
-      document.getElementById('repCalcExpense').innerText = `- ${formatRp(repExpense)}`;
-      document.getElementById('repNetProfit').innerText = formatRp(repNet);
-
-      const sortedFast = [...products].filter(p => (Number(p.terjual) || 0) > 0).sort((a, b) => (Number(b.terjual) || 0) - (Number(a.terjual) || 0)).slice(0, 3);
-      const topFastList = document.getElementById('repTopFastList');
-      if (sortedFast.length === 0) {
-        topFastList.innerHTML = '<li class="py-1 text-slate-400 italic">Belum ada data penjualan hari ini.</li>';
-      } else {
-        topFastList.innerHTML = sortedFast.map((p, i) => `
-          <li class="flex justify-between items-center py-0.5 border-b border-slate-200/50">
-            <span>${i + 1}. ${p.name}</span>
-            <span class="font-extrabold text-emerald-700">${(Number(p.terjual) || 0) * multiplier} pcs terjual</span>
-          </li>
-        `).join('');
-      }
-
-      const sortedBasi = [...products].filter(p => (Number(p.basi) || 0) > 0).sort((a, b) => (Number(b.basi) || 0) - (Number(a.basi) || 0)).slice(0, 3);
-      const topBasiList = document.getElementById('repTopBasiList');
-      if (sortedBasi.length === 0) {
-        topBasiList.innerHTML = '<li class="py-1 text-slate-400 italic">Tidak ada jajanan basi tercatat.</li>';
-      } else {
-        topBasiList.innerHTML = sortedBasi.map((p, i) => `
-          <li class="flex justify-between items-center py-0.5 border-b border-slate-200/50">
-            <span>${i + 1}. ${p.name}</span>
-            <span class="font-bold text-red-600">${(Number(p.basi) || 0) * multiplier} pcs basi</span>
-          </li>
-        `).join('');
-      }
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-      loadBranches();
-      loadBranchData(currentBranchId);
-      checkAndExecuteDailyReset();
-      renderBranchBar();
-      renderTable();
-
-      document.getElementById('tableBody').addEventListener('input', (e) => {
-        const target = e.target;
-        const idx = target.getAttribute('data-idx');
-        const field = target.getAttribute('data-field');
-        if (idx !== null && field && products[idx]) {
-          products[idx][field] = Math.max(0, Number(target.value) || 0);
-          saveData();
-          updateRowCalc(parseInt(idx, 10));
-        }
-      });
-
-      document.getElementById('searchInput').addEventListener('input', () => {
-        renderTable();
-      });
-
-      setInterval(() => {
-        checkAndExecuteDailyReset();
-      }, 60000);
+      tbody.appendChild(tr);
     });
-  </script>
+
+    // Attach delegated input listener without re-rendering DOM so keyboard never dismisses
+    tbody.removeEventListener('input', handleTableInput);
+    tbody.addEventListener('input', handleTableInput);
+
+    updateFilterVisibility();
+    updateBadgeCounts();
+  }
+
+  // Pure in-place calculation on keystroke
+  function handleTableInput(e) {
+    const input = e.target;
+    if (!input || !input.classList.contains('pill-input')) return;
+
+    const index = parseInt(input.dataset.index, 10);
+    const field = input.dataset.field;
+    if (isNaN(index) || !field) return;
+
+    const val = Math.max(0, parseInt(input.value) || 0);
+    productsList[index][field] = val;
+
+    // Mutate only text nodes for this row
+    const item = productsList[index];
+    const kulak = item.kulak || 0;
+    const jual = item.jual || 0;
+    const terjual = item.terjual || 0;
+    const basi = item.basi || 0;
+
+    const marjinBersih = Math.max(0, jual - kulak);
+    const labaKotor = terjual * marjinBersih;
+    const lossBasi = basi * kulak;
+    const labaBersih = Math.max(0, labaKotor - lossBasi);
+
+    const pMitra = parseFloat(document.getElementById("mitraPercent")?.value) || 20;
+    const hakMitra = Math.round((pMitra / 100) * labaBersih);
+
+    const cellMarjin = document.getElementById(`row-marjin-${index}`);
+    if (cellMarjin) cellMarjin.innerText = formatRupiah(marjinBersih);
+
+    const cellKotor = document.getElementById(`row-kotor-${index}`);
+    if (cellKotor) cellKotor.innerText = formatRupiah(labaKotor);
+
+    const cellBersih = document.getElementById(`row-bersih-${index}`);
+    if (cellBersih) cellBersih.innerText = formatRupiah(labaBersih);
+
+    const cellMitra = document.getElementById(`row-mitra-${index}`);
+    if (cellMitra) cellMitra.innerText = formatRupiah(hakMitra);
+
+    // Update global stat cards & Mitra share in-place
+    calculateTotals();
+    recalculateBagiHasil();
+    updateBadgeCounts();
+
+    // Persist to localStorage with debounce
+    debounceSave();
+  }
+
+  function calculateTotals() {
+    let totalOmzet = 0;
+    let totalPcsTerjual = 0;
+    let totalModalKulak = 0;
+    let totalLossBasi = 0;
+    let totalPcsBasi = 0;
+
+    productsList.forEach(item => {
+      const terjual = Number(item.terjual) || 0;
+      const kulak = Number(item.kulak) || 0;
+      const jual = Number(item.jual) || 0;
+      const basi = Number(item.basi) || 0;
+
+      totalOmzet += terjual * jual;
+      totalPcsTerjual += terjual;
+      totalModalKulak += terjual * kulak;
+      totalLossBasi += basi * kulak;
+      totalPcsBasi += basi;
+    });
+
+    const totalLabaKotor = Math.max(0, totalOmzet - totalModalKulak);
+
+    let totalBebanOperasional = 0;
+    expensesList.forEach(exp => {
+      totalBebanOperasional += Number(exp.nominal) || 0;
+    });
+
+    const labaBersihAkhir = totalLabaKotor - totalLossBasi - totalBebanOperasional;
+
+    const pMitra = parseFloat(document.getElementById("mitraPercent")?.value) || 20;
+    const totalSetorMitra = Math.round((pMitra / 100) * Math.max(0, labaBersihAkhir));
+
+    latestTotals = {
+      totalOmzet,
+      totalModalKulak,
+      totalLabaKotor,
+      totalLossBasi,
+      totalBebanOperasional,
+      labaBersihAkhir,
+      totalSetorMitra
+    };
+
+    // Update financial card text nodes directly
+    document.getElementById("stat-omzet").innerText = formatRupiah(totalOmzet);
+    document.getElementById("stat-pcs-terjual").innerText = totalPcsTerjual;
+    document.getElementById("stat-modal-kulak").innerText = formatRupiah(totalModalKulak);
+    document.getElementById("stat-laba-kotor").innerText = formatRupiah(totalLabaKotor);
+    document.getElementById("stat-loss-basi").innerText = formatRupiah(totalLossBasi);
+    document.getElementById("stat-pcs-basi").innerText = totalPcsBasi;
+    document.getElementById("stat-beban-operasional").innerText = formatRupiah(totalBebanOperasional);
+    document.getElementById("stat-item-biaya").innerText = expensesList.length;
+    document.getElementById("btn-count-operasional").innerText = expensesList.length;
+    document.getElementById("stat-laba-bersih").innerText = formatRupiah(labaBersihAkhir);
+
+    return latestTotals;
+  }
+
+  function updateBadgeCounts() {
+    let fastCount = 0;
+    let slowCount = 0;
+
+    productsList.forEach(item => {
+      const terjual = Number(item.terjual) || 0;
+      const stok = Number(item.stok) || 0;
+      const basi = Number(item.basi) || 0;
+
+      const totalStockRef = (stok > 0) ? stok : (terjual + basi);
+      const percentSold = totalStockRef > 0 ? (terjual / totalStockRef) * 100 : 0;
+      
+      const isFast = percentSold >= 40 && basi <= 2;
+      const isSlow = basi >= 3 || (totalStockRef > 0 && percentSold < 40);
+
+      if (isFast) fastCount++;
+      if (isSlow) slowCount++;
+    });
+
+    document.getElementById("badge-total-produk").innerText = productsList.length;
+    document.getElementById("badge-fast-moving").innerText = fastCount;
+    document.getElementById("badge-slow-moving").innerText = slowCount;
+  }
+
+  // Filter and Search purely via CSS display style: does NOT touch input nodes
+  function updateFilterVisibility() {
+    const searchVal = (document.getElementById("search-input")?.value || "").toLowerCase().trim();
+
+    productsList.forEach((item, index) => {
+      const row = document.getElementById(`product-row-${index}`);
+      if (!row) return;
+
+      const terjual = Number(item.terjual) || 0;
+      const stok = Number(item.stok) || 0;
+      const basi = Number(item.basi) || 0;
+
+      const totalStockRef = (stok > 0) ? stok : (terjual + basi);
+      const percentSold = totalStockRef > 0 ? (terjual / totalStockRef) * 100 : 0;
+
+      const isFast = percentSold >= 40 && basi <= 2;
+      const isSlow = basi >= 3 || (totalStockRef > 0 && percentSold < 40);
+
+      let matchFilter = true;
+      if (activeFilter === "fast" && !isFast) matchFilter = false;
+      if (activeFilter === "slow" && !isSlow) matchFilter = false;
+
+      let matchSearch = true;
+      if (searchVal && !item.name.toLowerCase().includes(searchVal)) matchSearch = false;
+
+      row.style.display = (matchFilter && matchSearch) ? "" : "none";
+    });
+  }
+
+  function setupSearchFilter() {
+    const searchInput = document.getElementById("search-input");
+    if (searchInput) {
+      searchInput.addEventListener("input", () => {
+        updateFilterVisibility();
+      });
+    }
+  }
+
+  function applyFilter(type) {
+    activeFilter = type;
+    const btnAll = document.getElementById("btn-filter-all");
+    const btnFast = document.getElementById("btn-filter-fast");
+    const btnSlow = document.getElementById("btn-filter-slow");
+
+    btnAll.className = "px-2.5 py-1 rounded-full text-[11px] font-bold transition " + (type === 'all' ? "bg-slate-900 text-white shadow-sm" : "bg-slate-100 text-slate-700 hover:bg-slate-200");
+    btnFast.className = "px-2.5 py-1 rounded-full text-[11px] font-bold transition " + (type === 'fast' ? "bg-emerald-700 text-white shadow-sm" : "bg-emerald-50 border border-emerald-300 text-emerald-800 hover:bg-emerald-100");
+    btnSlow.className = "px-2.5 py-1 rounded-full text-[11px] font-bold transition " + (type === 'slow' ? "bg-rose-700 text-white shadow-sm" : "bg-rose-50 border border-rose-300 text-rose-800 hover:bg-rose-100");
+
+    updateFilterVisibility();
+  }
+
+  function deleteProduct(index) {
+    if (confirm(`Hapus produk "${productsList[index].name}" dari database cabang ini?`)) {
+      productsList.splice(index, 1);
+      saveBranchData(productsList);
+      buildTable();
+      calculateTotals();
+      recalculateBagiHasil();
+    }
+  }
+</script>
+<script data-purpose="modals-and-features">
+  // --- BRANCH MODALS ---
+  function openAddBranchModal() {
+    document.getElementById("new-branch-name").value = "";
+    document.getElementById("modal-add-branch").classList.remove("hidden");
+  }
+  function closeAddBranchModal() {
+    document.getElementById("modal-add-branch").classList.add("hidden");
+  }
+  function createNewBranch() {
+    const name = document.getElementById("new-branch-name").value.trim();
+    if (!name) {
+      alert("Silakan masukkan nama cabang.");
+      return;
+    }
+    const sanitized = name.toUpperCase().replace(/\s+/g, '_').replace(/[^A-Z0-9_]/g, '');
+    const branchId = "DB_CABANG_" + (sanitized || Date.now());
+    
+    if (branches.some(b => b.id === branchId || b.name.toLowerCase() === name.toLowerCase())) {
+      alert("Cabang ini sudah ada!");
+      return;
+    }
+
+    branches.push({ id: branchId, name: name });
+    localStorage.setItem("NR_BRANCH_LIST", JSON.stringify(branches));
+
+    const template = DEFAULT_PRODUCTS.map(p => ({
+      ...p,
+      stok: 0,
+      terjual: 0,
+      basi: 0,
+      retur: 0
+    }));
+    localStorage.setItem(`NR_${branchId}_PRODUCTS`, JSON.stringify(template));
+    localStorage.setItem(`NR_${branchId}_EXPENSES`, JSON.stringify([]));
+
+    closeAddBranchModal();
+    switchBranch(branchId);
+    alert(`Cabang "${name}" berhasil dibuat dengan Database Terisolasi [${branchId}]!`);
+  }
+
+  // --- OPERASIONAL MODAL ---
+  function openOperasionalModal() {
+    renderOperasionalList();
+    document.getElementById("modal-operasional").classList.remove("hidden");
+  }
+  function closeOperasionalModal() {
+    document.getElementById("modal-operasional").classList.add("hidden");
+  }
+  function addOperationalCost() {
+    const ket = document.getElementById("op-keterangan").value.trim();
+    const nom = Number(document.getElementById("op-nominal").value) || 0;
+    if (!ket || nom <= 0) {
+      alert("Isi nama operasional dan nominal yang valid.");
+      return;
+    }
+    expensesList.push({ ket, nominal: nom, date: new Date().toLocaleDateString('id-ID') });
+    saveBranchExpenses(expensesList);
+    document.getElementById("op-keterangan").value = "";
+    document.getElementById("op-nominal").value = "";
+    renderOperasionalList();
+    calculateTotals();
+    recalculateBagiHasil();
+  }
+  function deleteOperationalCost(index) {
+    expensesList.splice(index, 1);
+    saveBranchExpenses(expensesList);
+    renderOperasionalList();
+    calculateTotals();
+    recalculateBagiHasil();
+  }
+  function renderOperasionalList() {
+    const cont = document.getElementById("op-list-items");
+    cont.innerHTML = "";
+    if (expensesList.length === 0) {
+      cont.innerHTML = `<div class="text-xs text-slate-400 py-3 text-center">Belum ada biaya operasional tercatat hari ini.</div>`;
+      return;
+    }
+    expensesList.forEach((exp, idx) => {
+      const row = document.createElement("div");
+      row.className = "flex items-center justify-between py-1.5 text-xs";
+      row.innerHTML = `
+        <div>
+          <div class="font-bold text-slate-700">${exp.ket}</div>
+          <div class="text-[10px] text-slate-400">${exp.date || ''}</div>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="font-bold text-amber-800">${formatRupiah(exp.nominal)}</span>
+          <button onclick="deleteOperationalCost(${idx})" class="text-rose-500 font-bold hover:text-rose-700">✕</button>
+        </div>
+      `;
+      cont.appendChild(row);
+    });
+  }
+
+  // --- REKAPITULASI MODAL ---
+  let currentRecapPeriod = 'harian';
+
+  function openRekapitulasiModal() {
+    const activeBranch = branches.find(b => b.id === currentBranchId);
+    document.getElementById("modal-branch-name").innerText = activeBranch ? activeBranch.name : currentBranchId;
+    selectPeriod('harian');
+    renderSavedRecapList();
+    document.getElementById("modal-rekapitulasi").classList.remove("hidden");
+  }
+  function closeRekapitulasiModal() {
+    document.getElementById("modal-rekapitulasi").classList.add("hidden");
+  }
+
+  function selectPeriod(period, evt) {
+    currentRecapPeriod = period;
+    const btns = document.querySelectorAll(".period-btn");
+    btns.forEach(b => {
+      b.className = "period-btn px-3 py-1 rounded text-xs font-semibold text-slate-600 hover:bg-slate-100";
+    });
+    if (evt && evt.target) {
+      evt.target.classList.remove("text-slate-600", "hover:bg-slate-100");
+      evt.target.classList.add("bg-emerald-600", "text-white");
+    }
+
+    const totals = calculateTotals();
+    
+    let mult = 1;
+    if (period === 'mingguan') mult = 7;
+    if (period === 'bulanan') mult = 30;
+    if (period === 'tahunan') mult = 365;
+
+    document.getElementById("modal-omzet").innerText = formatRupiah(totals.totalOmzet * mult);
+    document.getElementById("modal-modal").innerText = formatRupiah(totals.totalModalKulak * mult);
+    document.getElementById("modal-laba-kotor").innerText = formatRupiah(totals.totalLabaKotor * mult);
+    document.getElementById("modal-loss-basi").innerText = formatRupiah(totals.totalLossBasi * mult);
+    document.getElementById("modal-beban").innerText = formatRupiah(totals.totalBebanOperasional * mult);
+    document.getElementById("modal-laba-bersih").innerText = formatRupiah(totals.labaBersihAkhir * mult);
+    document.getElementById("modal-total-setor-mitra").innerText = formatRupiah(totals.totalSetorMitra * mult);
+
+    renderSavedRecapList();
+  }
+
+  function saveCurrentPeriodRecap() {
+    const totals = calculateTotals();
+    const currentBranch = branches.find(b => b.id === currentBranchId)?.name || currentBranchId;
+    const rec = {
+      id: Date.now(),
+      periode: currentRecapPeriod.toUpperCase(),
+      branch: currentBranch,
+      omzet: totals.totalOmzet,
+      labaBersih: totals.labaBersihAkhir,
+      setorMitra: totals.totalSetorMitra,
+      timestamp: new Date().toLocaleString('id-ID')
+    };
+
+    const key = getStoreKey("SAVED_REKAPS");
+    const saved = JSON.parse(localStorage.getItem(key) || "[]");
+    saved.unshift(rec);
+    localStorage.setItem(key, JSON.stringify(saved));
+    renderSavedRecapList();
+    alert(`Rekapitulasi Periode ${currentRecapPeriod.toUpperCase()} berhasil disimpan ke Database ${currentBranchId}!`);
+  }
+
+  function renderSavedRecapList() {
+    const key = getStoreKey("SAVED_REKAPS");
+    const saved = JSON.parse(localStorage.getItem(key) || "[]");
+    const cont = document.getElementById("saved-rekap-list");
+    cont.innerHTML = "";
+
+    if (saved.length === 0) {
+      cont.innerHTML = `<div class="text-center text-xs text-slate-400 py-3">Belum ada riwayat rekap tersimpan permanen untuk cabang ini.</div>`;
+      return;
+    }
+
+    saved.forEach(item => {
+      const div = document.createElement("div");
+      div.className = "flex items-center justify-between p-2 rounded-lg bg-slate-50 border border-slate-200 text-xs";
+      div.innerHTML = `
+        <div>
+          <div class="font-bold text-slate-800">[${item.periode}] - ${item.branch}</div>
+          <div class="text-[10px] text-slate-400">${item.timestamp}</div>
+        </div>
+        <div class="text-right">
+          <div class="font-bold text-emerald-700">Bersih: ${formatRupiah(item.labaBersih)}</div>
+          <div class="text-[10px] text-blue-600 font-semibold">Mitra: ${formatRupiah(item.setorMitra)}</div>
+        </div>
+      `;
+      cont.appendChild(div);
+    });
+  }
+
+  // --- RESET OPERATIONS ---
+  function confirmResetHarian() {
+    if (confirm("Reset Harian: Kembalikan semua Qty Terjual, Basi, dan Retur menjadi 0 untuk cabang ini?")) {
+      productsList.forEach(item => {
+        item.terjual = 0;
+        item.basi = 0;
+        item.retur = 0;
+      });
+      saveBranchData(productsList);
+      buildTable();
+      calculateTotals();
+      recalculateBagiHasil();
+      alert("Reset Harian selesai. Semua data penjualan & basi diset ke 0.");
+    }
+  }
+
+  function confirmResetMaster() {
+    if (confirm("Reset Master: Apakah Anda yakin ingin mengatur ulang katalog produk cabang ini ke daftar master lengkap 67 jajanan pasar (dengan semua Qty 0)?")) {
+      productsList = JSON.parse(JSON.stringify(DEFAULT_PRODUCTS));
+      saveBranchData(productsList);
+      buildTable();
+      calculateTotals();
+      recalculateBagiHasil();
+      alert("Katalog telah di-reset ke Master Lengkap 67 Jajanan Pasar (semua Qty bernilai 0).");
+    }
+  }
+
+  // --- NEW PRODUCT CREATION ---
+  function openNewProductModal() {
+    document.getElementById("np-name").value = "";
+    document.getElementById("np-kulak").value = "";
+    document.getElementById("np-jual").value = "";
+    document.getElementById("np-stok").value = "0";
+    document.getElementById("modal-add-product").classList.remove("hidden");
+  }
+  function closeNewProductModal() {
+    document.getElementById("modal-add-product").classList.add("hidden");
+  }
+  function saveNewProduct() {
+    const name = document.getElementById("np-name").value.trim().toUpperCase();
+    const kulak = parseInt(document.getElementById("np-kulak").value) || 0;
+    const jual = parseInt(document.getElementById("np-jual").value) || 0;
+    const stok = parseInt(document.getElementById("np-stok").value) || 0;
+
+    if (!name || kulak <= 0 || jual <= 0) {
+      alert("Mohon isi nama produk serta harga kulak dan jual yang benar!");
+      return;
+    }
+
+    productsList.unshift({
+      name,
+      kulak,
+      jual,
+      stok,
+      terjual: 0,
+      basi: 0,
+      retur: 0
+    });
+
+    saveBranchData(productsList);
+    closeNewProductModal();
+    buildTable();
+    calculateTotals();
+    recalculateBagiHasil();
+    alert(`Produk "${name}" berhasil ditambahkan ke ${currentBranchId}.`);
+  }
+
+  function simpanRiwayatPenjualan() {
+    const totals = calculateTotals();
+    const currentBranch = branches.find(b => b.id === currentBranchId)?.name || currentBranchId;
+    const snapshot = {
+      date: new Date().toLocaleString('id-ID'),
+      branch: currentBranch,
+      omzet: totals.totalOmzet,
+      labaBersih: totals.labaBersihAkhir,
+      setorMitra: totals.totalSetorMitra
+    };
+    
+    const key = getStoreKey("SALES_HISTORY");
+    const hist = JSON.parse(localStorage.getItem(key) || "[]");
+    hist.unshift(snapshot);
+    localStorage.setItem(key, JSON.stringify(hist));
+
+    alert(`✅ Riwayat Penjualan untuk ${currentBranch} berhasil disimpan! Total Omzet: ${formatRupiah(totals.totalOmzet)}`);
+  }
+
+  function cetakLaporanA4() {
+    window.print();
+  }
+
+  window.addEventListener("DOMContentLoaded", () => {
+    initApp();
+  });
+</script>
 </body></html>
