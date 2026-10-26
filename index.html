@@ -68,14 +68,72 @@
     -moz-appearance: textfield;
   }
 </style>
+<style data-purpose="print-styling">
+  @media print {
+    body {
+      background: #ffffff !important;
+      padding: 0 !important;
+      color: #000 !important;
+    }
+    header, #branch-pills-container, section, .no-print, #mitra-share-panel, button, input {
+      /* Handled selectively */
+    }
+    .print-only-header {
+      display: block !important;
+    }
+    .screen-only {
+      display: none !important;
+    }
+    #pos-table th, #pos-table td {
+      border: 1px solid #cbd5e1 !important;
+      padding: 4px 6px !important;
+      font-size: 9px !important;
+    }
+    .pill-input {
+      border: none !important;
+      box-shadow: none !important;
+      font-size: 9px !important;
+      padding: 0 !important;
+      text-align: center !important;
+      background: transparent !important;
+    }
+    @page {
+      size: A4 portrait;
+      margin: 10mm 8mm;
+    }
+  }
+  .print-only-header {
+    display: none;
+  }
+</style>
 </head>
 <body class="bg-[#f4f7f6] text-slate-800 antialiased font-sans pb-16 selection:bg-rose-100 selection:text-brand-red">
+<!-- BEGIN: Dedicated Print / PDF Header (Explicit Full Date) -->
+<div class="print-only-header w-full pb-3 mb-3 border-b-2 border-slate-800">
+<div class="flex items-center justify-between gap-4">
+<div class="w-44">
+<img alt="Ngenal Rasa Logo" class="h-10 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDqWvsi_6huHpp8SdRMeZcDk7MKMFx3GCWoo3d7H6kmHEAYErKC21MjTsUsIS0e4b87DSuD7tOmcr991DTcwCC7UwQsOp3apTEYNwhnoxzQ7UeE-YTvhgt2dLjRB54RYhN5YmwEJga_vtzeGx9BGdfFID5nuFL4VgEwhVsmWkLQT7e0cXhF8vC3xO3UmebU78CE9WBoeBKj-0-AYweXqwo7r-coMAMkqJZiMdrFiJGAFJvWEYtOSaEaOh3KGaE-LmL9Ww"/>
+</div>
+<div class="text-right">
+<h1 class="text-base font-black text-slate-900 uppercase tracking-wide">LAPORAN PENJUALAN HARIAN &amp; BAGI HASIL</h1>
+<div class="text-xs font-bold text-emerald-800" id="print-header-branch">CABANG: TOKO PUSAT (DB_PUSAT)</div>
+<div class="text-xs font-extrabold text-red-700 mt-0.5" id="print-header-date">Tanggal Laporan: -</div>
+</div>
+</div>
+<div class="grid grid-cols-4 gap-2 mt-2 pt-2 border-t border-slate-300 text-[10px]">
+<div>Omzet: <strong class="text-slate-900" id="print-stat-omzet">Rp 0</strong></div>
+<div>HPP/Modal: <strong class="text-slate-900" id="print-stat-modal">Rp 0</strong></div>
+<div>Laba Bersih: <strong class="text-emerald-800" id="print-stat-bersih">Rp 0</strong></div>
+<div>Bagi Mitra: <strong class="text-blue-800" id="print-stat-mitra">Rp 0</strong></div>
+</div>
+</div>
+<!-- END: Dedicated Print / PDF Header -->
 <!-- BEGIN: MainHeader -->
-<header class="bg-white border-b border-slate-200 pt-4 pb-3 px-4 shadow-sm">
+<header class="bg-white border-b border-slate-200 pt-4 pb-3 px-4 shadow-sm screen-only">
 <div class="max-w-7xl mx-auto flex flex-col items-center">
 <!-- Brand Logo Centered -->
 <div class="w-48 sm:w-56 mb-2">
-<img alt="Ngenal Rasa Logo" class="w-full h-auto object-contain mx-auto" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAwCEgSbTSLSOtbFteXrMgqux07z-kmHBmtgTMRF1Owt3i0MVRlAO2rCFc5wHRkSq2puTaEzsDK5d5zxQ-PwuDYmztcVpI6IYU07Kub83BpbCvqRkiTosNnqQs9p882qEcF2XdO03JClq2Ywjxx_eVHy1RMQPC7h8VUl9Mm42jWrKSbUALGIJQ4rW4cdjRVcOKu9V7_BACyEM7Uqaj6FEnRNeEURs_OGE6-xOSlbQfpMOd6rusYpM1hwNgUhEHYAOCItA"/>
+<img alt="Ngenal Rasa Logo" class="w-full h-auto object-contain mx-auto" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDqWvsi_6huHpp8SdRMeZcDk7MKMFx3GCWoo3d7H6kmHEAYErKC21MjTsUsIS0e4b87DSuD7tOmcr991DTcwCC7UwQsOp3apTEYNwhnoxzQ7UeE-YTvhgt2dLjRB54RYhN5YmwEJga_vtzeGx9BGdfFID5nuFL4VgEwhVsmWkLQT7e0cXhF8vC3xO3UmebU78CE9WBoeBKj-0-AYweXqwo7r-coMAMkqJZiMdrFiJGAFJvWEYtOSaEaOh3KGaE-LmL9Ww"/>
 </div>
 <!-- Cloud Status & Branch Info Header -->
 <div class="flex items-center gap-2 mb-2 text-xs font-semibold">
@@ -100,7 +158,7 @@
 </header>
 <!-- END: MainHeader -->
 <!-- BEGIN: ToolbarContainer -->
-<section class="max-w-7xl mx-auto px-3 sm:px-4 mt-3">
+<section class="max-w-7xl mx-auto px-3 sm:px-4 mt-3 screen-only">
 <div class="bg-white p-3 rounded-2xl border border-slate-200/80 shadow-sm space-y-2.5">
 <!-- Search and Add Product Bar -->
 <div class="grid grid-cols-1 sm:grid-cols-12 gap-2">
@@ -141,7 +199,7 @@
 </section>
 <!-- END: ToolbarContainer -->
 <!-- BEGIN: StatsMetricCards -->
-<section class="max-w-7xl mx-auto px-3 sm:px-4 mt-3">
+<section class="max-w-7xl mx-auto px-3 sm:px-4 mt-3 screen-only">
 <!-- Grid of 6 Main Cards -->
 <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-3">
 <!-- 1. Total Omzet (Penjualan) -->
@@ -241,7 +299,7 @@
 </section>
 <!-- END: StatsMetricCards -->
 <!-- BEGIN: FilterSection -->
-<section class="max-w-7xl mx-auto px-3 sm:px-4 mt-3">
+<section class="max-w-7xl mx-auto px-3 sm:px-4 mt-3 screen-only">
 <div class="bg-white p-2.5 rounded-2xl border border-slate-200 shadow-sm flex flex-wrap items-center justify-between gap-2 text-xs">
 <!-- Filter Buttons Left -->
 <div class="flex flex-wrap items-center gap-1.5">
@@ -286,7 +344,7 @@
 <th class="py-2.5 px-2 text-center min-w-[75px] uppercase" scope="col">LABA KOTOR</th>
 <th class="py-2.5 px-2 text-center min-w-[75px] uppercase text-emerald-600" scope="col">LABA BERSIH</th>
 <th class="py-2.5 px-2 text-center min-w-[75px] uppercase text-blue-600" scope="col">BAGI MITRA</th>
-<th class="py-2.5 px-2 text-center min-w-[40px] uppercase" scope="col">AKSI</th>
+<th class="py-2.5 px-2 text-center min-w-[40px] uppercase screen-only" scope="col">AKSI</th>
 </tr>
 </thead>
 <tbody class="divide-y divide-slate-100 font-medium" id="product-table-body">
@@ -308,7 +366,8 @@
 <button class="text-slate-400 hover:text-white text-lg font-bold" onclick="closeRekapitulasiModal()">✕</button>
 </div>
 <div class="p-5 space-y-4">
-<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-50 p-3 rounded-xl border border-slate-200">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-50 p-3 rounded-xl border border-slate-200"><div class="space-y-2">
+<div class="flex flex-wrap items-center gap-2">
 <div>
 <label class="block text-xs font-semibold text-slate-700 mb-1">Pilih Rentang Periode Rekap:</label>
 <div class="inline-flex rounded-lg border border-slate-300 p-0.5 bg-white" id="period-switcher">
@@ -318,11 +377,21 @@
 <button class="period-btn px-3 py-1 rounded text-xs font-semibold text-slate-600 hover:bg-slate-100" onclick="selectPeriod('tahunan', event)">Tahunan</button>
 </div>
 </div>
+<div>
+<label class="block text-xs font-semibold text-slate-700 mb-1">Pilih Tanggal Laporan:</label>
+<input class="text-xs py-1 px-2.5 bg-white border border-slate-300 rounded-lg text-slate-800 font-medium focus:ring-2 focus:ring-emerald-500 outline-none" id="rekap-date-picker" onchange="onRekapDateChange(this.value)" type="date"/>
+</div>
+</div>
+<div class="flex items-center gap-1.5 text-xs text-slate-600 bg-white px-2.5 py-1 rounded-lg border border-slate-200/80 w-fit">
+<span>📅</span>
+<span class="font-medium">Tanggal Laporan Lengkap:</span>
+<span class="font-bold text-emerald-800" id="active-rekap-date-display">-</span>
+</div>
+</div>
 <div class="text-right text-xs">
 <span class="text-slate-500">Cabang Aktif:</span>
 <div class="font-bold text-emerald-800 text-sm" id="modal-branch-name">Toko Pusat</div>
-</div>
-</div>
+</div></div>
 <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 text-xs">
 <div class="p-2.5 bg-slate-50 rounded-xl border border-slate-200">
 <div class="text-slate-500 font-medium text-[11px]">Total Omzet</div>
@@ -371,9 +440,14 @@
 <button class="px-4 py-1.5 rounded-xl border border-slate-300 text-xs font-semibold text-slate-700 hover:bg-slate-100 transition" onclick="closeRekapitulasiModal()">
         Tutup
       </button>
+<div class="flex items-center gap-2">
+<button class="px-3.5 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-xs font-semibold text-white shadow-sm transition active:scale-95 flex items-center gap-1" onclick="cetakLaporanA4()">
+<span>🖨️</span> Cetak Rekap A4
+</button>
 <button class="px-4 py-1.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-xs font-semibold text-white shadow-sm transition active:scale-95 flex items-center gap-1" onclick="saveCurrentPeriodRecap()">
 <span>💾</span> Simpan Rekap Periode Ini
-      </button>
+</button>
+</div>
 </div>
 </div>
 </div>
@@ -549,6 +623,20 @@
     return "Rp " + Number(number || 0).toLocaleString('id-ID');
   }
 
+  // Indonesian Full Date Formatter: "Senin, 26 Oktober 2026"
+  function getFullIndonesianDate(dateObj = new Date()) {
+    const days = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
+    const months = [
+      "Januari", "Februari", "Maret", "April", "Mei", "Juni",
+      "Juli", "Agustus", "September", "Oktober", "November", "Desember"
+    ];
+    const dayName = days[dateObj.getDay()];
+    const dayDate = dateObj.getDate();
+    const monthName = months[dateObj.getMonth()];
+    const year = dateObj.getFullYear();
+    return `${dayName}, ${dayDate} ${monthName} ${year}`;
+  }
+
   function getStoreKey(suffix) {
     return `NR_${currentBranchId}_${suffix}`;
   }
@@ -634,6 +722,32 @@
     calculateTotals();
     recalculateBagiHasil();
     setupSearchFilter();
+    setupDatePickerDefault();
+  }
+
+  function setupDatePickerDefault() {
+    const picker = document.getElementById("rekap-date-picker");
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const dd = String(today.getDate()).padStart(2, '0');
+    if (picker) {
+      picker.value = `${yyyy}-${mm}-${dd}`;
+    }
+    const disp = document.getElementById("active-rekap-date-display");
+    if (disp) {
+      disp.innerText = getFullIndonesianDate(today);
+    }
+  }
+
+  function onRekapDateChange(val) {
+    if (!val) return;
+    const parts = val.split("-");
+    const d = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
+    const disp = document.getElementById("active-rekap-date-display");
+    if (disp) {
+      disp.innerText = getFullIndonesianDate(d);
+    }
   }
 
   function renderBranchButtons() {
@@ -791,7 +905,7 @@
       labelMitraElem.innerText = `Hak Mitra (${pMitra}% Laba Bersih):`;
     }
     if (labelTokoElem) {
-      labelMitraElem.innerText = `Bagian Toko (${pToko}% Laba Bersih):`;
+      labelTokoElem.innerText = `Bagian Toko (${pToko}% Laba Bersih):`;
     }
 
     let hakMitraNominal = 0;
@@ -812,6 +926,11 @@
     const modalMitra = document.getElementById("modal-total-setor-mitra");
     if (modalMitra) {
       modalMitra.innerText = formatRupiah(hakMitraNominal);
+    }
+
+    const printMitra = document.getElementById("print-stat-mitra");
+    if (printMitra) {
+      printMitra.innerText = formatRupiah(hakMitraNominal);
     }
   }
 
@@ -927,7 +1046,7 @@
         <td class="py-2 px-2 text-center font-bold text-blue-700 text-xs" id="row-mitra-${index}">
           ${formatRupiah(hakMitra)}
         </td>
-        <td class="py-2 px-1 text-center">
+        <td class="py-2 px-1 text-center screen-only">
           <button 
             type="button" 
             onclick="deleteProduct(${index})" 
@@ -1050,6 +1169,16 @@
     document.getElementById("stat-item-biaya").innerText = expensesList.length;
     document.getElementById("btn-count-operasional").innerText = expensesList.length;
     document.getElementById("stat-laba-bersih").innerText = formatRupiah(labaBersihAkhir);
+
+    // Update print header totals
+    const pOmzet = document.getElementById("print-stat-omzet");
+    if (pOmzet) pOmzet.innerText = formatRupiah(totalOmzet);
+    const pModal = document.getElementById("print-stat-modal");
+    if (pModal) pModal.innerText = formatRupiah(totalModalKulak);
+    const pBersih = document.getElementById("print-stat-bersih");
+    if (pBersih) pBersih.innerText = formatRupiah(labaBersihAkhir);
+    const pMitraElem = document.getElementById("print-stat-mitra");
+    if (pMitraElem) pMitraElem.innerText = formatRupiah(totalSetorMitra);
 
     return latestTotals;
   }
@@ -1195,7 +1324,7 @@
       alert("Isi nama operasional dan nominal yang valid.");
       return;
     }
-    expensesList.push({ ket, nominal: nom, date: new Date().toLocaleDateString('id-ID') });
+    expensesList.push({ ket, nominal: nom, date: getFullIndonesianDate() });
     saveBranchExpenses(expensesList);
     document.getElementById("op-keterangan").value = "";
     document.getElementById("op-nominal").value = "";
@@ -1240,6 +1369,7 @@
   function openRekapitulasiModal() {
     const activeBranch = branches.find(b => b.id === currentBranchId);
     document.getElementById("modal-branch-name").innerText = activeBranch ? activeBranch.name : currentBranchId;
+    setupDatePickerDefault();
     selectPeriod('harian');
     renderSavedRecapList();
     document.getElementById("modal-rekapitulasi").classList.remove("hidden");
@@ -1280,6 +1410,13 @@
   function saveCurrentPeriodRecap() {
     const totals = calculateTotals();
     const currentBranch = branches.find(b => b.id === currentBranchId)?.name || currentBranchId;
+    const pickerVal = document.getElementById("rekap-date-picker")?.value;
+    let explicitDate = getFullIndonesianDate();
+    if (pickerVal) {
+      const parts = pickerVal.split("-");
+      explicitDate = getFullIndonesianDate(new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2])));
+    }
+
     const rec = {
       id: Date.now(),
       periode: currentRecapPeriod.toUpperCase(),
@@ -1287,7 +1424,7 @@
       omzet: totals.totalOmzet,
       labaBersih: totals.labaBersihAkhir,
       setorMitra: totals.totalSetorMitra,
-      timestamp: new Date().toLocaleString('id-ID')
+      timestamp: explicitDate
     };
 
     const key = getStoreKey("SAVED_REKAPS");
@@ -1295,7 +1432,7 @@
     saved.unshift(rec);
     localStorage.setItem(key, JSON.stringify(saved));
     renderSavedRecapList();
-    alert(`Rekapitulasi Periode ${currentRecapPeriod.toUpperCase()} berhasil disimpan ke Database ${currentBranchId}!`);
+    alert(`Rekapitulasi Periode ${currentRecapPeriod.toUpperCase()} tanggal ${explicitDate} berhasil disimpan ke Database ${currentBranchId}!`);
   }
 
   function renderSavedRecapList() {
@@ -1315,7 +1452,7 @@
       div.innerHTML = `
         <div>
           <div class="font-bold text-slate-800">[${item.periode}] - ${item.branch}</div>
-          <div class="text-[10px] text-slate-400">${item.timestamp}</div>
+          <div class="text-[10px] text-slate-500 font-semibold">📅 ${item.timestamp}</div>
         </div>
         <div class="text-right">
           <div class="font-bold text-emerald-700">Bersih: ${formatRupiah(item.labaBersih)}</div>
@@ -1396,8 +1533,9 @@
   function simpanRiwayatPenjualan() {
     const totals = calculateTotals();
     const currentBranch = branches.find(b => b.id === currentBranchId)?.name || currentBranchId;
+    const fullDate = getFullIndonesianDate();
     const snapshot = {
-      date: new Date().toLocaleString('id-ID'),
+      date: fullDate,
       branch: currentBranch,
       omzet: totals.totalOmzet,
       labaBersih: totals.labaBersihAkhir,
@@ -1409,10 +1547,28 @@
     hist.unshift(snapshot);
     localStorage.setItem(key, JSON.stringify(hist));
 
-    alert(`✅ Riwayat Penjualan untuk ${currentBranch} berhasil disimpan! Total Omzet: ${formatRupiah(totals.totalOmzet)}`);
+    alert(`✅ Riwayat Penjualan untuk ${currentBranch} berhasil disimpan!\nTanggal: ${fullDate}\nTotal Omzet: ${formatRupiah(totals.totalOmzet)}`);
   }
 
   function cetakLaporanA4() {
+    // Synchronize full Indonesian date and branch info on print header
+    const fullDate = getFullIndonesianDate();
+    const activeBranch = branches.find(b => b.id === currentBranchId);
+    const branchName = activeBranch ? activeBranch.name : "Toko Pusat";
+
+    const pDate = document.getElementById("print-header-date");
+    if (pDate) {
+      pDate.innerText = `Tanggal Laporan: ${fullDate}`;
+    }
+
+    const pBranch = document.getElementById("print-header-branch");
+    if (pBranch) {
+      pBranch.innerText = `CABANG: ${branchName.toUpperCase()} (${currentBranchId})`;
+    }
+
+    calculateTotals();
+    recalculateBagiHasil();
+
     window.print();
   }
 
