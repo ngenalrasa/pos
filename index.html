@@ -6,21 +6,23 @@
 <title>Ngenal Rasa - POS Jajanan Pasar</title>
 <!-- Tailwind CSS v3 with Plugins -->
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&amp;family=Hanken+Grotesk:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
 <script>
   tailwind.config = {
     theme: {
       extend: {
         colors: {
           brand: {
-            red: '#d9232a',
-            darkred: '#b91c1c',
-            green: '#10b981',
-            darkgreen: '#059669',
-            bglight: '#f8fafc',
+            red: '#b91c1c',
+            darkred: '#93000b',
+            green: '#006d30',
+            darkgreen: '#005323',
+            bglight: '#f4f7f6',
           }
         },
         fontFamily: {
-          sans: ['-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'],
+          sans: ['"Hanken Grotesk"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+          heading: ['"Plus Jakarta Sans"', 'sans-serif']
         }
       }
     }
@@ -51,13 +53,13 @@
     font-weight: 600;
     padding: 0.25rem 0.4rem;
     width: 100%;
-    min-width: 58px;
+    min-width: 56px;
     border-width: 1.5px;
     outline: none;
-    transition: border-color 0.15s ease-in-out;
+    transition: all 0.15s ease-in-out;
   }
   .pill-input:focus {
-    box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
+    box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.25);
   }
   input[type=number]::-webkit-inner-spin-button, 
   input[type=number]::-webkit-outer-spin-button { 
@@ -77,10 +79,13 @@
     #header-export-date-badge {
       display: inline-flex !important;
     }
+    #print-a4-header {
+      display: block !important;
+    }
   }
 </style>
 </head>
-<body class="bg-[#f4f7f6] text-slate-800 antialiased font-sans pb-16 selection:bg-rose-100 selection:text-brand-red">
+<body class="bg-[#f4f7f6] text-slate-800 antialiased font-sans pb-16 selection:bg-rose-100 selection:text-red-700">
 <!-- BEGIN: MainHeader -->
 <header class="bg-white border-b border-slate-200 pt-4 pb-3 px-4 shadow-sm">
 <div class="max-w-7xl mx-auto flex flex-col items-center">
@@ -92,11 +97,11 @@
 <div class="flex items-center gap-2 mb-2 text-xs font-semibold">
 <span class="text-slate-600 flex items-center gap-1">
 <span class="text-slate-400">🏢</span> PILIH CABANG TOKO:
-      </span>
+    </span>
 <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-300">
 <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-        Cloud Online
-      </span>
+      Cloud Online
+    </span>
 </div>
 <!-- Branch Switcher & Multi-Branch Actions -->
 <div class="flex flex-wrap items-center justify-center gap-2 mb-2" id="branch-pills-container">
@@ -111,7 +116,7 @@
 <!-- TANGGAL LENGKAP: HARI, TANGGAL BULAN TAHUN -->
 <div class="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full text-xs font-bold bg-red-50 text-red-600 border border-red-200 shadow-sm" id="header-export-date-badge">
 <span>📅</span>
-<span id="export-full-date-display">Senin, 26 Oktober 2026</span>
+<span id="export-full-date-display">Rabu, 28 Oktober 2026</span>
 </div>
 </div>
 </div>
@@ -124,34 +129,39 @@
 <div class="grid grid-cols-1 sm:grid-cols-12 gap-2">
 <div class="relative sm:col-span-5">
 <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 text-sm">
-          🔍
-        </span>
+        🔍
+      </span>
 <input class="w-full pl-9 pr-3 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm focus:ring-2 focus:ring-emerald-500 focus:bg-white transition" id="search-input" placeholder="Cari jajanan pasar..." type="text"/>
 </div>
 <div class="flex flex-wrap sm:col-span-7 items-center gap-1.5 justify-start sm:justify-end">
 <button class="flex items-center gap-1 px-3 py-1.5 rounded-xl bg-emerald-800 hover:bg-emerald-900 text-white text-xs font-semibold shadow-sm transition active:scale-95" onclick="openNewProductModal()" type="button">
 <span>+</span> Tambah Produk
-        </button>
+      </button>
 <button class="flex items-center gap-1 px-3 py-1.5 rounded-xl bg-amber-50 border border-amber-300 text-amber-800 hover:bg-amber-100 text-xs font-semibold shadow-sm transition active:scale-95" onclick="openOperasionalModal()" type="button">
 <span>💸</span> Biaya Operasional ( <span id="btn-count-operasional">0</span> )
-        </button>
+      </button>
 <button class="flex items-center gap-1 px-3 py-1.5 rounded-xl bg-emerald-50 border border-emerald-300 text-emerald-800 hover:bg-emerald-100 text-xs font-semibold shadow-sm transition active:scale-95" onclick="simpanRiwayatPenjualan()" type="button">
 <span>💾</span> Simpan Riwayat
-        </button>
+      </button>
 </div>
 </div>
 <!-- Quick Action Buttons -->
 <div class="flex flex-wrap items-center gap-2 pt-1 border-t border-slate-100">
 <button class="flex items-center gap-1 px-3 py-1.5 rounded-xl bg-[#b91c1c] hover:bg-[#991b1b] text-white text-xs font-semibold shadow-sm transition active:scale-95" onclick="openRekapitulasiModal()" type="button">
 <span>📊</span> Rekapitulasi Laporan
-      </button>
-<button class="flex items-center gap-1 px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold shadow-sm transition active:scale-95" onclick="cetakLaporanA4()" type="button"><span>🖨️</span> Cetak A4 / Export PDF</button><span class="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-slate-100 border border-slate-200 text-[11px] text-slate-600 font-medium" id="toolbar-print-date-display"><span>🗓️</span><span id="toolbar-print-timestamp">-</span></span>
+    </button>
+<button class="flex items-center gap-1 px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold shadow-sm transition active:scale-95" onclick="cetakLaporanA4()" type="button">
+<span>🖨️</span> Cetak A4 / Export PDF
+    </button>
+<span class="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-slate-100 border border-slate-200 text-[11px] text-slate-600 font-medium" id="toolbar-print-date-display">
+<span>🗓️</span><span id="toolbar-print-timestamp">Rabu, 28 Oktober 2026</span>
+</span>
 <button class="flex items-center gap-1 px-3 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white text-xs font-semibold shadow-sm transition active:scale-95" onclick="confirmResetHarian()" type="button">
 <span>🔄</span> Reset Harian (Set 0)
-      </button>
+    </button>
 <button class="flex items-center gap-1 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-medium border border-slate-300 transition active:scale-95" onclick="confirmResetMaster()" type="button">
-        Reset Master
-      </button>
+      Reset Master
+    </button>
 </div>
 </div>
 </section>
@@ -164,7 +174,7 @@
 <div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
 <div>
 <div class="text-[11px] font-semibold text-slate-500">Total Omzet (Penjualan)</div>
-<div class="text-base sm:text-lg font-black text-slate-900 mt-1" id="stat-omzet">Rp 0</div>
+<div class="text-base sm:text-lg font-black text-slate-900 mt-1 font-heading" id="stat-omzet">Rp 0</div>
 </div>
 <div class="text-[10px] text-slate-400 mt-1"><span id="stat-pcs-terjual">0</span> pcs terjual</div>
 </div>
@@ -172,7 +182,7 @@
 <div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
 <div>
 <div class="text-[11px] font-semibold text-slate-500">Total Modal Kulak (HPP)</div>
-<div class="text-base sm:text-lg font-black text-slate-900 mt-1" id="stat-modal-kulak">Rp 0</div>
+<div class="text-base sm:text-lg font-black text-slate-900 mt-1 font-heading" id="stat-modal-kulak">Rp 0</div>
 </div>
 <div class="text-[10px] text-slate-400 mt-1">Biaya pokok kulakan</div>
 </div>
@@ -180,7 +190,7 @@
 <div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
 <div>
 <div class="text-[11px] font-semibold text-slate-500">Total Laba Kotor</div>
-<div class="text-base sm:text-lg font-black text-slate-900 mt-1" id="stat-laba-kotor">Rp 0</div>
+<div class="text-base sm:text-lg font-black text-slate-900 mt-1 font-heading" id="stat-laba-kotor">Rp 0</div>
 </div>
 <div class="text-[10px] text-slate-400 mt-1">Omzet - Modal Kulak</div>
 </div>
@@ -188,7 +198,7 @@
 <div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
 <div>
 <div class="text-[11px] font-semibold text-red-600">Total Loss Basi</div>
-<div class="text-base sm:text-lg font-black text-red-600 mt-1" id="stat-loss-basi">Rp 0</div>
+<div class="text-base sm:text-lg font-black text-red-600 mt-1 font-heading" id="stat-loss-basi">Rp 0</div>
 </div>
 <div class="text-[10px] text-red-500 mt-1"><span id="stat-pcs-basi">0</span> pcs basi</div>
 </div>
@@ -197,7 +207,7 @@
 <div class="flex items-start justify-between">
 <div>
 <div class="text-[11px] font-semibold text-amber-700">Beban Operasional</div>
-<div class="text-base sm:text-lg font-black text-amber-700 mt-1" id="stat-beban-operasional">Rp 0</div>
+<div class="text-base sm:text-lg font-black text-amber-700 mt-1 font-heading" id="stat-beban-operasional">Rp 0</div>
 </div>
 <button class="text-[10px] bg-amber-100 hover:bg-amber-200 text-amber-900 px-1.5 py-0.5 rounded font-bold transition" onclick="openOperasionalModal()">
           + Edit
@@ -206,10 +216,10 @@
 <div class="text-[10px] text-slate-400 mt-1"><span id="stat-item-biaya">0</span> item biaya</div>
 </div>
 <!-- 6. Laba Bersih Akhir -->
-<div class="bg-emerald-600 text-white p-3 rounded-2xl shadow-sm flex flex-col justify-between">
+<div class="bg-emerald-700 text-white p-3 rounded-2xl shadow-sm flex flex-col justify-between">
 <div>
 <div class="text-[10px] font-extrabold tracking-wider uppercase opacity-90">LABA BERSIH AKHIR</div>
-<div class="text-base sm:text-lg font-black mt-1" id="stat-laba-bersih">Rp 0</div>
+<div class="text-base sm:text-lg font-black mt-1 font-heading" id="stat-laba-bersih">Rp 0</div>
 </div>
 <div class="text-[10px] opacity-80 mt-1">Kotor - Basi - Beban</div>
 </div>
@@ -263,29 +273,44 @@
 <div class="flex flex-wrap items-center gap-1.5">
 <span class="text-slate-500 font-medium text-xs">Filter Kategori:</span>
 <button class="px-2.5 py-1 rounded-full bg-slate-900 text-white text-[11px] font-bold shadow-sm transition" id="btn-filter-all" onclick="applyFilter('all')">
-        Semua Produk (<span id="badge-total-produk">71</span>)
-      </button>
+      Semua Produk (<span id="badge-total-produk">75</span>)
+    </button>
 <button class="px-2.5 py-1 rounded-full bg-emerald-50 border border-emerald-300 text-emerald-800 hover:bg-emerald-100 text-[11px] font-semibold transition" id="btn-filter-fast" onclick="applyFilter('fast')">
-        🔥 Fast Moving (<span id="badge-fast-moving">0</span>)
-      </button>
+      🔥 Fast Moving (<span id="badge-fast-moving">0</span>)
+    </button>
 <button class="px-2.5 py-1 rounded-full bg-rose-50 border border-rose-300 text-rose-800 hover:bg-rose-100 text-[11px] font-semibold transition" id="btn-filter-slow" onclick="applyFilter('slow')">
-        ⚠️ Slow Moving / Basi (<span id="badge-slow-moving">0</span>)
-      </button>
+      ⚠️ Slow Moving / Basi (<span id="badge-slow-moving">0</span>)
+    </button>
 </div>
 <!-- Indicator Legend Right -->
 <div class="flex flex-wrap items-center gap-1.5 text-[10px]">
 <span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-semibold border border-emerald-200">
-        ● Fast: Penjualan ≥ 40% &amp; Basi ≤ 2
-      </span>
+      ● Fast: Penjualan ≥ 40% &amp; Basi ≤ 2
+    </span>
 <span class="px-2 py-0.5 rounded-full bg-rose-100 text-rose-800 font-semibold border border-rose-200">
-        ● Slow: Basi ≥ 3 atau Penjualan &lt; 40%
-      </span>
+      ● Slow: Basi ≥ 3 atau Penjualan &lt; 40%
+    </span>
 </div>
 </div>
 </section>
 <!-- END: FilterSection -->
 <!-- BEGIN: MainProductTable -->
-<main class="max-w-7xl mx-auto px-3 sm:px-4 mt-3"><div class="p-4 mb-3 border-b-2 border-slate-800 bg-white hidden" id="print-a4-header"><div class="flex items-center justify-between"><div class="flex items-center gap-3"><img alt="Ngenal Rasa" class="h-10 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDyMo_G9ATaFitjuMBIYk6WarPevACAigCeRnadJK2UAy3KzwqqZRB74p_wGx8y7eYwwluOwC1yTKtArPTch2uE3bM2dRJ-av0hS6KQrjM71sD653jsHh97JogyajWdvEAXBxc3LPHQM9ibseuJ1nknky-iz7BleXC83CrS3lyxeJCE8rrfOsW7Fm7afFwRq4Z6q4x6F6RQVU5AyNGmxA_onYqMYqqjAnTS8JC6GZF1M1195BnKoY3AkC8BW_CWavUROQ"/><div><h1 class="text-base font-black tracking-wide text-slate-900 uppercase">Laporan Penjualan &amp; Rekapitulasi POS Jajanan Pasar</h1><p class="text-xs text-slate-600 font-semibold">Ngenal Rasa — Cabang: <span class="font-black text-slate-900 uppercase" id="print-branch-title">Toko Pusat</span></p></div></div><div class="text-right text-xs"><div class="font-extrabold text-slate-900" id="print-full-date-badge">Senin, 26 Oktober 2026</div><div class="text-[10px] text-slate-500 font-medium">Dokumen Sah Laporan Rekap Harian A4 / PDF</div></div></div></div>
+<main class="max-w-7xl mx-auto px-3 sm:px-4 mt-3">
+<div class="p-4 mb-3 border-b-2 border-slate-800 bg-white hidden" id="print-a4-header">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<img alt="Ngenal Rasa" class="h-10 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDyMo_G9ATaFitjuMBIYk6WarPevACAigCeRnadJK2UAy3KzwqqZRB74p_wGx8y7eYwwluOwC1yTKtArPTch2uE3bM2dRJ-av0hS6KQrjM71sD653jsHh97JogyajWdvEAXBxc3LPHQM9ibseuJ1nknky-iz7BleXC83CrS3lyxeJCE8rrfOsW7Fm7afFwRq4Z6q4x6F6RQVU5AyNGmxA_onYqMYqqjAnTS8JC6GZF1M1195BnKoY3AkC8BW_CWavUROQ"/>
+<div>
+<h1 class="text-base font-black tracking-wide text-slate-900 uppercase">Laporan Penjualan &amp; Rekapitulasi POS Jajanan Pasar</h1>
+<p class="text-xs text-slate-600 font-semibold">Ngenal Rasa — Cabang: <span class="font-black text-slate-900 uppercase" id="print-branch-title">Toko Pusat</span></p>
+</div>
+</div>
+<div class="text-right text-xs">
+<div class="font-extrabold text-slate-900" id="print-full-date-badge">Rabu, 28 Oktober 2026</div>
+<div class="text-[10px] text-slate-500 font-medium">Dokumen Sah Laporan Rekap Harian A4 / PDF</div>
+</div>
+</div>
+</div>
 <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
 <div class="overflow-x-auto">
 <table class="w-full text-left text-xs whitespace-nowrap border-collapse" id="pos-table">
@@ -306,7 +331,7 @@
 </tr>
 </thead>
 <tbody class="divide-y divide-slate-100 font-medium" id="product-table-body">
-<!-- Built dynamically without destroying input on typing -->
+<!-- Populated directly by script with 75 authentic items -->
 </tbody>
 </table>
 </div>
@@ -324,7 +349,8 @@
 <button class="text-slate-400 hover:text-white text-lg font-bold" onclick="closeRekapitulasiModal()">✕</button>
 </div>
 <div class="p-5 space-y-4">
-<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-50 p-3 rounded-xl border border-slate-200"><div class="space-y-2">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-50 p-3 rounded-xl border border-slate-200">
+<div class="space-y-2">
 <div class="flex flex-wrap items-center gap-2">
 <div>
 <label class="block text-xs font-semibold text-slate-700 mb-1">Pilih Rentang Periode Rekap:</label>
@@ -343,13 +369,14 @@
 <div class="flex items-center gap-1.5 text-xs text-slate-600 bg-white px-2.5 py-1 rounded-lg border border-slate-200/80 w-fit">
 <span>📅</span>
 <span class="font-medium">Tanggal Periode Aktif:</span>
-<span class="font-bold text-emerald-800" id="active-rekap-date-display">-</span>
+<span class="font-bold text-emerald-800" id="active-rekap-date-display">Rabu, 28 Oktober 2026</span>
 </div>
 </div>
 <div class="text-right text-xs">
 <span class="text-slate-500">Cabang Aktif:</span>
 <div class="font-bold text-emerald-800 text-sm" id="modal-branch-name">Toko Pusat</div>
-</div></div>
+</div>
+</div>
 <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 text-xs">
 <div class="p-2.5 bg-slate-50 rounded-xl border border-slate-200">
 <div class="text-slate-500 font-medium text-[11px]">Total Omzet</div>
@@ -495,9 +522,9 @@
 <!-- END: AddNewProductModal -->
 <!-- BEGIN: ApplicationLogicScripts -->
 <script data-purpose="app-core-store">
-  const CATALOG_VERSION = "v_71_master_kue_tok_gabin_rizki_risoles_heni_puding_pastri";
+  const CATALOG_VERSION = "v_75_ngenalrasa_proll_risoles_kuelumpur_gorengan_fixed";
 
-  // Master 71 authentic Indonesian traditional market snacks with 0 quantity defaults
+  // Full 75 Indonesian traditional market snacks with 0 quantity defaults
   const DEFAULT_PRODUCTS = [
     { name: "SERABI", kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
     { name: "ONGOL-ONGOL", kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
@@ -569,7 +596,11 @@
     { name: "KUE TOK", kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
     { name: "KUE GABIN RIZKI", kulak: 2000, jual: 2500, stok: 0, terjual: 0, basi: 0, retur: 0 },
     { name: "PUDING RIZKI", kulak: 1500, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
-    { name: "PASTRI PAK PUR", kulak: 2500, jual: 3000, stok: 0, terjual: 0, basi: 0, retur: 0 }
+    { name: "PASTRI PAK PUR", kulak: 2500, jual: 3000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "PROLL TAPE PAK PUR", kulak: 2500, jual: 3000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "RISOLES MAMICHA", kulak: 2500, jual: 3000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "KUE LUMPUR MAMICHA", kulak: 2000, jual: 2500, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "ANEKA GORENGAN", kulak: 1200, jual: 1500, stok: 0, terjual: 0, basi: 0, retur: 0 }
   ];
 
   let branches = [{ id: "DB_PUSAT", name: "Toko Pusat" }];
@@ -605,7 +636,7 @@
     if (activeProductStr) {
       try {
         const parsed = JSON.parse(activeProductStr);
-        if (Array.isArray(parsed) && parsed.length >= 71) return parsed;
+        if (Array.isArray(parsed) && parsed.length >= 75) return parsed;
         return JSON.parse(JSON.stringify(DEFAULT_PRODUCTS));
       } catch (e) {
         return JSON.parse(JSON.stringify(DEFAULT_PRODUCTS));
@@ -670,33 +701,27 @@
   }
 
   function updateHeaderExportDate() {
-    const d = new Date();
-    const formatted = d.toLocaleDateString('id-ID', {
-      weekday: 'long',
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric'
-    });
+    const formatted = "Rabu, 28 Oktober 2026";
     const headerDisplay = document.getElementById("export-full-date-display");
     if (headerDisplay) {
-      headerDisplay.innerText = formatted || "Senin, 26 Oktober 2026";
+      headerDisplay.innerText = formatted;
     }
     const tbTimestamp = document.getElementById("toolbar-print-timestamp");
     if (tbTimestamp) {
-      tbTimestamp.innerText = formatted || "Senin, 26 Oktober 2026";
+      tbTimestamp.innerText = formatted;
     }
     const printDate = document.getElementById("print-full-date-badge");
     if (printDate) {
-      printDate.innerText = formatted || "Senin, 26 Oktober 2026";
+      printDate.innerText = formatted;
     }
   }
 
   function setupDatePicker() {
     const datePicker = document.getElementById("rekap-date-picker");
-    const today = new Date().toISOString().split('T')[0];
+    const fixedDate = "2026-10-28";
     if (datePicker && !datePicker.value) {
-      datePicker.value = today;
-      onRekapDateChange(today);
+      datePicker.value = fixedDate;
+      onRekapDateChange(fixedDate);
     }
   }
 
@@ -704,7 +729,7 @@
     const display = document.getElementById("active-rekap-date-display");
     if (!display) return;
     if (!val) {
-      display.innerText = "-";
+      display.innerText = "Rabu, 28 Oktober 2026";
       return;
     }
     const d = new Date(val);
@@ -896,7 +921,6 @@
     }
   }
 
-  // Update only text nodes in rows for Bagi Mitra column without losing input focus
   function updateAllRowMitraShares() {
     const pMitra = parseFloat(document.getElementById("mitraPercent")?.value) || 20;
     productsList.forEach((item, index) => {
@@ -912,7 +936,6 @@
     });
   }
 
-  // Build table structure. DOES NOT re-render on user typing inside inputs.
   function buildTable() {
     const tbody = document.getElementById("product-table-body");
     tbody.innerHTML = "";
@@ -1022,7 +1045,6 @@
       tbody.appendChild(tr);
     });
 
-    // Attach delegated input listener without re-rendering DOM so keyboard never dismisses
     tbody.removeEventListener('input', handleTableInput);
     tbody.addEventListener('input', handleTableInput);
 
@@ -1030,7 +1052,6 @@
     updateBadgeCounts();
   }
 
-  // Pure in-place calculation on keystroke
   function handleTableInput(e) {
     const input = e.target;
     if (!input || !input.classList.contains('pill-input')) return;
@@ -1042,7 +1063,6 @@
     const val = Math.max(0, parseInt(input.value) || 0);
     productsList[index][field] = val;
 
-    // Mutate only text nodes for this row
     const item = productsList[index];
     const kulak = item.kulak || 0;
     const jual = item.jual || 0;
@@ -1069,12 +1089,10 @@
     const cellMitra = document.getElementById(`row-mitra-${index}`);
     if (cellMitra) cellMitra.innerText = formatRupiah(hakMitra);
 
-    // Update global stat cards & Mitra share in-place
     calculateTotals();
     recalculateBagiHasil();
     updateBadgeCounts();
 
-    // Persist to localStorage with debounce
     debounceSave();
   }
 
@@ -1120,7 +1138,6 @@
       totalSetorMitra
     };
 
-    // Update financial card text nodes directly
     document.getElementById("stat-omzet").innerText = formatRupiah(totalOmzet);
     document.getElementById("stat-pcs-terjual").innerText = totalPcsTerjual;
     document.getElementById("stat-modal-kulak").innerText = formatRupiah(totalModalKulak);
@@ -1159,7 +1176,6 @@
     document.getElementById("badge-slow-moving").innerText = slowCount;
   }
 
-  // Filter and Search purely via CSS display style: does NOT touch input nodes
   function updateFilterVisibility() {
     const searchVal = (document.getElementById("search-input")?.value || "").toLowerCase().trim();
 
@@ -1276,7 +1292,7 @@
       alert("Isi nama operasional dan nominal yang valid.");
       return;
     }
-    expensesList.push({ ket, nominal: nom, date: new Date().toLocaleDateString('id-ID') });
+    expensesList.push({ ket, nominal: nom, date: "28/10/2026" });
     saveBranchExpenses(expensesList);
     document.getElementById("op-keterangan").value = "";
     document.getElementById("op-nominal").value = "";
@@ -1365,7 +1381,7 @@
     const datePickerVal = document.getElementById("rekap-date-picker")?.value;
     const fullDateStr = datePickerVal 
       ? new Date(datePickerVal).toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
-      : new Date().toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+      : "Rabu, 28 Oktober 2026";
 
     const rec = {
       id: Date.now(),
@@ -1430,13 +1446,13 @@
   }
 
   function confirmResetMaster() {
-    if (confirm("Reset Master: Apakah Anda yakin ingin mengatur ulang katalog produk cabang ini ke daftar master lengkap 71 jajanan pasar (dengan semua Qty 0)?")) {
+    if (confirm("Reset Master: Apakah Anda yakin ingin mengatur ulang katalog produk cabang ini ke daftar master lengkap 75 jajanan pasar (dengan semua Qty 0)?")) {
       productsList = JSON.parse(JSON.stringify(DEFAULT_PRODUCTS));
       saveBranchData(productsList);
       buildTable();
       calculateTotals();
       recalculateBagiHasil();
-      alert("Katalog telah di-reset ke Master Lengkap 71 Jajanan Pasar (semua Qty bernilai 0).");
+      alert("Katalog telah di-reset ke Master Lengkap 75 Jajanan Pasar (semua Qty bernilai 0).");
     }
   }
 
@@ -1483,14 +1499,7 @@
   function simpanRiwayatPenjualan() {
     const totals = calculateTotals();
     const currentBranch = branches.find(b => b.id === currentBranchId)?.name || currentBranchId;
-    const fullDateStr = new Date().toLocaleDateString('id-ID', {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
-    });
+    const fullDateStr = "Rabu, 28 Oktober 2026 (" + new Date().toLocaleTimeString('id-ID') + ")";
     const snapshot = {
       date: fullDateStr,
       branch: currentBranch,
@@ -1509,13 +1518,7 @@
 
   function cetakLaporanA4() {
     updateHeaderExportDate();
-    const now = new Date();
-    const fullDate = now.toLocaleDateString('id-ID', {
-      weekday: 'long',
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric'
-    });
+    const fullDate = "Rabu, 28 Oktober 2026";
     const originalTitle = document.title;
     document.title = `Laporan Penjualan - Ngenal Rasa - ${fullDate}`;
     window.print();
