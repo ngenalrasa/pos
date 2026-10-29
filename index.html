@@ -113,10 +113,10 @@
 <span>Koneksi DB Terisolasi:</span>
 <code class="font-bold text-slate-700" id="active-db-badge">DB_PUSAT</code>
 </div>
-<!-- TANGGAL LENGKAP: HARI, TANGGAL BULAN TAHUN -->
+<!-- TANGGAL LENGKAP: HARI, TANGGAL BULAN TAHUN (OTOMATIS REAL-TIME) -->
 <div class="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full text-xs font-bold bg-red-50 text-red-600 border border-red-200 shadow-sm" id="header-export-date-badge">
 <span>📅</span>
-<span id="export-full-date-display">Rabu, 28 Oktober 2026</span>
+<span id="export-full-date-display">Memuat tanggal...</span>
 </div>
 </div>
 </div>
@@ -154,7 +154,7 @@
 <span>🖨️</span> Cetak A4 / Export PDF
     </button>
 <span class="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-slate-100 border border-slate-200 text-[11px] text-slate-600 font-medium" id="toolbar-print-date-display">
-<span>🗓️</span><span id="toolbar-print-timestamp">Rabu, 28 Oktober 2026</span>
+<span>🗓️</span><span id="toolbar-print-timestamp">Memuat tanggal...</span>
 </span>
 <button class="flex items-center gap-1 px-3 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white text-xs font-semibold shadow-sm transition active:scale-95" onclick="confirmResetHarian()" type="button">
 <span>🔄</span> Reset Harian (Set 0)
@@ -306,7 +306,7 @@
 </div>
 </div>
 <div class="text-right text-xs">
-<div class="font-extrabold text-slate-900" id="print-full-date-badge">Rabu, 28 Oktober 2026</div>
+<div class="font-extrabold text-slate-900" id="print-full-date-badge">Memuat tanggal...</div>
 <div class="text-[10px] text-slate-500 font-medium">Dokumen Sah Laporan Rekap Harian A4 / PDF</div>
 </div>
 </div>
@@ -369,7 +369,7 @@
 <div class="flex items-center gap-1.5 text-xs text-slate-600 bg-white px-2.5 py-1 rounded-lg border border-slate-200/80 w-fit">
 <span>📅</span>
 <span class="font-medium">Tanggal Periode Aktif:</span>
-<span class="font-bold text-emerald-800" id="active-rekap-date-display">Rabu, 28 Oktober 2026</span>
+<span class="font-bold text-emerald-800" id="active-rekap-date-display">Memuat tanggal...</span>
 </div>
 </div>
 <div class="text-right text-xs">
@@ -547,7 +547,7 @@
     { name: "KUE PIA", kulak: 2200, jual: 3000, stok: 0, terjual: 0, basi: 0, retur: 0 },
     { name: "KUE AMANDEL", kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
     { name: "ROTI O", kulak: 2500, jual: 3000, stok: 0, terjual: 0, basi: 0, retur: 0 },
-    { name: "ROTI PISANG", kulak: 2200, jual: 3000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "ROTI PISANG", kulak: 2200, jual: 3000, stok: 0, squeal: 0, basi: 0, retur: 0 },
     { name: "ROTI GULUNG", kulak: 2500, jual: 3000, stok: 0, terjual: 0, basi: 0, retur: 0 },
     { name: "ROTI SOSIS", kulak: 2500, jual: 3000, stok: 0, terjual: 0, basi: 0, retur: 0 },
     { name: "ROTI SISIR", kulak: 2500, jual: 3000, stok: 0, terjual: 0, basi: 0, retur: 0 },
@@ -609,6 +609,23 @@
 
   function formatRupiah(number) {
     return "Rp " + Number(number || 0).toLocaleString('id-ID');
+  }
+
+  // LOGIKA PENANGGALAN REAL-TIME DINAMIS DALAM BAHASA INDONESIA
+  function getSystemCurrentDateFormatted(dateObj = new Date()) {
+    return dateObj.toLocaleDateString('id-ID', {
+      weekday: 'long',
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric'
+    });
+  }
+
+  function getSystemCurrentISODate(dateObj = new Date()) {
+    const y = dateObj.getFullYear();
+    const m = String(dateObj.getMonth() + 1).padStart(2, '0');
+    const d = String(dateObj.getDate()).padStart(2, '0');
+    return `${y}-${m}-${d}`;
   }
 
   function getStoreKey(suffix) {
@@ -698,10 +715,13 @@
     setupSearchFilter();
     setupDatePicker();
     updateHeaderExportDate();
+
+    // Pastikan tanggal selalu update otomatis setiap hari mengikuti kalender real-time
+    setInterval(updateHeaderExportDate, 30000);
   }
 
   function updateHeaderExportDate() {
-    const formatted = "Rabu, 28 Oktober 2026";
+    const formatted = getSystemCurrentDateFormatted();
     const headerDisplay = document.getElementById("export-full-date-display");
     if (headerDisplay) {
       headerDisplay.innerText = formatted;
@@ -714,14 +734,19 @@
     if (printDate) {
       printDate.innerText = formatted;
     }
+    const activeBranch = branches.find(b => b.id === currentBranchId);
+    const printBranch = document.getElementById("print-branch-title");
+    if (printBranch && activeBranch) {
+      printBranch.innerText = activeBranch.name;
+    }
   }
 
   function setupDatePicker() {
     const datePicker = document.getElementById("rekap-date-picker");
-    const fixedDate = "2026-10-28";
+    const todayISO = getSystemCurrentISODate();
     if (datePicker && !datePicker.value) {
-      datePicker.value = fixedDate;
-      onRekapDateChange(fixedDate);
+      datePicker.value = todayISO;
+      onRekapDateChange(todayISO);
     }
   }
 
@@ -729,17 +754,21 @@
     const display = document.getElementById("active-rekap-date-display");
     if (!display) return;
     if (!val) {
-      display.innerText = "Rabu, 28 Oktober 2026";
+      display.innerText = getSystemCurrentDateFormatted();
       return;
     }
-    const d = new Date(val);
-    const formatted = d.toLocaleDateString('id-ID', {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    });
-    display.innerText = formatted;
+    // Parse YYYY-MM-DD reliably in local time
+    const parts = val.split('-');
+    if (parts.length === 3) {
+      const year = parseInt(parts[0], 10);
+      const month = parseInt(parts[1], 10) - 1;
+      const day = parseInt(parts[2], 10);
+      const d = new Date(year, month, day);
+      display.innerText = getSystemCurrentDateFormatted(d);
+    } else {
+      const d = new Date(val);
+      display.innerText = getSystemCurrentDateFormatted(d);
+    }
   }
 
   function renderBranchButtons() {
@@ -1292,7 +1321,9 @@
       alert("Isi nama operasional dan nominal yang valid.");
       return;
     }
-    expensesList.push({ ket, nominal: nom, date: "28/10/2026" });
+    const now = new Date();
+    const dateFormatted = `${String(now.getDate()).padStart(2, '0')}/${String(now.getMonth() + 1).padStart(2, '0')}/${now.getFullYear()}`;
+    expensesList.push({ ket, nominal: nom, date: dateFormatted });
     saveBranchExpenses(expensesList);
     document.getElementById("op-keterangan").value = "";
     document.getElementById("op-nominal").value = "";
@@ -1337,7 +1368,11 @@
   function openRekapitulasiModal() {
     const activeBranch = branches.find(b => b.id === currentBranchId);
     document.getElementById("modal-branch-name").innerText = activeBranch ? activeBranch.name : currentBranchId;
-    setupDatePicker();
+    const datePicker = document.getElementById("rekap-date-picker");
+    if (datePicker && !datePicker.value) {
+      datePicker.value = getSystemCurrentISODate();
+    }
+    onRekapDateChange(datePicker ? datePicker.value : getSystemCurrentISODate());
     selectPeriod('harian');
     renderSavedRecapList();
     document.getElementById("modal-rekapitulasi").classList.remove("hidden");
@@ -1379,9 +1414,13 @@
     const totals = calculateTotals();
     const currentBranch = branches.find(b => b.id === currentBranchId)?.name || currentBranchId;
     const datePickerVal = document.getElementById("rekap-date-picker")?.value;
-    const fullDateStr = datePickerVal 
-      ? new Date(datePickerVal).toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
-      : "Rabu, 28 Oktober 2026";
+    let fullDateStr = getSystemCurrentDateFormatted();
+    if (datePickerVal) {
+      const parts = datePickerVal.split('-');
+      if (parts.length === 3) {
+        fullDateStr = getSystemCurrentDateFormatted(new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2])));
+      }
+    }
 
     const rec = {
       id: Date.now(),
@@ -1499,7 +1538,7 @@
   function simpanRiwayatPenjualan() {
     const totals = calculateTotals();
     const currentBranch = branches.find(b => b.id === currentBranchId)?.name || currentBranchId;
-    const fullDateStr = "Rabu, 28 Oktober 2026 (" + new Date().toLocaleTimeString('id-ID') + ")";
+    const fullDateStr = getSystemCurrentDateFormatted() + " (" + new Date().toLocaleTimeString('id-ID') + ")";
     const snapshot = {
       date: fullDateStr,
       branch: currentBranch,
@@ -1518,7 +1557,7 @@
 
   function cetakLaporanA4() {
     updateHeaderExportDate();
-    const fullDate = "Rabu, 28 Oktober 2026";
+    const fullDate = getSystemCurrentDateFormatted();
     const originalTitle = document.title;
     document.title = `Laporan Penjualan - Ngenal Rasa - ${fullDate}`;
     window.print();
