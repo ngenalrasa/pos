@@ -273,7 +273,7 @@
 <div class="flex flex-wrap items-center gap-1.5">
 <span class="text-slate-500 font-medium text-xs">Filter Kategori:</span>
 <button class="px-2.5 py-1 rounded-full bg-slate-900 text-white text-[11px] font-bold shadow-sm transition" id="btn-filter-all" onclick="applyFilter('all')">
-      Semua Produk (<span id="badge-total-produk">81</span>)
+      Semua Produk (<span id="badge-total-produk">85</span>)
     </button>
 <button class="px-2.5 py-1 rounded-full bg-emerald-50 border border-emerald-300 text-emerald-800 hover:bg-emerald-100 text-[11px] font-semibold transition" id="btn-filter-fast" onclick="applyFilter('fast')">
       🔥 Fast Moving (<span id="badge-fast-moving">0</span>)
@@ -331,7 +331,7 @@
 </tr>
 </thead>
 <tbody class="divide-y divide-slate-100 font-medium" id="product-table-body">
-<!-- Populated directly by script with 81 authentic items -->
+<!-- Populated directly by script with 85 authentic items -->
 </tbody>
 </table>
 </div>
@@ -522,9 +522,9 @@
 <!-- END: AddNewProductModal -->
 <!-- BEGIN: ApplicationLogicScripts -->
 <script data-purpose="app-core-store">
-  const CATALOG_VERSION = "v_81_ngenalrasa_susupagu5600";
+  const CATALOG_VERSION = "v_85_ngenalrasa_revisi_nogosari_4produk";
 
-  // Full 81 Indonesian traditional market snacks with 0 quantity defaults
+  // Full 85 Indonesian traditional market snacks with 0 quantity defaults
   const DEFAULT_PRODUCTS = [
     { name: "SERABI", kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
     { name: "ONGOL-ONGOL", kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
@@ -555,7 +555,7 @@
     { name: "PASTEL", kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
     { name: "KUE CUM-CUM", kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
     { name: "BIKANG", kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
-    { name: "NOGOSARI", kulak: 1500, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "NOGOSARI", kulak: 2000, jual: 2500, stok: 0, terjual: 0, basi: 0, retur: 0 },
     { name: "AREM-AREM", kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
     { name: "LEMPER BIASA", kulak: 1500, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
     { name: "LEMPER BAKAR", kulak: 2000, jual: 2500, stok: 0, terjual: 0, basi: 0, retur: 0 },
@@ -606,7 +606,11 @@
     { name: "ROTI GORENG AAN", kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
     { name: "KUE APEM", kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
     { name: "SUSU PAGU", kulak: 5600, jual: 6000, stok: 0, terjual: 0, basi: 0, retur: 0 },
-    { name: "RUJAK SERUT", kulak: 5000, jual: 6000, stok: 0, terjual: 0, basi: 0, retur: 0 }
+    { name: "RUJAK SERUT", kulak: 5000, jual: 6000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "KERIPIK USUS NR", kulak: 5000, jual: 10000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "KERIPIK GADUNG", kulak: 4000, jual: 5000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "KERIPIK TEMPE", kulak: 4000, jual: 5000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "JUS NR", kulak: 3500, jual: 6000, stok: 0, terjual: 0, basi: 0, retur: 0 }
   ];
 
   let branches = [{ id: "DB_PUSAT", name: "Toko Pusat" }];
@@ -660,13 +664,31 @@
       try {
         const parsed = JSON.parse(activeProductStr);
         if (Array.isArray(parsed) && parsed.length >= 81) {
-          // Sinkronisasi update SUSU PAGU jika masih menyimpan nilai lama
+          // Sinkronisasi update SUSU PAGU
           const sp = parsed.find(p => p.name === "SUSU PAGU");
           if (sp && sp.kulak !== 5600) {
             sp.kulak = 5600;
             sp.jual = 6000;
-            localStorage.setItem(getStoreKey("PRODUCTS"), JSON.stringify(parsed));
           }
+          // Sinkronisasi update NOGOSARI
+          const nogo = parsed.find(p => p.name === "NOGOSARI");
+          if (nogo && (nogo.kulak !== 2000 || nogo.jual !== 2500)) {
+            nogo.kulak = 2000;
+            nogo.jual = 2500;
+          }
+          // Pastikan 4 produk baru ada
+          const newItems = [
+            { name: "KERIPIK USUS NR", kulak: 5000, jual: 10000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+            { name: "KERIPIK GADUNG", kulak: 4000, jual: 5000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+            { name: "KERIPIK TEMPE", kulak: 4000, jual: 5000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+            { name: "JUS NR", kulak: 3500, jual: 6000, stok: 0, terjual: 0, basi: 0, retur: 0 }
+          ];
+          newItems.forEach(item => {
+            if (!parsed.some(p => p.name === item.name)) {
+              parsed.push(item);
+            }
+          });
+          localStorage.setItem(getStoreKey("PRODUCTS"), JSON.stringify(parsed));
           return parsed;
         }
         return JSON.parse(JSON.stringify(DEFAULT_PRODUCTS));
@@ -1500,13 +1522,13 @@
   }
 
   function confirmResetMaster() {
-    if (confirm("Reset Master: Apakah Anda yakin ingin mengatur ulang katalog produk cabang ini ke daftar master lengkap 81 jajanan pasar (dengan semua Qty 0)?")) {
+    if (confirm("Reset Master: Apakah Anda yakin ingin mengatur ulang katalog produk cabang ini ke daftar master lengkap 85 jajanan pasar (dengan semua Qty 0)?")) {
       productsList = JSON.parse(JSON.stringify(DEFAULT_PRODUCTS));
       saveBranchData(productsList);
       buildTable();
       calculateTotals();
       recalculateBagiHasil();
-      alert("Katalog telah di-reset ke Master Lengkap 81 Jajanan Pasar (semua Qty bernilai 0).");
+      alert("Katalog telah di-reset ke Master Lengkap 85 Jajanan Pasar (semua Qty bernilai 0).");
     }
   }
 
