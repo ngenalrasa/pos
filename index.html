@@ -91,7 +91,7 @@
 <div class="max-w-7xl mx-auto flex flex-col items-center">
 <!-- Brand Logo Centered -->
 <div class="w-48 sm:w-56 mb-2">
-<img alt="Ngenal Rasa Logo" class="w-full h-auto object-contain mx-auto" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCOPnzmELjlgb43zBLkCNOR3YVZQ9gtL6bpzmeCbO-aBXRTEH2MlqpCIUsBNZfai_ZYEjVVItAkC9HrF89KY7mGALwMRb6gplSklkv6pNlfIONpigawVbfYQluxbChhXsvDbdzBz_VXGPzd4kj0cWVLQ_3tTwgaxPhY8_OessiVxyuT5ZqYJnBb7mL5Foq_qsKUpxM3F0i_QBTM9fp7hIyM0eHcuXzIJ1-p5PHn2AWeIJPXzSqXVDuQ"/>
+<img alt="Ngenal Rasa Logo" class="w-full h-auto object-contain mx-auto" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDDb_80zUD1B1M4mNxoCzfMQnY-YemLRIjo4wMG-cN4B4t_sAZQnor59hN5lpeS7lqm9OW_fi4RuKqJrvRvjHbKQZVMRmf2Lt6d1BaYs167MY6aFsb59YBYhJF8V4FZXsEJVGIcQL47RE-sTWJYeJNENrr1e7Uq3nMLdJ59A0ruBKetT01AZJJVVsPv_FXSxdweEpAkUyhBu1sitOTKJ-15ldltSUm46autXvL9fZ0wZJkcbLqp7JXJ"/>
 </div>
 <!-- Cloud Status & Branch Info Header -->
 <div class="flex items-center gap-2 mb-2 text-xs font-semibold">
@@ -273,7 +273,7 @@
 <div class="flex flex-wrap items-center gap-1.5">
 <span class="text-slate-500 font-medium text-xs">Filter Kategori:</span>
 <button class="px-2.5 py-1 rounded-full bg-slate-900 text-white text-[11px] font-bold shadow-sm transition" id="btn-filter-all" onclick="applyFilter('all')">
-      Semua Produk (<span id="badge-total-produk">85</span>)
+      Semua Produk (<span id="badge-total-produk">86</span>)
     </button>
 <button class="px-2.5 py-1 rounded-full bg-emerald-50 border border-emerald-300 text-emerald-800 hover:bg-emerald-100 text-[11px] font-semibold transition" id="btn-filter-fast" onclick="applyFilter('fast')">
       🔥 Fast Moving (<span id="badge-fast-moving">0</span>)
@@ -299,7 +299,7 @@
 <div class="p-4 mb-3 border-b-2 border-slate-800 bg-white hidden" id="print-a4-header">
 <div class="flex items-center justify-between">
 <div class="flex items-center gap-3">
-<img alt="Ngenal Rasa" class="h-10 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCOPnzmELjlgb43zBLkCNOR3YVZQ9gtL6bpzmeCbO-aBXRTEH2MlqpCIUsBNZfai_ZYEjVVItAkC9HrF89KY7mGALwMRb6gplSklkv6pNlfIONpigawVbfYQluxbChhXsvDbdzBz_VXGPzd4kj0cWVLQ_3tTwgaxPhY8_OessiVxyuT5ZqYJnBb7mL5Foq_qsKUpxM3F0i_QBTM9fp7hIyM0eHcuXzIJ1-p5PHn2AWeIJPXzSqXVDuQ"/>
+<img alt="Ngenal Rasa" class="h-10 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDDb_80zUD1B1M4mNxoCzfMQnY-YemLRIjo4wMG-cN4B4t_sAZQnor59hN5lpeS7lqm9OW_fi4RuKqJrvRvjHbKQZVMRmf2Lt6d1BaYs167MY6aFsb59YBYhJF8V4FZXsEJVGIcQL47RE-sTWJYeJNENrr1e7Uq3nMLdJ59A0ruBKetT01AZJJVVsPv_FXSxdweEpAkUyhBu1sitOTKJ-15ldltSUm46autXvL9fZ0wZJkcbLqp7JXJ"/>
 <div>
 <h1 class="text-base font-black tracking-wide text-slate-900 uppercase">Laporan Penjualan &amp; Rekapitulasi POS Jajanan Pasar</h1>
 <p class="text-xs text-slate-600 font-semibold">Ngenal Rasa — Cabang: <span class="font-black text-slate-900 uppercase" id="print-branch-title">Toko Pusat</span></p>
@@ -331,7 +331,7 @@
 </tr>
 </thead>
 <tbody class="divide-y divide-slate-100 font-medium" id="product-table-body">
-<!-- Populated directly by script with 85 authentic items -->
+<!-- Populated directly by script with 86 authentic items -->
 </tbody>
 </table>
 </div>
@@ -522,9 +522,9 @@
 <!-- END: AddNewProductModal -->
 <!-- BEGIN: ApplicationLogicScripts -->
 <script data-purpose="app-core-store">
-  const CATALOG_VERSION = "v_85_ngenalrasa_revisi_nogosari_4produk";
+  const CATALOG_VERSION = "v_86_ngenalrasa_donat_cup_mini";
 
-  // Full 85 Indonesian traditional market snacks with 0 quantity defaults
+  // Full 86 Indonesian traditional market snacks with 0 quantity defaults
   const DEFAULT_PRODUCTS = [
     { name: "SERABI", kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
     { name: "ONGOL-ONGOL", kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
@@ -542,6 +542,7 @@
     { name: "KUKUS", kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
     { name: "DONAT TEBAL", kulak: 2500, jual: 3000, stok: 0, terjual: 0, basi: 0, retur: 0 },
     { name: "DONAT TIPIS/GULA", kulak: 1500, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { name: "DONAT CUP MINI", kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
     { name: "KUE SEBRA", kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
     { name: "KUE GABIN", kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
     { name: "KUE PIA", kulak: 2200, jual: 3000, stok: 0, terjual: 0, basi: 0, retur: 0 },
@@ -681,7 +682,8 @@
             { name: "KERIPIK USUS NR", kulak: 5000, jual: 10000, stok: 0, terjual: 0, basi: 0, retur: 0 },
             { name: "KERIPIK GADUNG", kulak: 4000, jual: 5000, stok: 0, terjual: 0, basi: 0, retur: 0 },
             { name: "KERIPIK TEMPE", kulak: 4000, jual: 5000, stok: 0, terjual: 0, basi: 0, retur: 0 },
-            { name: "JUS NR", kulak: 3500, jual: 6000, stok: 0, terjual: 0, basi: 0, retur: 0 }
+            { name: "JUS NR", kulak: 3500, jual: 6000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+            { name: "DONAT CUP MINI", kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 }
           ];
           newItems.forEach(item => {
             if (!parsed.some(p => p.name === item.name)) {
@@ -1522,13 +1524,13 @@
   }
 
   function confirmResetMaster() {
-    if (confirm("Reset Master: Apakah Anda yakin ingin mengatur ulang katalog produk cabang ini ke daftar master lengkap 85 jajanan pasar (dengan semua Qty 0)?")) {
+    if (confirm("Reset Master: Apakah Anda yakin ingin mengatur ulang katalog produk cabang ini ke daftar master lengkap 86 jajanan pasar (dengan semua Qty 0)?")) {
       productsList = JSON.parse(JSON.stringify(DEFAULT_PRODUCTS));
       saveBranchData(productsList);
       buildTable();
       calculateTotals();
       recalculateBagiHasil();
-      alert("Katalog telah di-reset ke Master Lengkap 85 Jajanan Pasar (semua Qty bernilai 0).");
+      alert("Katalog telah di-reset ke Master Lengkap 86 Jajanan Pasar (semua Qty bernilai 0).");
     }
   }
 
