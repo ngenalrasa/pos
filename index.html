@@ -91,7 +91,7 @@
 <div class="max-w-7xl mx-auto flex flex-col items-center">
 <!-- Brand Logo Centered -->
 <div class="w-48 sm:w-56 mb-2">
-<img alt="Ngenal Rasa Logo" class="w-full h-auto object-contain mx-auto" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDmTpM1IZpjFPovIKTW-H6UYQvBFEBeKPSJO2xZKCWY3sM-hWV_NZeLjdvolfhVSCyKRYz4ecYE77pRStjGlEIRZCTX6et8cunFdVDhXcrTWeMxxGtYCqBgtsGm2c_Xr1T9Tck5oddkCyCcbhLhbmiDBAOBeqc5_RHyMg2DAjY3sdabXFk8hw5D_CduuFlcU7D4Pu-0aWol8qwRGyVc4If-jmX_fMF3CDf_8Q18WJmIOdviJzQ9sLqg"/>
+<img alt="Ngenal Rasa Logo" class="w-full h-auto object-contain mx-auto" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCkH9B5FcUdX-vkHrTh_59BSDd-XUSl1Ye-wo-9H0E4UrHR4AyhaFE3UY3xfSh0mi3kYKuNX22_N8SimLrdOBPpm8KwtUczn_9uR6Z3EBm5E00rR57BFF5omm_5W9e5lGgVdi5erc00pIE9MTvXV0P-1ilvFyhhIZMxLSc_4etHLhsY_ch22NFaNuTmFyjXd5kZWuMFfNZ47IBiSmyNuf4yITQ7OKUAZur1hEMJJZ7KXykJbfkZnNbB"/>
 </div>
 <!-- Cloud Status & Branch Info Header -->
 <div class="flex items-center gap-2 mb-2 text-xs font-semibold">
@@ -272,7 +272,7 @@
 <!-- Filter Buttons Left -->
 <div class="flex flex-wrap items-center gap-1.5">
 <span class="text-slate-500 font-medium text-xs">Filter Kategori:</span>
-<button class="px-2.5 py-1 rounded-full bg-slate-900 text-white text-[11px] font-bold shadow-sm transition" id="btn-filter-all" onclick="applyFilter('all')">Semua Produk (90)</button>
+<button class="px-2.5 py-1 rounded-full bg-slate-900 text-white text-[11px] font-bold shadow-sm transition" id="btn-filter-all" onclick="applyFilter('all')">Semua Produk (92)</button>
 <button class="px-2.5 py-1 rounded-full bg-emerald-50 border border-emerald-300 text-emerald-800 hover:bg-emerald-100 text-[11px] font-semibold transition" id="btn-filter-fast" onclick="applyFilter('fast')">
       🔥 Fast Moving (<span id="badge-fast-moving">0</span>)
     </button>
@@ -297,7 +297,7 @@
 <div class="p-4 mb-3 border-b-2 border-slate-800 bg-white hidden" id="print-a4-header">
 <div class="flex items-center justify-between">
 <div class="flex items-center gap-3">
-<img alt="Ngenal Rasa" class="h-10 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDmTpM1IZpjFPovIKTW-H6UYQvBFEBeKPSJO2xZKCWY3sM-hWV_NZeLjdvolfhVSCyKRYz4ecYE77pRStjGlEIRZCTX6et8cunFdVDhXcrTWeMxxGtYCqBgtsGm2c_Xr1T9Tck5oddkCyCcbhLhbmiDBAOBeqc5_RHyMg2DAjY3sdabXFk8hw5D_CduuFlcU7D4Pu-0aWol8qwRGyVc4If-jmX_fMF3CDf_8Q18WJmIOdviJzQ9sLqg"/>
+<img alt="Ngenal Rasa" class="h-10 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCkH9B5FcUdX-vkHrTh_59BSDd-XUSl1Ye-wo-9H0E4UrHR4AyhaFE3UY3xfSh0mi3kYKuNX22_N8SimLrdOBPpm8KwtUczn_9uR6Z3EBm5E00rR57BFF5omm_5W9e5lGgVdi5erc00pIE9MTvXV0P-1ilvFyhhIZMxLSc_4etHLhsY_ch22NFaNuTmFyjXd5kZWuMFfNZ47IBiSmyNuf4yITQ7OKUAZur1hEMJJZ7KXykJbfkZnNbB"/>
 <div>
 <h1 class="text-base font-black tracking-wide text-slate-900 uppercase">Laporan Penjualan &amp; Rekapitulasi POS Jajanan Pasar</h1>
 <p class="text-xs text-slate-600 font-semibold">Ngenal Rasa — Cabang: <span class="font-black text-slate-900 uppercase" id="print-branch-title">Toko Pusat</span></p>
@@ -344,37 +344,67 @@
 <td class="py-2 px-2 text-center font-bold text-blue-700 text-xs" id="row-mitra-0">Rp 0</td>
 <td class="py-2 px-1 text-center"><button class="text-slate-400 hover:text-rose-600 font-bold px-1.5 py-0.5 rounded transition" onclick="deleteProduct(0)" title="Hapus Jajanan" type="button">✕</button></td>
 </tr>
-<!-- Baris 2: BOLA MESES -->
-<tr class="hover:bg-slate-50/80 transition-colors border-b border-slate-100" data-product-name="bola meses" id="product-row-1">
-<td class="py-2 px-3 font-bold text-slate-800 text-[11px] sm:text-xs uppercase">BOLA MESES</td>
-<td class="py-1.5 px-1 text-center"><input class="pill-input border-slate-200 text-slate-800 bg-white" data-field="kulak" data-index="1" type="number" value="1200"/></td>
-<td class="py-1.5 px-1 text-center"><input class="pill-input border-rose-300 text-red-600 bg-white" data-field="jual" data-index="1" type="number" value="2000"/></td>
+<!-- Baris 2: PIZZA -->
+<tr class="hover:bg-slate-50/80 transition-colors border-b border-slate-100" data-product-name="pizza" id="product-row-1">
+<td class="py-2 px-3 font-bold text-slate-800 text-[11px] sm:text-xs uppercase">PIZZA</td>
+<td class="py-1.5 px-1 text-center"><input class="pill-input border-slate-200 text-slate-800 bg-white" data-field="kulak" data-index="1" type="number" value="3000"/></td>
+<td class="py-1.5 px-1 text-center"><input class="pill-input border-rose-300 text-red-600 bg-white" data-field="jual" data-index="1" type="number" value="4000"/></td>
 <td class="py-1.5 px-1 text-center"><input class="pill-input border-slate-200 text-slate-800 bg-white" data-field="stok" data-index="1" type="number" value="0"/></td>
 <td class="py-1.5 px-1 text-center"><input class="pill-input border-emerald-300 text-emerald-700 bg-white" data-field="terjual" data-index="1" type="number" value="0"/></td>
 <td class="py-1.5 px-1 text-center"><input class="pill-input border-rose-300 text-rose-600 bg-white" data-field="basi" data-index="1" type="number" value="0"/></td>
 <td class="py-1.5 px-1 text-center"><input class="pill-input border-amber-300 text-amber-700 bg-white" data-field="retur" data-index="1" type="number" value="0"/></td>
-<td class="py-2 px-2 text-center font-bold text-emerald-700 text-xs" id="row-marjin-1">Rp 800</td>
+<td class="py-2 px-2 text-center font-bold text-emerald-700 text-xs" id="row-marjin-1">Rp 1.000</td>
 <td class="py-2 px-2 text-center font-bold text-slate-800 text-xs" id="row-kotor-1">Rp 0</td>
 <td class="py-2 px-2 text-center font-bold text-emerald-800 text-xs" id="row-bersih-1">Rp 0</td>
 <td class="py-2 px-2 text-center font-bold text-blue-700 text-xs" id="row-mitra-1">Rp 0</td>
 <td class="py-2 px-1 text-center"><button class="text-slate-400 hover:text-rose-600 font-bold px-1.5 py-0.5 rounded transition" onclick="deleteProduct(1)" title="Hapus Jajanan" type="button">✕</button></td>
 </tr>
-<!-- Baris 3: SERABI -->
-<tr class="hover:bg-slate-50/80 transition-colors border-b border-slate-100" data-product-name="serabi" id="product-row-2">
-<td class="py-2 px-3 font-bold text-slate-800 text-[11px] sm:text-xs uppercase">SERABI</td>
-<td class="py-1.5 px-1 text-center"><input class="pill-input border-slate-200 text-slate-800 bg-white" data-field="kulak" data-index="2" type="number" value="1200"/></td>
-<td class="py-1.5 px-1 text-center"><input class="pill-input border-rose-300 text-red-600 bg-white" data-field="jual" data-index="2" type="number" value="2000"/></td>
+<!-- Baris 3: JUZ 500 ML -->
+<tr class="hover:bg-slate-50/80 transition-colors border-b border-slate-100" data-product-name="juz 500 ml" id="product-row-2">
+<td class="py-2 px-3 font-bold text-slate-800 text-[11px] sm:text-xs uppercase">JUZ 500 ML</td>
+<td class="py-1.5 px-1 text-center"><input class="pill-input border-slate-200 text-slate-800 bg-white" data-field="kulak" data-index="2" type="number" value="6000"/></td>
+<td class="py-1.5 px-1 text-center"><input class="pill-input border-rose-300 text-red-600 bg-white" data-field="jual" data-index="2" type="number" value="7000"/></td>
 <td class="py-1.5 px-1 text-center"><input class="pill-input border-slate-200 text-slate-800 bg-white" data-field="stok" data-index="2" type="number" value="0"/></td>
 <td class="py-1.5 px-1 text-center"><input class="pill-input border-emerald-300 text-emerald-700 bg-white" data-field="terjual" data-index="2" type="number" value="0"/></td>
 <td class="py-1.5 px-1 text-center"><input class="pill-input border-rose-300 text-rose-600 bg-white" data-field="basi" data-index="2" type="number" value="0"/></td>
 <td class="py-1.5 px-1 text-center"><input class="pill-input border-amber-300 text-amber-700 bg-white" data-field="retur" data-index="2" type="number" value="0"/></td>
-<td class="py-2 px-2 text-center font-bold text-emerald-700 text-xs" id="row-marjin-2">Rp 800</td>
+<td class="py-2 px-2 text-center font-bold text-emerald-700 text-xs" id="row-marjin-2">Rp 1.000</td>
 <td class="py-2 px-2 text-center font-bold text-slate-800 text-xs" id="row-kotor-2">Rp 0</td>
 <td class="py-2 px-2 text-center font-bold text-emerald-800 text-xs" id="row-bersih-2">Rp 0</td>
 <td class="py-2 px-2 text-center font-bold text-blue-700 text-xs" id="row-mitra-2">Rp 0</td>
 <td class="py-2 px-1 text-center"><button class="text-slate-400 hover:text-rose-600 font-bold px-1.5 py-0.5 rounded transition" onclick="deleteProduct(2)" title="Hapus Jajanan" type="button">✕</button></td>
 </tr>
-<!-- Baris 4-90 dimuat dinamis oleh Javascript -->
+<!-- Baris 4: BOLA MESES -->
+<tr class="hover:bg-slate-50/80 transition-colors border-b border-slate-100" data-product-name="bola meses" id="product-row-3">
+<td class="py-2 px-3 font-bold text-slate-800 text-[11px] sm:text-xs uppercase">BOLA MESES</td>
+<td class="py-1.5 px-1 text-center"><input class="pill-input border-slate-200 text-slate-800 bg-white" data-field="kulak" data-index="3" type="number" value="1200"/></td>
+<td class="py-1.5 px-1 text-center"><input class="pill-input border-rose-300 text-red-600 bg-white" data-field="jual" data-index="3" type="number" value="2000"/></td>
+<td class="py-1.5 px-1 text-center"><input class="pill-input border-slate-200 text-slate-800 bg-white" data-field="stok" data-index="3" type="number" value="0"/></td>
+<td class="py-1.5 px-1 text-center"><input class="pill-input border-emerald-300 text-emerald-700 bg-white" data-field="terjual" data-index="3" type="number" value="0"/></td>
+<td class="py-1.5 px-1 text-center"><input class="pill-input border-rose-300 text-rose-600 bg-white" data-field="basi" data-index="3" type="number" value="0"/></td>
+<td class="py-1.5 px-1 text-center"><input class="pill-input border-amber-300 text-amber-700 bg-white" data-field="retur" data-index="3" type="number" value="0"/></td>
+<td class="py-2 px-2 text-center font-bold text-emerald-700 text-xs" id="row-marjin-3">Rp 800</td>
+<td class="py-2 px-2 text-center font-bold text-slate-800 text-xs" id="row-kotor-3">Rp 0</td>
+<td class="py-2 px-2 text-center font-bold text-emerald-800 text-xs" id="row-bersih-3">Rp 0</td>
+<td class="py-2 px-2 text-center font-bold text-blue-700 text-xs" id="row-mitra-3">Rp 0</td>
+<td class="py-2 px-1 text-center"><button class="text-slate-400 hover:text-rose-600 font-bold px-1.5 py-0.5 rounded transition" onclick="deleteProduct(3)" title="Hapus Jajanan" type="button">✕</button></td>
+</tr>
+<!-- Baris 5: SERABI -->
+<tr class="hover:bg-slate-50/80 transition-colors border-b border-slate-100" data-product-name="serabi" id="product-row-4">
+<td class="py-2 px-3 font-bold text-slate-800 text-[11px] sm:text-xs uppercase">SERABI</td>
+<td class="py-1.5 px-1 text-center"><input class="pill-input border-slate-200 text-slate-800 bg-white" data-field="kulak" data-index="4" type="number" value="1200"/></td>
+<td class="py-1.5 px-1 text-center"><input class="pill-input border-rose-300 text-red-600 bg-white" data-field="jual" data-index="4" type="number" value="2000"/></td>
+<td class="py-1.5 px-1 text-center"><input class="pill-input border-slate-200 text-slate-800 bg-white" data-field="stok" data-index="4" type="number" value="0"/></td>
+<td class="py-1.5 px-1 text-center"><input class="pill-input border-emerald-300 text-emerald-700 bg-white" data-field="terjual" data-index="4" type="number" value="0"/></td>
+<td class="py-1.5 px-1 text-center"><input class="pill-input border-rose-300 text-rose-600 bg-white" data-field="basi" data-index="4" type="number" value="0"/></td>
+<td class="py-1.5 px-1 text-center"><input class="pill-input border-amber-300 text-amber-700 bg-white" data-field="retur" data-index="4" type="number" value="0"/></td>
+<td class="py-2 px-2 text-center font-bold text-emerald-700 text-xs" id="row-marjin-4">Rp 800</td>
+<td class="py-2 px-2 text-center font-bold text-slate-800 text-xs" id="row-kotor-4">Rp 0</td>
+<td class="py-2 px-2 text-center font-bold text-emerald-800 text-xs" id="row-bersih-4">Rp 0</td>
+<td class="py-2 px-2 text-center font-bold text-blue-700 text-xs" id="row-mitra-4">Rp 0</td>
+<td class="py-2 px-1 text-center"><button class="text-slate-400 hover:text-rose-600 font-bold px-1.5 py-0.5 rounded transition" onclick="deleteProduct(4)" title="Hapus Jajanan" type="button">✕</button></td>
+</tr>
+<!-- Baris 6-92 dimuat dinamis oleh Javascript -->
 </tbody>
 </table>
 </div>
@@ -565,11 +595,13 @@
 <!-- END: AddNewProductModal -->
 <!-- BEGIN: ApplicationLogicScripts -->
 <script data-purpose="app-core-store">
-  const CATALOG_VERSION = "v_90_ngenalrasa_roti_tape_aan_meses_serabi_fixed";
+  const CATALOG_VERSION = "v_92_ngenalrasa_roti_tape_pizza_juz_meses_serabi_fixed";
 
-  // Full 90 traditional market snacks with 0 quantity defaults starting with ROTI TAPE KUNING AAN (#1), BOLA MESES (#2), SERABI (#3)
+  // Full 92 traditional market snacks with 0 quantity defaults starting with ROTI TAPE KUNING AAN (#1), PIZZA (#2), JUZ 500 ML (#3), BOLA MESES (#4), SERABI (#5)
   const DEFAULT_PRODUCTS = [
     { id: 'roti_tape_kuning_aan', name: "ROTI TAPE KUNING AAN", kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { id: 'pizza', name: "PIZZA", kulak: 3000, jual: 4000, stok: 0, terjual: 0, basi: 0, retur: 0 },
+    { id: 'juz_500_ml', name: "JUZ 500 ML", kulak: 6000, jual: 7000, stok: 0, terjual: 0, basi: 0, retur: 0 },
     { id: 'bola_meses', name: "BOLA MESES", kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
     { id: 'serabi', name: "SERABI", kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
     { name: "ONGOL-ONGOL", kulak: 1200, jual: 2000, stok: 0, terjual: 0, basi: 0, retur: 0 },
@@ -712,7 +744,7 @@
       try {
         let parsed = JSON.parse(activeProductStr);
         if (Array.isArray(parsed)) {
-          // Reorder or merge to guarantee ROTI TAPE KUNING AAN (#1), BOLA MESES (#2), SERABI (#3)
+          // Reorder or merge to guarantee top items: ROTI TAPE KUNING AAN (#1), PIZZA (#2), JUZ 500 ML (#3), BOLA MESES (#4), SERABI (#5)
           DEFAULT_PRODUCTS.forEach(defaultItem => {
             const existing = parsed.find(p => p.name.toUpperCase() === defaultItem.name.toUpperCase());
             if (!existing) {
@@ -727,8 +759,8 @@
             }
           });
 
-          // Urutan tepat 3 teratas
-          const orderTop = ["ROTI TAPE KUNING AAN", "BOLA MESES", "SERABI"];
+          // Urutan tepat 5 teratas
+          const orderTop = ["ROTI TAPE KUNING AAN", "PIZZA", "JUZ 500 ML", "BOLA MESES", "SERABI"];
           for (let i = orderTop.length - 1; i >= 0; i--) {
             const targetName = orderTop[i];
             const idx = parsed.findIndex(p => p.name.toUpperCase() === targetName);
@@ -1576,13 +1608,13 @@
   }
 
   function confirmResetMaster() {
-    if (confirm("Reset Master: Apakah Anda yakin ingin mengatur ulang katalog produk cabang ini ke daftar master lengkap 90 jajanan pasar (dengan semua Qty 0)?")) {
+    if (confirm("Reset Master: Apakah Anda yakin ingin mengatur ulang katalog produk cabang ini ke daftar master lengkap 92 jajanan pasar (dengan semua Qty 0)?")) {
       productsList = JSON.parse(JSON.stringify(DEFAULT_PRODUCTS));
       saveBranchData(productsList);
       buildTable();
       calculateTotals();
       recalculateBagiHasil();
-      alert("Katalog telah di-reset ke Master Lengkap 90 Jajanan Pasar (semua Qty bernilai 0).");
+      alert("Katalog telah di-reset ke Master Lengkap 92 Jajanan Pasar (semua Qty bernilai 0).");
     }
   }
 
